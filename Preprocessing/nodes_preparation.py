@@ -1,8 +1,9 @@
 import pickle
 import numpy as np
 import pandas as pd
+from pathlib import Path
 import sys
-sys.path.append("..")  # Adds higher directory to python modules path.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import evaluation_framework as ef
 
 
@@ -60,21 +61,23 @@ def modify_demand_dict(my_demand_matrix):
 
 if __name__ == '__main__':
     location = "Toy_Example"
-    graph_file = "../Graph/" + location + ".graphml"
-    node_file = "../Graph/node_list_" + location + ".txt"
+    repository_root = Path(__file__).resolve().parents[1]
+    graph_dir = repository_root / "Graph" / location
+    graph_file = graph_dir / (location + ".graphml")
+    node_file = graph_dir / ("node_list_" + location + ".txt")
     graph, node_list = ef.prepare_graph(graph_file, node_file)
 
     # open Pickle files with necessary data (in grid structure)
-    with (open("../Graph/Pickle/demand_" + location + ".pkl", "rb")) as f:
+    with (open(graph_dir / ("demand_" + location + ".pkl"), "rb")) as f:
         objects = pickle.load(f)
 
-    with (open("../Graph/Pickle/grid_density_" + location + ".pkl", "rb")) as f:
+    with (open(graph_dir / ("grid_density_" + location + ".pkl"), "rb")) as f:
         grid_density = pickle.load(f)
 
-    with (open("../Graph/Pickle/privCS_" + location + ".pkl", "rb")) as f:
+    with (open(graph_dir / ("privCS_" + location + ".pkl"), "rb")) as f:
         priv_matrix = pickle.load(f)
 
-    with (open("../Graph/Pickle/estateprice_" + location + ".pkl", "rb")) as f:
+    with (open(graph_dir / ("estateprice_" + location + ".pkl"), "rb")) as f:
         estate_matrix = pickle.load(f)
 
     """
@@ -115,7 +118,7 @@ if __name__ == '__main__':
     5.) Existing charging infrastructure
     """
     # open CSV File with the existing charging stations in it
-    df = pd.read_csv("../data/" + location + "/OCM_simple" + location + ".csv")
+    df = pd.read_csv(repository_root / "data" / location / ("OCM_simple" + location + ".csv"))
     existing_plan = []
     for row in df.iterrows():
         # each charging station has assigned its nearest OSM node
@@ -131,6 +134,6 @@ if __name__ == '__main__':
             existing_plan.append([s_pos, s_x, {}])
 
     # Save node files
-    with open("../Graph/nodes_extended_" + location + ".txt", 'w') as file:
+    with open(graph_dir / ("nodes_extended_" + location + ".txt"), 'w') as file:
         file.write(str(node_list))
-    pickle.dump(existing_plan, open("../Graph/Pickle/existingplan_" + location + ".pkl", "wb"))
+    pickle.dump(existing_plan, open(graph_dir / ("existingplan_" + location + ".pkl"), "wb"))

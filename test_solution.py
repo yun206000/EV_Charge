@@ -8,26 +8,24 @@ Calculate evaluation metrics for the created charging plan.
 """
 
 def travel_metric(my_node_list):
-    """ this gives the mean travel time in minutes """
+    """Return demand-weighted average and maximum travel time in minutes."""
     big_travel_list = []
     for my_node in my_node_list:
         travel = my_node[1]['distance'] / ef.VELOCITY * 60
         times = ceil(10 * ef.weak_demand(my_node))
         for time in range(times):
             big_travel_list.append(travel)
-    travel_mean = max(big_travel_list)
-    return travel_mean
+    return sum(big_travel_list) / len(big_travel_list), max(big_travel_list)
 
 
 def waiting_metric(my_plan):
-    """ mean waiting time in minutes """
+    """Return demand-weighted average and maximum waiting time in minutes."""
     big_waiting_list = []
     for my_station in my_plan:
         times = ceil(my_station[2]["D_s"])
         for time in range(times):
             big_waiting_list.append(my_station[2]["W_s"] * 60)
-    wait_mean = max(big_waiting_list)
-    return wait_mean
+    return sum(big_waiting_list) / len(big_waiting_list), max(big_waiting_list)
 
 
 def eci_test(my_plan, my_node_list, my_norm_benefit, my_norm_charging, my_norm_waiting,
@@ -43,8 +41,8 @@ def test(my_plan, my_node_list, my_basic_cost, my_norm_benefit, my_norm_charging
     """
     prints results of the evaulation metrics
     """
-    travel_max = travel_metric(my_node_list)
-    wait_max = waiting_metric(my_plan)
+    travel_average, travel_max = travel_metric(my_node_list)
+    wait_average, wait_max = waiting_metric(my_plan)
     score, benefit, cost, charg_time, wait_time, cost_travel = ef.norm_score(my_plan, my_node_list, my_norm_benefit,
                                                                              my_norm_charging, my_norm_waiting,
                                                                              my_norm_travel)
@@ -52,11 +50,17 @@ def test(my_plan, my_node_list, my_basic_cost, my_norm_benefit, my_norm_charging
     ef.constraint_check(my_plan, my_node_list, my_basic_cost)
     total_inst_cost = (sum([my_station[2]["fee"] for my_station in my_plan]) - my_basic_cost) / ef.BUDGET
     score = score / my_norm_score * 100
+    travel_time_minutes = ef.travel_cost(my_node_list) * 60
+    waiting_time_minutes = ef.waiting_time(my_plan) * 60
+    charging_time_minutes = ef.charging_time(my_plan) * 60
     print("The score is {}".format(score))
     print("Benefit: {}".format(benefit * 100))
     print("Waiting time: {}, Travel time: {}, Charging time: {}".format(wait_time * 100, cost_travel * 100,
                                                                         charg_time * 100))
-    print(travel_max, wait_max)
+    print("Actual total time (minutes) - Waiting: {:.3f}, Travel: {:.3f}, Charging: {:.3f}".format(
+        waiting_time_minutes, travel_time_minutes, charging_time_minutes))
+    print("Travel time (minutes) - Average: {:.3f}, Maximum: {:.3f}".format(travel_average, travel_max))
+    print("Waiting time (minutes) - Average: {:.3f}, Maximum: {:.3f}".format(wait_average, wait_max))
     print("Used budget: {} \n".format(total_inst_cost * 100))
 
 

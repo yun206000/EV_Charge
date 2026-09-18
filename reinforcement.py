@@ -76,13 +76,16 @@ if __name__ == '__main__':
     random.seed(seed)
     # Instantiate the env
     location = "Toy_Example"  # take a location of your choice
-    graph_file = "Graph/" + location + "/" + location + ".graphml"
-    node_file = "Graph/" + location + "/nodes_extended_" + location + ".txt"
-    plan_file = "Graph/" + location + "/existingplan_" + location + ".pkl"
+    repository_root = os.path.dirname(os.path.abspath(__file__))
+    graph_dir = os.path.join(repository_root, "Graph", location)
+    graph_file = os.path.join(graph_dir, location + ".graphml")
+    node_file = os.path.join(graph_dir, "nodes_extended_" + location + ".txt")
+    plan_file = os.path.join(graph_dir, "existingplan_" + location + ".pkl")
 
     env = ev.StationPlacement(graph_file, node_file, plan_file)
-    log_dir = "tmp_Toy_Example/"
+    log_dir = os.path.join(repository_root, "tmp_Toy_Example")
     modelname = "best_model_" + location + "_"
+    os.makedirs(log_dir, exist_ok=True)
 
     """
     Define and train the agent 
@@ -91,5 +94,5 @@ if __name__ == '__main__':
     model = DQN("MlpPolicy", env, verbose=1, batch_size=128, buffer_size=10000, learning_rate=0.001, device='cpu',
                 seed=seed)
     callback = SaveOnBestTrainingRewardCallback(check_freq=400, my_log_dir=log_dir, my_modelname=modelname)
-    model.learn(total_timesteps=200000, log_interval=10 ** 4, callback=callback)
+    model.learn(total_timesteps=2000, log_interval=10 ** 4, callback=callback)
 
