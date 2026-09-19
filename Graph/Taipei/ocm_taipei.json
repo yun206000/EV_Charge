@@ -1,0 +1,4981 @@
+[
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302979,
+    "UUID": "313F57BF-B245-4E99-B621-C4579C31B10F",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303366,
+      "Title": "Tesla Supercharger Taipei - Xinyi Exchange Square 2",
+      "AddressLine1": "No. 97 B3 Songren Road",
+      "AddressLine2": "Xinyi",
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "110",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.036448,
+      "Longitude": 121.569635,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 0.5736220243170138,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569596,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 6,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 6,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:34:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302922,
+    "UUID": "F4657BF3-4028-4295-87C1-35FB8D49045E",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303309,
+      "Title": "Tesla Supercharger Taipei - Fubon Financial Center",
+      "AddressLine1": "No. 169 Section 4, Ren'ai Road",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "106",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.038214,
+      "Longitude": 121.552196,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 1.451122172328109,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569539,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 6,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 6,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:24:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302977,
+    "UUID": "AA9FB608-39EB-4A86-922F-80C4FFAD9161",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303364,
+      "Title": "Tesla Supercharger Taipei - Songshan",
+      "AddressLine1": "Section 6, Civic Boulevard",
+      "AddressLine2": "Tanmei",
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": null,
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.0488529,
+      "Longitude": 121.577203,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 2.126316819722867,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569594,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 72,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 4,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 4,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:33:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302975,
+    "UUID": "9FAE5A01-8E29-477A-BA77-E6154A5FA7F2",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303362,
+      "Title": "Tesla Supercharger Taipei - National Taiwan University",
+      "AddressLine1": "No. 1 Sec. 4, Roosevelt Road",
+      "AddressLine2": "Da’an District",
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "106",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.02059,
+      "Longitude": 121.543246,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 2.6242286448343455,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569592,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 3,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 3,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:33:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": null,
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": null,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": null,
+      "ID": 1,
+      "Title": "(Unknown Operator)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2021-11-23T10:04:00Z",
+    "ID": 190152,
+    "UUID": "A5898C12-386A-487F-9CAF-FF77E628150D",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 1,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": "每度8.8元",
+    "AddressInfo": {
+      "ID": 190511,
+      "Title": "家樂福三民店",
+      "AddressLine1": "105台北市松山區三民路160號",
+      "AddressLine2": null,
+      "Town": "台北",
+      "StateOrProvince": null,
+      "Postcode": null,
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.061783107897156,
+      "Longitude": 121.56373178908507,
+      "ContactTelephone1": "02 2767 0702",
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": "http://carrefour.com.tw",
+      "Distance": 3.2049445317061447,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 308152,
+        "ConnectionTypeID": 32,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration EE",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 32,
+          "Title": "CCS (Type 1)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 120,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 1,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 1,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2021-11-23T10:04:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2021-11-23T01:21:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302972,
+    "UUID": "30FF5838-D57A-4D63-A7AE-E6B46C7F3C79",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303359,
+      "Title": "Tesla Supercharger Taipei - NTU Stadium",
+      "AddressLine1": "No. 1 Sec. 4, Roosevelt Road",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "106319",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.0215925,
+      "Longitude": 121.5349975,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 3.3154324712724472,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569589,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 6,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 6,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:32:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302974,
+    "UUID": "3E565DBB-C427-4F75-94F5-BC62D12D249C",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303361,
+      "Title": "Tesla Supercharger Taipei - National Chengchi University CPBAE",
+      "AddressLine1": "187 Jinhua Street",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "10642",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.0303766,
+      "Longitude": 121.5275292,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 3.826649033997462,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569591,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 8,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 8,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:33:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "https://www.u-power.com.tw/",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 3679,
+      "Title": "U-Power"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2023-06-07T11:36:00Z",
+    "ID": 266493,
+    "UUID": "6B92E36E-16A5-4E78-92FD-78E44144C68B",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 3679,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 266877,
+      "Title": "U-POWER內湖行忠站",
+      "AddressLine1": "114台北市內湖區行忠路69號",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": null,
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.066146460971908,
+      "Longitude": 121.5785304146932,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 3.9158745574822977,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 453596,
+        "ConnectionTypeID": 32,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration EE",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 32,
+          "Title": "CCS (Type 1)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 360,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 2,
+        "Comments": null
+      },
+      {
+        "ID": 453597,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 360,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 2,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 4,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2023-06-07T11:36:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2023-06-05T03:24:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302923,
+    "UUID": "284A1C75-BE98-45C5-86B8-7FAEA3D097A7",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303310,
+      "Title": "Tesla Supercharger Taipei - Neihu Service Centre",
+      "AddressLine1": "No. 6, Lane 11 Section 6 Minquan East Road, Neihu District",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "11494",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.067136,
+      "Longitude": 121.57515,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 3.9207630066958,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569540,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 115,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 10,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 10,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:24:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": null,
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": null,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": null,
+      "ID": 1,
+      "Title": "(Unknown Operator)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2021-11-22T16:20:00Z",
+    "ID": 190119,
+    "UUID": "BF07FA07-43FD-4610-9EC2-4BD531DA92E9",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 1,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": "每度12元",
+    "AddressInfo": {
+      "ID": 190478,
+      "Title": "Audi 內湖展示中心",
+      "AddressLine1": "114台北市內湖區新湖三路288號",
+      "AddressLine2": null,
+      "Town": "台北",
+      "StateOrProvince": null,
+      "Postcode": null,
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.066721196847098,
+      "Longitude": 121.58253858463956,
+      "ContactTelephone1": "02 2793 9191",
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 4.128001455014268,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 308059,
+        "ConnectionTypeID": 32,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration EE",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 32,
+          "Title": "CCS (Type 1)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 180,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 1,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 1,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2021-11-22T16:20:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2021-11-22T01:31:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": null,
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": null,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": null,
+      "ID": 1,
+      "Title": "(Unknown Operator)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-03-08T15:51:00Z",
+    "ID": 267503,
+    "UUID": "0F7099C1-46CF-4F7A-93E6-B4B84017896E",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 1,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": "每度 8.8元",
+    "AddressInfo": {
+      "ID": 267887,
+      "Title": "MR.CHARGER 恰吉先生",
+      "AddressLine1": "安美街123號",
+      "AddressLine2": "內湖區",
+      "Town": "台北市",
+      "StateOrProvince": null,
+      "Postcode": "114",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.0599869467152,
+      "Longitude": 121.59874394106339,
+      "ContactTelephone1": "+886 938 402 305",
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": "直接進出充電車位",
+      "RelatedURL": "https://mrcharger.com.tw",
+      "Distance": 4.504210454027819,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 455768,
+        "ConnectionTypeID": 32,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration EE",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 32,
+          "Title": "CCS (Type 1)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 120,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 1,
+        "Comments": null
+      },
+      {
+        "ID": 455769,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 120,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 1,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 1,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-03-08T15:51:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2023-06-27T08:21:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": null,
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": null,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": null,
+      "ID": 1,
+      "Title": "(Unknown Operator)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2021-11-12T14:12:00Z",
+    "ID": 189952,
+    "UUID": "81B3CF22-E456-4D1D-9525-5F9BD007DAB4",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 1,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 190311,
+      "Title": "台隆賓士原廠精選中古車 濱江展示中心",
+      "AddressLine1": "10472台北市中山區濱江街277號",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": null,
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.072851589786296,
+      "Longitude": 121.54304384278907,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 4.970706782532562,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 307665,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 120,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 1,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 1,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2021-11-12T14:12:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2021-11-11T01:29:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": null,
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": null,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": null,
+      "ID": 1,
+      "Title": "(Unknown Operator)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2021-11-22T16:19:00Z",
+    "ID": 190121,
+    "UUID": "4528149C-61B6-442E-AB63-C63119E35A6B",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 1,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": "每度12元",
+    "AddressInfo": {
+      "ID": 190480,
+      "Title": "Audi 濱江展示中心",
+      "AddressLine1": "10491台北市中山區濱江街209號",
+      "AddressLine2": null,
+      "Town": "台北市",
+      "StateOrProvince": null,
+      "Postcode": null,
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.072780005116087,
+      "Longitude": 121.54001226782975,
+      "ContactTelephone1": "02 2516 6158",
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 5.109417519162506,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 308061,
+        "ConnectionTypeID": 32,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration EE",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 32,
+          "Title": "CCS (Type 1)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 180,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 1,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 1,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2021-11-22T16:19:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2021-11-22T02:19:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302910,
+    "UUID": "500C272A-F106-4E0A-B064-9DF6055E420C",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303297,
+      "Title": "Tesla Supercharger Taipei - Dazhi Noke",
+      "AddressLine1": "No. 200 B2 Lequn 3rd Rd",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "104",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.082608,
+      "Longitude": 121.557316,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 5.575937270402621,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569525,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 6,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 6,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:18:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302973,
+    "UUID": "15A0B639-C424-4543-ADCE-85B12EE8F013",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303360,
+      "Title": "Tesla Supercharger Taipei - Nangang",
+      "AddressLine1": "No.2 B1F Jingmao 2nd Road, Nangang District",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "10642",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.056849,
+      "Longitude": 121.614709,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 5.630935444747128,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569590,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 6,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 6,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:33:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.noodoe.com/ev",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 3346,
+      "Title": "Noodoe EV"
+    },
+    "UsageType": {
+      "IsPayAtLocation": null,
+      "IsMembershipRequired": null,
+      "IsAccessKeyRequired": null,
+      "ID": 1,
+      "Title": "Public"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": [
+      {
+        "ID": 18007,
+        "ChargePointID": 125135,
+        "ItemURL": "https://media.openchargemap.io/images/TW/OCM125135/OCM-125135.orig.2019041103361669.jpg",
+        "ItemThumbnailURL": "https://media.openchargemap.io/images/TW/OCM125135/OCM-125135.thmb.2019041103361669.jpg",
+        "Comment": "",
+        "IsEnabled": true,
+        "IsVideo": false,
+        "IsFeaturedItem": false,
+        "IsExternalResource": false,
+        "MetadataValue": null,
+        "User": {
+          "ID": 20469,
+          "IdentityProvider": null,
+          "Identifier": null,
+          "CurrentSessionToken": null,
+          "Username": "Calvin Lu",
+          "Profile": null,
+          "Location": null,
+          "WebsiteURL": null,
+          "ReputationPoints": 7,
+          "Permissions": null,
+          "PermissionsRequested": null,
+          "DateCreated": null,
+          "DateLastLogin": null,
+          "IsProfilePublic": null,
+          "IsEmergencyChargingProvider": null,
+          "IsPublicChargingProvider": null,
+          "Latitude": null,
+          "Longitude": null,
+          "EmailAddress": null,
+          "EmailHash": null,
+          "ProfileImageURL": "https://www.gravatar.com/avatar/6ab1c30e5756c8506a417be8fff2b0c7?s=80&d=robohash",
+          "IsCurrentSessionTokenValid": null,
+          "APIKey": null,
+          "SyncedSettings": null
+        },
+        "DateCreated": "2019-04-11T03:36:00Z"
+      }
+    ],
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2019-04-11T07:01:00Z",
+    "ID": 125135,
+    "UUID": "9F491787-5DA3-48C3-9D44-0ECF4BDDA7C7",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 3346,
+    "OperatorsReference": null,
+    "UsageTypeID": 1,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 125481,
+      "Title": "Taipei Nangang Exhibition Center, Hall 2",
+      "AddressLine1": "No. 2, Jingmao 2nd Rd",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "115",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.0598213519734,
+      "Longitude": 121.615793677439,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 5.887827748039852,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 175390,
+        "ConnectionTypeID": 1,
+        "ConnectionType": {
+          "FormalName": "SAE J1772-2009",
+          "IsDiscontinued": null,
+          "IsObsolete": null,
+          "ID": 1,
+          "Title": "Type 1 (J1772)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 2,
+        "Level": {
+          "Comments": "Over 2 kW, usually non-domestic socket type",
+          "IsFastChargeCapable": false,
+          "ID": 2,
+          "Title": "Level 2 : Medium (Over 2kW)"
+        },
+        "Amps": 32,
+        "Voltage": 220,
+        "PowerKW": 7,
+        "CurrentTypeID": 10,
+        "CurrentType": {
+          "Description": "Alternating Current - Single Phase",
+          "ID": 10,
+          "Title": "AC (Single-Phase)"
+        },
+        "Quantity": 5,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 5,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2019-04-11T07:01:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2019-04-11T03:36:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302942,
+    "UUID": "6AA1F8FB-990D-40BC-89CE-762B04356368",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303329,
+      "Title": "Tesla Supercharger New Taipei - Xindian",
+      "AddressLine1": "B2 No.213 Sec. 3, Beixin Road",
+      "AddressLine2": null,
+      "Town": "New Taipei",
+      "StateOrProvince": null,
+      "Postcode": "231632",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 24.985198,
+      "Longitude": 121.540048,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 5.897402361418543,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569559,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 72,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 4,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 4,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:27:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302978,
+    "UUID": "38E34ABE-DC85-43CD-A556-54B6FB57C296",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303365,
+      "Title": "Tesla Supercharger Taipei - Taipei Expo Park",
+      "AddressLine1": "1  Yumen Street",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "10452",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.06867,
+      "Longitude": 121.52126,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 5.958406551429601,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569595,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 115,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 6,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 6,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:34:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302971,
+    "UUID": "8B465D6A-FF86-432C-8410-C15D93A3D6A2",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303358,
+      "Title": "Tesla Supercharger Taipei - Guilin Carrefour",
+      "AddressLine1": "1st 7F Guilin Road",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "108412",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.0379979,
+      "Longitude": 121.5055462,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 6.055686804825683,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569588,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 6,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 6,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:32:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302976,
+    "UUID": "054CD1AD-EBD5-4891-AB5F-02F05241007A",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303363,
+      "Title": "Tesla Supercharger Taipei - Shilin Fulin",
+      "AddressLine1": "No. 465,  Section 5, Zhongshan North Road",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "111",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.0928557,
+      "Longitude": 121.5271526,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 7.690204333174628,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569593,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 6,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 6,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:33:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302945,
+    "UUID": "E8C3CDC9-AF0C-4EE9-802A-EFD64368E8AE",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303332,
+      "Title": "Tesla Supercharger New Taipei - Xizhi Asehome Design Center",
+      "AddressLine1": "No. 13 Ln. 751, Kangning Street, Xizhi District",
+      "AddressLine2": null,
+      "Town": "New Taipei",
+      "StateOrProvince": null,
+      "Postcode": "221017",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.074612,
+      "Longitude": 121.638074,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 8.660332830528379,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569562,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 4,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 4,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:27:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": null,
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": null,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": null,
+      "ID": 1,
+      "Title": "(Unknown Operator)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2021-11-12T14:14:00Z",
+    "ID": 189953,
+    "UUID": "58E7291D-E229-4D2F-95CF-1F62B6D81E03",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 1,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 190312,
+      "Title": "賓航賓士原廠精選中古車",
+      "AddressLine1": "235新北市中和區建八路63號",
+      "AddressLine2": null,
+      "Town": "新北",
+      "StateOrProvince": null,
+      "Postcode": null,
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 24.99947900912737,
+      "Longitude": 121.48729892342135,
+      "ContactTelephone1": "02 3234 9488",
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": "http://mercedes-benz-select.com.tw",
+      "Distance": 8.707813599524354,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 307666,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 120,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 1,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 1,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2021-11-12T14:14:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2021-11-11T01:41:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302970,
+    "UUID": "1473C260-A624-4844-83F5-15B58DD939DC",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303357,
+      "Title": "Tesla Supercharger Taipei - Dayeh Takashimaya",
+      "AddressLine1": "No. 55  Sec. 2, Zhongcheng Road",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "111",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.11134,
+      "Longitude": 121.53169,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 9.349278515385352,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569587,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 6,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 6,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:32:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302946,
+    "UUID": "C05B8C2E-EC77-456B-AF77-8A4330694256",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303333,
+      "Title": "Tesla Supercharger New Taipei - Zhonghe Global Mall",
+      "AddressLine1": "122 6F Section 3, Zhongshan Road",
+      "AddressLine2": "Zhonghe District",
+      "Town": "New Taipei",
+      "StateOrProvince": null,
+      "Postcode": "235008",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.008094,
+      "Longitude": 121.474834,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 9.53640975969887,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569563,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 72,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 8,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 8,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:28:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302939,
+    "UUID": "AAE0E8E3-3671-46A7-AA62-431E74CD363F",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303326,
+      "Title": "Tesla Supercharger New Taipei - Sanchong AMart",
+      "AddressLine1": "No. 45,  Lane 193, Zhongzheng North Road,",
+      "AddressLine2": null,
+      "Town": "New Taipei",
+      "StateOrProvince": null,
+      "Postcode": "24872",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.0715,
+      "Longitude": 121.476302,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 9.943895685017022,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569556,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 6,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 6,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:26:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302944,
+    "UUID": "6600B975-5FAA-4F05-9B0C-16CB4522D94B",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303331,
+      "Title": "Tesla Supercharger New Taipei - Xinzhuang Tesla Center",
+      "AddressLine1": "No. 37 Huacheng Road",
+      "AddressLine2": null,
+      "Town": "New Taipei",
+      "StateOrProvince": null,
+      "Postcode": "24213",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.0444707,
+      "Longitude": 121.4644698,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 10.247901258379212,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569561,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 72,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 4,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 4,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:27:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": null,
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": null,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": null,
+      "ID": 1,
+      "Title": "(Unknown Operator)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2021-11-22T16:20:00Z",
+    "ID": 190120,
+    "UUID": "F6EE18E3-3F7B-41A7-9D5E-AA850DE6B283",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 1,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": "每度12元",
+    "AddressInfo": {
+      "ID": 190479,
+      "Title": "Audi 新莊展示中心",
+      "AddressLine1": "242新北市新莊區中正路54號",
+      "AddressLine2": null,
+      "Town": "新北市",
+      "StateOrProvince": null,
+      "Postcode": null,
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.040387115197404,
+      "Longitude": 121.46189186402489,
+      "ContactTelephone1": "02 2998 8866",
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": "http://audi.com.tw",
+      "Distance": 10.460404802781873,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 308060,
+        "ConnectionTypeID": 32,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration EE",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 32,
+          "Title": "CCS (Type 1)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 180,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 1,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 1,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2021-11-22T16:20:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2021-11-22T02:13:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302943,
+    "UUID": "F0901684-C069-4C4C-9263-A379E00EB814",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303330,
+      "Title": "Tesla Supercharger New Taipei - Xinzhuang",
+      "AddressLine1": "Aly. 24 Ln. 155, Zhonghe Street",
+      "AddressLine2": null,
+      "Town": "New Taipei",
+      "StateOrProvince": null,
+      "Postcode": "242029",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.0511131,
+      "Longitude": 121.4463772,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 12.158608815437606,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569560,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 6,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 6,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:27:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302969,
+    "UUID": "1A499599-CD95-4433-8F02-A6FD00BD954E",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303356,
+      "Title": "Tesla Supercharger Taipei - Beitou Aloft",
+      "AddressLine1": "No. 1,  Lane 300, Daye Road, Beitou District,",
+      "AddressLine2": null,
+      "Town": "Taipei",
+      "StateOrProvince": null,
+      "Postcode": "112",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.128346,
+      "Longitude": 121.498382,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 12.5680897797594,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569586,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 72,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 4,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 4,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:32:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "http://www.teslamotors.com",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 23,
+      "Title": "Tesla (Tesla-only charging)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2024-09-02T01:49:00Z",
+    "ID": 302941,
+    "UUID": "E23D1307-DF25-4F7F-95D8-38420F28A344",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 23,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 303328,
+      "Title": "Tesla Supercharger New Taipei - Tucheng Asewemall",
+      "AddressLine1": "B3F, No.210 Section 2, Xuefu Road,",
+      "AddressLine2": "Qingshui",
+      "Town": "New Taipei",
+      "StateOrProvince": null,
+      "Postcode": "236030",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 24.979615,
+      "Longitude": 121.444553,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 13.547703159481637,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 569558,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 250,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 4,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 4,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2024-09-02T01:49:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2024-08-15T21:27:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": null,
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": null,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": null,
+      "ID": 1,
+      "Title": "(Unknown Operator)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2021-11-12T14:15:00Z",
+    "ID": 189954,
+    "UUID": "96A82EC1-9EB4-4D7B-AD37-174D6FD325E3",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 1,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 190313,
+      "Title": "中華賓士關渡服務廠",
+      "AddressLine1": "112台北市北投區大度路三段168號B2",
+      "AddressLine2": null,
+      "Town": "台北",
+      "StateOrProvince": null,
+      "Postcode": null,
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.123783352297437,
+      "Longitude": 121.46846017814369,
+      "ContactTelephone1": "02 2893 6226",
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": "http://cmi.mercedes-benz.com.tw",
+      "Distance": 14.043466401987503,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 307667,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 120,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 1,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 1,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2021-11-12T14:15:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2021-11-11T01:45:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": null,
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": null,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": null,
+      "ID": 1,
+      "Title": "(Unknown Operator)"
+    },
+    "UsageType": {
+      "IsPayAtLocation": null,
+      "IsMembershipRequired": null,
+      "IsAccessKeyRequired": null,
+      "ID": 1,
+      "Title": "Public"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": [
+      {
+        "ID": 17029,
+        "ChargePointID": 112845,
+        "ItemURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.orig.2018112201551947.png",
+        "ItemThumbnailURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.thmb.2018112201551947.png",
+        "Comment": "",
+        "IsEnabled": true,
+        "IsVideo": false,
+        "IsFeaturedItem": false,
+        "IsExternalResource": false,
+        "MetadataValue": null,
+        "User": {
+          "ID": 19389,
+          "IdentityProvider": null,
+          "Identifier": null,
+          "CurrentSessionToken": null,
+          "Username": "Revol",
+          "Profile": null,
+          "Location": null,
+          "WebsiteURL": null,
+          "ReputationPoints": 22,
+          "Permissions": null,
+          "PermissionsRequested": null,
+          "DateCreated": null,
+          "DateLastLogin": null,
+          "IsProfilePublic": null,
+          "IsEmergencyChargingProvider": null,
+          "IsPublicChargingProvider": null,
+          "Latitude": null,
+          "Longitude": null,
+          "EmailAddress": null,
+          "EmailHash": null,
+          "ProfileImageURL": "https://www.gravatar.com/avatar/acb92921cc9a8ecbcfec7ebe6fce8e38?s=80&d=robohash",
+          "IsCurrentSessionTokenValid": null,
+          "APIKey": null,
+          "SyncedSettings": null
+        },
+        "DateCreated": "2018-11-22T01:56:00Z"
+      },
+      {
+        "ID": 17030,
+        "ChargePointID": 112845,
+        "ItemURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.orig.2018112201553598.png",
+        "ItemThumbnailURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.thmb.2018112201553598.png",
+        "Comment": "",
+        "IsEnabled": true,
+        "IsVideo": false,
+        "IsFeaturedItem": false,
+        "IsExternalResource": false,
+        "MetadataValue": null,
+        "User": {
+          "ID": 19389,
+          "IdentityProvider": null,
+          "Identifier": null,
+          "CurrentSessionToken": null,
+          "Username": "Revol",
+          "Profile": null,
+          "Location": null,
+          "WebsiteURL": null,
+          "ReputationPoints": 22,
+          "Permissions": null,
+          "PermissionsRequested": null,
+          "DateCreated": null,
+          "DateLastLogin": null,
+          "IsProfilePublic": null,
+          "IsEmergencyChargingProvider": null,
+          "IsPublicChargingProvider": null,
+          "Latitude": null,
+          "Longitude": null,
+          "EmailAddress": null,
+          "EmailHash": null,
+          "ProfileImageURL": "https://www.gravatar.com/avatar/acb92921cc9a8ecbcfec7ebe6fce8e38?s=80&d=robohash",
+          "IsCurrentSessionTokenValid": null,
+          "APIKey": null,
+          "SyncedSettings": null
+        },
+        "DateCreated": "2018-11-22T01:56:00Z"
+      },
+      {
+        "ID": 17031,
+        "ChargePointID": 112845,
+        "ItemURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.orig.2018112201560111.png",
+        "ItemThumbnailURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.thmb.2018112201560111.png",
+        "Comment": "",
+        "IsEnabled": true,
+        "IsVideo": false,
+        "IsFeaturedItem": false,
+        "IsExternalResource": false,
+        "MetadataValue": null,
+        "User": {
+          "ID": 19389,
+          "IdentityProvider": null,
+          "Identifier": null,
+          "CurrentSessionToken": null,
+          "Username": "Revol",
+          "Profile": null,
+          "Location": null,
+          "WebsiteURL": null,
+          "ReputationPoints": 22,
+          "Permissions": null,
+          "PermissionsRequested": null,
+          "DateCreated": null,
+          "DateLastLogin": null,
+          "IsProfilePublic": null,
+          "IsEmergencyChargingProvider": null,
+          "IsPublicChargingProvider": null,
+          "Latitude": null,
+          "Longitude": null,
+          "EmailAddress": null,
+          "EmailHash": null,
+          "ProfileImageURL": "https://www.gravatar.com/avatar/acb92921cc9a8ecbcfec7ebe6fce8e38?s=80&d=robohash",
+          "IsCurrentSessionTokenValid": null,
+          "APIKey": null,
+          "SyncedSettings": null
+        },
+        "DateCreated": "2018-11-22T01:56:00Z"
+      },
+      {
+        "ID": 17032,
+        "ChargePointID": 112845,
+        "ItemURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.orig.2018112201560932.png",
+        "ItemThumbnailURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.thmb.2018112201560932.png",
+        "Comment": "",
+        "IsEnabled": true,
+        "IsVideo": false,
+        "IsFeaturedItem": false,
+        "IsExternalResource": false,
+        "MetadataValue": null,
+        "User": {
+          "ID": 19389,
+          "IdentityProvider": null,
+          "Identifier": null,
+          "CurrentSessionToken": null,
+          "Username": "Revol",
+          "Profile": null,
+          "Location": null,
+          "WebsiteURL": null,
+          "ReputationPoints": 22,
+          "Permissions": null,
+          "PermissionsRequested": null,
+          "DateCreated": null,
+          "DateLastLogin": null,
+          "IsProfilePublic": null,
+          "IsEmergencyChargingProvider": null,
+          "IsPublicChargingProvider": null,
+          "Latitude": null,
+          "Longitude": null,
+          "EmailAddress": null,
+          "EmailHash": null,
+          "ProfileImageURL": "https://www.gravatar.com/avatar/acb92921cc9a8ecbcfec7ebe6fce8e38?s=80&d=robohash",
+          "IsCurrentSessionTokenValid": null,
+          "APIKey": null,
+          "SyncedSettings": null
+        },
+        "DateCreated": "2018-11-22T01:56:00Z"
+      },
+      {
+        "ID": 17025,
+        "ChargePointID": 112845,
+        "ItemURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.orig.2018112106273026.jpg",
+        "ItemThumbnailURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.thmb.2018112106273026.jpg",
+        "Comment": "",
+        "IsEnabled": true,
+        "IsVideo": false,
+        "IsFeaturedItem": false,
+        "IsExternalResource": false,
+        "MetadataValue": null,
+        "User": {
+          "ID": 19389,
+          "IdentityProvider": null,
+          "Identifier": null,
+          "CurrentSessionToken": null,
+          "Username": "Revol",
+          "Profile": null,
+          "Location": null,
+          "WebsiteURL": null,
+          "ReputationPoints": 22,
+          "Permissions": null,
+          "PermissionsRequested": null,
+          "DateCreated": null,
+          "DateLastLogin": null,
+          "IsProfilePublic": null,
+          "IsEmergencyChargingProvider": null,
+          "IsPublicChargingProvider": null,
+          "Latitude": null,
+          "Longitude": null,
+          "EmailAddress": null,
+          "EmailHash": null,
+          "ProfileImageURL": "https://www.gravatar.com/avatar/acb92921cc9a8ecbcfec7ebe6fce8e38?s=80&d=robohash",
+          "IsCurrentSessionTokenValid": null,
+          "APIKey": null,
+          "SyncedSettings": null
+        },
+        "DateCreated": "2018-11-21T06:28:00Z"
+      },
+      {
+        "ID": 17026,
+        "ChargePointID": 112845,
+        "ItemURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.orig.2018112106281879.jpg",
+        "ItemThumbnailURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.thmb.2018112106281879.jpg",
+        "Comment": "",
+        "IsEnabled": true,
+        "IsVideo": false,
+        "IsFeaturedItem": false,
+        "IsExternalResource": false,
+        "MetadataValue": null,
+        "User": {
+          "ID": 19389,
+          "IdentityProvider": null,
+          "Identifier": null,
+          "CurrentSessionToken": null,
+          "Username": "Revol",
+          "Profile": null,
+          "Location": null,
+          "WebsiteURL": null,
+          "ReputationPoints": 22,
+          "Permissions": null,
+          "PermissionsRequested": null,
+          "DateCreated": null,
+          "DateLastLogin": null,
+          "IsProfilePublic": null,
+          "IsEmergencyChargingProvider": null,
+          "IsPublicChargingProvider": null,
+          "Latitude": null,
+          "Longitude": null,
+          "EmailAddress": null,
+          "EmailHash": null,
+          "ProfileImageURL": "https://www.gravatar.com/avatar/acb92921cc9a8ecbcfec7ebe6fce8e38?s=80&d=robohash",
+          "IsCurrentSessionTokenValid": null,
+          "APIKey": null,
+          "SyncedSettings": null
+        },
+        "DateCreated": "2018-11-21T06:28:00Z"
+      },
+      {
+        "ID": 17024,
+        "ChargePointID": 112845,
+        "ItemURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.orig.2018112106255060.jpg",
+        "ItemThumbnailURL": "https://media.openchargemap.io/images/TW/OCM112845/OCM-112845.thmb.2018112106255060.jpg",
+        "Comment": "The first customer using EV charger in the Hotel",
+        "IsEnabled": true,
+        "IsVideo": false,
+        "IsFeaturedItem": false,
+        "IsExternalResource": false,
+        "MetadataValue": null,
+        "User": {
+          "ID": 19389,
+          "IdentityProvider": null,
+          "Identifier": null,
+          "CurrentSessionToken": null,
+          "Username": "Revol",
+          "Profile": null,
+          "Location": null,
+          "WebsiteURL": null,
+          "ReputationPoints": 22,
+          "Permissions": null,
+          "PermissionsRequested": null,
+          "DateCreated": null,
+          "DateLastLogin": null,
+          "IsProfilePublic": null,
+          "IsEmergencyChargingProvider": null,
+          "IsPublicChargingProvider": null,
+          "Latitude": null,
+          "Longitude": null,
+          "EmailAddress": null,
+          "EmailHash": null,
+          "ProfileImageURL": "https://www.gravatar.com/avatar/acb92921cc9a8ecbcfec7ebe6fce8e38?s=80&d=robohash",
+          "IsCurrentSessionTokenValid": null,
+          "APIKey": null,
+          "SyncedSettings": null
+        },
+        "DateCreated": "2018-11-21T06:26:00Z"
+      }
+    ],
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2019-04-11T07:12:00Z",
+    "ID": 112845,
+    "UUID": "031590F3-A199-40B2-8C80-32AAA398907B",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 1,
+    "OperatorsReference": null,
+    "UsageTypeID": 1,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 113191,
+      "Title": "天籟溫泉會館",
+      "AddressLine1": "名流路",
+      "AddressLine2": "秀峰坪",
+      "Town": null,
+      "StateOrProvince": "新北市",
+      "Postcode": "20842",
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.2019254204311,
+      "Longitude": 121.595476076991,
+      "ContactTelephone1": "+886-2-2408-0000",
+      "ContactTelephone2": null,
+      "ContactEmail": "service@tienlai.com.tw",
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 19.026157791500175,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 158931,
+        "ConnectionTypeID": 1,
+        "ConnectionType": {
+          "FormalName": "SAE J1772-2009",
+          "IsDiscontinued": null,
+          "IsObsolete": null,
+          "ID": 1,
+          "Title": "Type 1 (J1772)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 2,
+        "Level": {
+          "Comments": "Over 2 kW, usually non-domestic socket type",
+          "IsFastChargeCapable": false,
+          "ID": 2,
+          "Title": "Level 2 : Medium (Over 2kW)"
+        },
+        "Amps": 32,
+        "Voltage": 220,
+        "PowerKW": 7,
+        "CurrentTypeID": 10,
+        "CurrentType": {
+          "Description": "Alternating Current - Single Phase",
+          "ID": 10,
+          "Title": "AC (Single-Phase)"
+        },
+        "Quantity": 1,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 1,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2019-04-11T07:12:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2018-11-21T06:16:00Z",
+    "SubmissionStatusTypeID": 200
+  },
+  {
+    "DataProvider": {
+      "WebsiteURL": "http://openchargemap.org",
+      "Comments": null,
+      "DataProviderStatusType": {
+        "IsProviderEnabled": true,
+        "ID": 1,
+        "Title": "Manual Data Entry"
+      },
+      "IsRestrictedEdit": false,
+      "IsOpenDataLicensed": true,
+      "IsApprovedImport": true,
+      "License": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "DateLastImported": null,
+      "ID": 1,
+      "Title": "Open Charge Map Contributors"
+    },
+    "OperatorInfo": {
+      "WebsiteURL": "https://www.u-power.com.tw/",
+      "Comments": null,
+      "PhonePrimaryContact": null,
+      "PhoneSecondaryContact": null,
+      "IsPrivateIndividual": false,
+      "AddressInfo": null,
+      "BookingURL": null,
+      "ContactEmail": null,
+      "FaultReportEmail": null,
+      "IsRestrictedEdit": false,
+      "ID": 3679,
+      "Title": "U-Power"
+    },
+    "UsageType": {
+      "IsPayAtLocation": false,
+      "IsMembershipRequired": true,
+      "IsAccessKeyRequired": true,
+      "ID": 4,
+      "Title": "Public - Membership Required"
+    },
+    "StatusType": {
+      "IsOperational": true,
+      "IsUserSelectable": true,
+      "ID": 50,
+      "Title": "Operational"
+    },
+    "SubmissionStatus": {
+      "IsLive": true,
+      "ID": 200,
+      "Title": "Submission Published"
+    },
+    "UserComments": null,
+    "PercentageSimilarity": null,
+    "MediaItems": null,
+    "IsRecentlyVerified": false,
+    "DateLastVerified": "2023-06-11T17:38:00Z",
+    "ID": 266564,
+    "UUID": "FD2AA960-4D9F-43F6-B22B-B140A83E7984",
+    "ParentChargePointID": null,
+    "DataProviderID": 1,
+    "DataProvidersReference": null,
+    "OperatorID": 3679,
+    "OperatorsReference": null,
+    "UsageTypeID": 4,
+    "UsageCost": null,
+    "AddressInfo": {
+      "ID": 266948,
+      "Title": "U-POWER新北林口站",
+      "AddressLine1": "244新北市林口區文化一路二段8號",
+      "AddressLine2": null,
+      "Town": "New Taipei City",
+      "StateOrProvince": null,
+      "Postcode": null,
+      "CountryID": 219,
+      "Country": {
+        "ISOCode": "TW",
+        "ContinentCode": "AS",
+        "ID": 219,
+        "Title": "Taiwan, Province Of China"
+      },
+      "Latitude": 25.076486507313405,
+      "Longitude": 121.38041289751823,
+      "ContactTelephone1": null,
+      "ContactTelephone2": null,
+      "ContactEmail": null,
+      "AccessComments": null,
+      "RelatedURL": null,
+      "Distance": 19.251270688793046,
+      "DistanceUnit": 1
+    },
+    "Connections": [
+      {
+        "ID": 453748,
+        "ConnectionTypeID": 32,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration EE",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 32,
+          "Title": "CCS (Type 1)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 360,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 2,
+        "Comments": null
+      },
+      {
+        "ID": 453749,
+        "ConnectionTypeID": 33,
+        "ConnectionType": {
+          "FormalName": "IEC 62196-3 Configuration FF",
+          "IsDiscontinued": false,
+          "IsObsolete": false,
+          "ID": 33,
+          "Title": "CCS (Type 2)"
+        },
+        "Reference": null,
+        "StatusTypeID": 50,
+        "StatusType": {
+          "IsOperational": true,
+          "IsUserSelectable": true,
+          "ID": 50,
+          "Title": "Operational"
+        },
+        "LevelID": 3,
+        "Level": {
+          "Comments": "40KW and Higher",
+          "IsFastChargeCapable": true,
+          "ID": 3,
+          "Title": "Level 3:  High (Over 40kW)"
+        },
+        "Amps": null,
+        "Voltage": null,
+        "PowerKW": 360,
+        "CurrentTypeID": 30,
+        "CurrentType": {
+          "Description": "Direct Current",
+          "ID": 30,
+          "Title": "DC"
+        },
+        "Quantity": 2,
+        "Comments": null
+      }
+    ],
+    "NumberOfPoints": 4,
+    "GeneralComments": null,
+    "DatePlanned": null,
+    "DateLastConfirmed": null,
+    "StatusTypeID": 50,
+    "DateLastStatusUpdate": "2023-06-11T17:38:00Z",
+    "MetadataValues": null,
+    "DataQualityLevel": 1,
+    "DateCreated": "2023-06-07T06:44:00Z",
+    "SubmissionStatusTypeID": 200
+  }
+]
