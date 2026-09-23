@@ -99,7 +99,14 @@ def anti_choose_node_bybenefit(my_node_list, my_plan):
     my_occupied_list = [node for node in my_node_list if node[0] in plan_list]
     if not my_occupied_list:
         return None
-    upbound_list = [node[1]["upper bound"] for node in my_occupied_list]
+    upbound_list = []
+    for node in my_occupied_list:
+        if "upper bound" not in node[1]:
+            nearby_nodes = sum(ef.haversine(node, other_node) <= ef.RADIUS_MAX
+                               for other_node in my_node_list)
+            delta_benefit = nearby_nodes * (1 - 0.1 * node[1]["private CS"]) / 100
+            node[1]["upper bound"] = ef.my_lambda * delta_benefit / node[1]["estate price"]
+        upbound_list.append(node[1]["upper bound"])
     pos_minindex = upbound_list.index(min(upbound_list))
     remove_node = my_occupied_list[pos_minindex]
     plan_index = plan_list.index(remove_node[0])
@@ -138,6 +145,12 @@ class Plan:
     def __init__(self, my_node_list, my_node_dict, my_cost_dict, my_plan_file):
         with (open(my_plan_file, "rb")) as f:
             self.plan = pickle.load(f)
+        node_by_id = {my_node[0]: my_node for my_node in my_node_list}
+        for my_station in self.plan:
+            station_id = my_station[0][0]
+            if station_id not in node_by_id:
+                raise ValueError("Station node {} is missing from the node list".format(station_id))
+            my_station[0] = node_by_id[station_id]
         self.plan = [ef.s_dictionnary(my_station, my_node_list) for my_station in self.plan]
         my_node_list, _, _ = ef.station_seeking(self.plan, my_node_list, my_node_dict, my_cost_dict)
         # update the dictionnary

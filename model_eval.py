@@ -8,16 +8,16 @@ import env_plus as ev
 Generate a charging plan based on the model.
 """
 # Instantiate the env
-location = "Toy_Example"
+location = "Taipei"
 
 repository_root = os.path.dirname(os.path.abspath(__file__))
 graph_dir = os.path.join(repository_root, "Graph", location)
 graph_file = os.path.join(graph_dir, location + ".graphml")
-node_file = os.path.join(graph_dir, "nodes_extended_" + location + ".txt")
+node_file = os.path.join(graph_dir, "node_list_" + location + ".txt") # nodes_extended_
 plan_file = os.path.join(graph_dir, "existingplan_" + location + ".pkl")
 
 env = ev.StationPlacement(graph_file, node_file, plan_file)
-log_dir = os.path.join(repository_root, "tmp_Toy_Example")
+log_dir = os.path.join(repository_root, "tmp_Taipei")
 os.makedirs(log_dir, exist_ok=True)
 
 """
@@ -27,7 +27,7 @@ print("Evaluation for best model")
 env = Monitor(env, log_dir)  # new environment for evaluation
 
 model = DQN.load(
-    os.path.join(log_dir, "best_model_" + location + "_2000.zip"),
+    os.path.join(log_dir, "best_model_" + location + "_400.zip"),
     device="cpu",
 )
 

@@ -1,16 +1,24 @@
 import osmnx as ox
+import networkx as nx
 import numpy as np
-from math import sin, cos, sqrt, atan2, radians
 
 """
 Utility model and help functions.
 """
 
+_OSM_GRAPH = None
+_OSM_NODE_CACHE = {}
+_ROAD_DISTANCE_CACHE = {}
+
 def prepare_graph(my_graph_file, my_node_file):
     """
     loads graph and nodes prepared in load_graph.py
     """
+    global _OSM_GRAPH, _OSM_NODE_CACHE, _ROAD_DISTANCE_CACHE
     my_graph = ox.load_graphml(my_graph_file)
+    _OSM_GRAPH = my_graph
+    _OSM_NODE_CACHE = {}
+    _ROAD_DISTANCE_CACHE = {}
     with open(my_node_file, "r") as file:
         my_node_list = eval(file.readline())
     return my_graph, my_node_list
@@ -95,19 +103,39 @@ def influence_radius(my_station):
 
 def haversine(s_pos, my_node):
     """
-    yields the approximate distance of two GPS points, middle computational cost
+    yields the shortest drivable-road distance between two GPS points in meters
     """
-    lon1, lat1 = s_pos[1]['x'], s_pos[1]['y']
-    R_earth = 6372800  # approximate radius of earth. [R_earth] = m
-    lon2, lat2 = my_node[1]['x'], my_node[1]['y']
-    dlon = radians(lon2 - lon1)
-    dlat = radians(lat2 - lat1)
-    a = sin(dlat / 2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) ** 2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-    distance = R_earth * c  # [distance] = m
+    if _OSM_GRAPH is None:
+        raise RuntimeError("An OSM graph must be loaded with prepare_graph before calculating distances")
+
+    start = _nearest_osm_node(s_pos)
+    end = _nearest_osm_node(my_node)
+    cache_key = (start, end)
+    if cache_key in _ROAD_DISTANCE_CACHE:
+        return _ROAD_DISTANCE_CACHE[cache_key]
+
+    try:
+        distance = nx.shortest_path_length(_OSM_GRAPH, start, end, weight="length")
+    except nx.NetworkXNoPath as error:
+        raise ValueError("No drivable OSM route exists between the two points") from error
+
+    distance = float(distance)  # [distance] = m
+    _ROAD_DISTANCE_CACHE[cache_key] = distance
     if distance < 0.1:  # to avoid ZeroDivisionError
         distance = 0.1
     return distance
+
+
+def _nearest_osm_node(position):
+    """Map a PCRL node/station position to its nearest node in the OSM graph."""
+    node_id, attributes = position
+    if node_id not in _OSM_NODE_CACHE:
+        _OSM_NODE_CACHE[node_id] = ox.distance.nearest_nodes(
+            _OSM_GRAPH,
+            X=float(attributes["x"]),
+            Y=float(attributes["y"]),
+        )
+    return _OSM_NODE_CACHE[node_id]
 
 
 def nodes_covered(my_station, my_node_list):

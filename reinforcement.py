@@ -75,15 +75,15 @@ if __name__ == '__main__':
     np.random.seed(seed)
     random.seed(seed)
     # Instantiate the env
-    location = "Toy_Example"  # take a location of your choice
+    location = "Taipei"  # take a location of your choice
     repository_root = os.path.dirname(os.path.abspath(__file__))
     graph_dir = os.path.join(repository_root, "Graph", location)
     graph_file = os.path.join(graph_dir, location + ".graphml")
-    node_file = os.path.join(graph_dir, "nodes_extended_" + location + ".txt")
+    node_file = os.path.join(graph_dir, "node_list_" + location + ".txt") # nodes_extended_
     plan_file = os.path.join(graph_dir, "existingplan_" + location + ".pkl")
 
     env = ev.StationPlacement(graph_file, node_file, plan_file)
-    log_dir = os.path.join(repository_root, "tmp_Toy_Example")
+    log_dir = os.path.join(repository_root, "tmp_Taipei")
     modelname = "best_model_" + location + "_"
     os.makedirs(log_dir, exist_ok=True)
 

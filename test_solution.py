@@ -67,6 +67,13 @@ def test(my_plan, my_node_list, my_basic_cost, my_norm_benefit, my_norm_charging
 def prepare_existing_plan(my_plan, my_node_list):
     my_cost_dict = {}
     my_node_dict = {}
+    node_by_id = {my_node[0]: my_node for my_node in my_node_list}
+    for my_station in my_plan:
+        station_id = my_station[0][0]
+        if station_id not in node_by_id:
+            raise ValueError("Station node {} is missing from the node list".format(station_id))
+        my_station[0] = node_by_id[station_id]
+
     for my_node in my_node_list:
         my_node_dict[my_node[0]] = {}  # prepare node_dict
         my_node[1]["charging station"] = None
@@ -94,14 +101,14 @@ def perform_test(my_node_file, my_basic_cost, my_result_file, my_norm_benefit, m
 
 
 if __name__ == '__main__':
-    location = "Toy_Example"
+    location = "Taipei"
 
     graph_file = "Graph/" + location + "/" + location + ".graphml"
     graph = ox.load_graphml(graph_file)
     """
     Test existing charging stations.
     """
-    node_file = "Graph/" + location + "/nodes_extended_" + location + ".txt"
+    node_file = "Graph/" + location + "/node_list_" + location + ".txt"
     with open(node_file, "r") as file:
         node_list = eval(file.readline())
     with (open("Graph/" + location + "/existingplan_" + location + ".pkl", "rb")) as f:
