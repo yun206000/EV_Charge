@@ -1,0 +1,128 @@
+Using cpu device
+Wrapping the env in a DummyVecEnv.
+Num timesteps: 800
+Best mean reward: -inf - Last mean reward per episode: 7.02
+New best mean reward: 7.02
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_800
+Num timesteps: 1200
+Best mean reward: 7.02 - Last mean reward per episode: 7.02
+Num timesteps: 1600
+Best mean reward: 7.02 - Last mean reward per episode: 7.10
+New best mean reward: 7.10
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_1600
+Num timesteps: 2000
+Best mean reward: 7.10 - Last mean reward per episode: 7.18
+New best mean reward: 7.18
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_2000
+Num timesteps: 2400
+Best mean reward: 7.18 - Last mean reward per episode: 7.24
+New best mean reward: 7.24
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_2400
+Num timesteps: 2800
+Best mean reward: 7.24 - Last mean reward per episode: 7.24
+Num timesteps: 3200
+Best mean reward: 7.24 - Last mean reward per episode: 7.28
+New best mean reward: 7.28
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_3200
+Num timesteps: 3600
+Best mean reward: 7.28 - Last mean reward per episode: 7.32
+New best mean reward: 7.32
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_3600
+Num timesteps: 4000
+Best mean reward: 7.32 - Last mean reward per episode: 7.32
+Num timesteps: 4400
+Best mean reward: 7.32 - Last mean reward per episode: 7.46
+New best mean reward: 7.46
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_4400
+Num timesteps: 4800
+Best mean reward: 7.46 - Last mean reward per episode: 7.61
+New best mean reward: 7.61
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_4800
+Num timesteps: 5200
+Best mean reward: 7.61 - Last mean reward per episode: 7.61
+Num timesteps: 5600
+Best mean reward: 7.61 - Last mean reward per episode: 7.64
+New best mean reward: 7.64
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_5600
+Num timesteps: 6000
+Best mean reward: 7.64 - Last mean reward per episode: 7.69
+New best mean reward: 7.69
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_6000
+Num timesteps: 6400
+Best mean reward: 7.69 - Last mean reward per episode: 7.69
+Num timesteps: 6800
+Best mean reward: 7.69 - Last mean reward per episode: 7.69
+New best mean reward: 7.69
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_6800
+Num timesteps: 7200
+Best mean reward: 7.69 - Last mean reward per episode: 7.75
+New best mean reward: 7.75
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_7200
+Num timesteps: 7600
+Best mean reward: 7.75 - Last mean reward per episode: 7.79
+New best mean reward: 7.79
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_7600
+Num timesteps: 8000
+Best mean reward: 7.79 - Last mean reward per episode: 7.79
+Num timesteps: 8400
+Best mean reward: 7.79 - Last mean reward per episode: 7.77
+Num timesteps: 8800
+Best mean reward: 7.79 - Last mean reward per episode: 7.72
+Num timesteps: 9200
+Best mean reward: 7.79 - Last mean reward per episode: 7.72
+Num timesteps: 9600
+Best mean reward: 7.79 - Last mean reward per episode: 7.56
+Num timesteps: 10000
+Best mean reward: 7.79 - Last mean reward per episode: 7.61
+Num timesteps: 10400
+Best mean reward: 7.79 - Last mean reward per episode: 7.61
+Num timesteps: 10800
+Best mean reward: 7.79 - Last mean reward per episode: 7.67
+Num timesteps: 11200
+Best mean reward: 7.79 - Last mean reward per episode: 7.79
+New best mean reward: 7.79
+Saving new best model to /home/angel030880/test/PCRL/tmp_Tainan/best_model_Tainan_11200
+Num timesteps: 11600
+Best mean reward: 7.79 - Last mean reward per episode: 7.79
+Num timesteps: 12000
+Best mean reward: 7.79 - Last mean reward per episode: 7.77
+Num timesteps: 12400
+Best mean reward: 7.79 - Last mean reward per episode: 7.77
+Num timesteps: 12800
+Best mean reward: 7.79 - Last mean reward per episode: 7.70
+Num timesteps: 13200
+Best mean reward: 7.79 - Last mean reward per episode: 7.63
+Num timesteps: 13600
+Best mean reward: 7.79 - Last mean reward per episode: 7.63
+Num timesteps: 14000
+Best mean reward: 7.79 - Last mean reward per episode: 7.57
+Num timesteps: 14400
+Best mean reward: 7.79 - Last mean reward per episode: 7.54
+Num timesteps: 14800
+Best mean reward: 7.79 - Last mean reward per episode: 7.51
+Num timesteps: 15200
+Best mean reward: 7.79 - Last mean reward per episode: 7.51
+Num timesteps: 15600
+Best mean reward: 7.79 - Last mean reward per episode: 7.51
+Num timesteps: 16000
+Best mean reward: 7.79 - Last mean reward per episode: 7.59
+Num timesteps: 16400
+Best mean reward: 7.79 - Last mean reward per episode: 7.59
+Num timesteps: 16800
+Best mean reward: 7.79 - Last mean reward per episode: 7.61
+Num timesteps: 17200
+Best mean reward: 7.79 - Last mean reward per episode: 7.63
+Num timesteps: 17600
+Best mean reward: 7.79 - Last mean reward per episode: 7.48
+Num timesteps: 18000
+Best mean reward: 7.79 - Last mean reward per episode: 7.48
+Num timesteps: 18400
+Best mean reward: 7.79 - Last mean reward per episode: 7.40
+Num timesteps: 18800
+Best mean reward: 7.79 - Last mean reward per episode: 7.40
+Num timesteps: 19200
+Best mean reward: 7.79 - Last mean reward per episode: 7.42
+Num timesteps: 19600
+Best mean reward: 7.79 - Last mean reward per episode: 7.47
+Num timesteps: 20000
+Best mean reward: 7.79 - Last mean reward per episode: 7.58

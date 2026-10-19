@@ -5,8 +5,13 @@ import argparse
 import requests
 
 """
-Download charging station data from Open Charge Map (OCM) for a given location, using given latitude and longitude.
-The selected area is defined by a radius in kilometers.
+Download charging station data from Open Charge Map (OCM) for a given location.
+
+Two ways to select the area:
+    1. --latitude / --longitude / --distance : a circle around a center point.
+    2. --place : the same OSM place query used in build_osm_graph.py.
+       The bounding box of the place polygon is sent to OCM, and the result is
+       then filtered by the polygon itself, so the OCM area matches the OSM graph.
 """
 
 
@@ -15,12 +20,13 @@ OCM_API_URL = "https://api.openchargemap.io/v3/poi/"
 
 def fetch_ocm(
     api_key,
-    latitude,
-    longitude,
+    latitude=None,
+    longitude=None,
     distance_km=20,
     max_results=100,
     country_code="TW",
     status_type_id=50,
+    bounding_box=None,
     verbose=True,
 ):
     """
@@ -53,6 +59,10 @@ def fetch_ocm(
         Set to None if you do not want to filter
         by operational status.
 
+    bounding_box : tuple or None
+        (south, west, north, east). If given, it is used
+        instead of latitude / longitude / distance_km.
+
     Returns
     -------
     stations : list
@@ -65,12 +75,17 @@ def fetch_ocm(
 
     params = {
         "key": api_key,
-        "latitude": latitude,
-        "longitude": longitude,
-        "distance": distance_km,
-        "distanceunit": "KM",
         "maxresults": max_results,
     }
+
+    if bounding_box is not None:
+        south, west, north, east = bounding_box
+        params["boundingbox"] = f"({south},{west}),({north},{east})"
+    else:
+        params["latitude"] = latitude
+        params["longitude"] = longitude
+        params["distance"] = distance_km
+        params["distanceunit"] = "KM"
 
     if country_code:
         params["countrycode"] = country_code
@@ -82,9 +97,12 @@ def fetch_ocm(
         print("=" * 70)
         print("Open Charge Map downloader")
         print("=" * 70)
-        print(f"Latitude       : {latitude}")
-        print(f"Longitude      : {longitude}")
-        print(f"Distance       : {distance_km} km")
+        if bounding_box is not None:
+            print(f"Bounding box   : {bounding_box}")
+        else:
+            print(f"Latitude       : {latitude}")
+            print(f"Longitude      : {longitude}")
+            print(f"Distance       : {distance_km} km")
         print(f"Country        : {country_code}")
         print(f"StatusTypeID   : {status_type_id}")
         print()
@@ -122,7 +140,61 @@ def fetch_ocm(
             f"Stations returned: {len(data)}"
         )
 
+    if len(data) >= max_results:
+        print(
+            f"WARNING: OCM returned {len(data)} stations, which equals "
+            f"--max-results. The result is probably truncated."
+        )
+
     return data
+
+
+def load_place_polygon(place):
+    """
+    Geocode the OSM place query to the same polygon that
+    ox.graph_from_place uses in build_osm_graph.py.
+    """
+
+    import osmnx as ox
+
+    gdf = ox.geocode_to_gdf(place)
+
+    return gdf.unary_union
+
+
+def filter_by_polygon(
+    stations,
+    polygon,
+):
+    """
+    Keep only the stations located inside the polygon.
+    """
+
+    from shapely.geometry import Point
+
+    kept = []
+
+    for station in stations:
+
+        address_info = station.get(
+            "AddressInfo",
+            {}
+        )
+
+        lat = address_info.get("Latitude")
+        lon = address_info.get("Longitude")
+
+        if lat is None or lon is None:
+            continue
+
+        if polygon.covers(Point(float(lon), float(lat))):
+            kept.append(station)
+
+    print(
+        f"Stations inside place polygon: {len(kept)} / {len(stations)}"
+    )
+
+    return kept
 
 
 def save_json(
@@ -297,16 +369,27 @@ def main():
     # --------------------------------------------------------
 
     parser.add_argument(
+        "--place",
+        default=None,
+        help=(
+            'OSM place query, e.g. "Tainan, Taiwan". '
+            "Use the same query as build_osm_graph.py so that "
+            "the OCM area is aligned with the OSM graph. "
+            "Overrides --latitude / --longitude / --distance."
+        ),
+    )
+
+    parser.add_argument(
         "--latitude",
         type=float,
-        required=True,
+        default=None,
         help="Center latitude.",
     )
 
     parser.add_argument(
         "--longitude",
         type=float,
-        required=True,
+        default=None,
         help="Center longitude.",
     )
 
@@ -404,6 +487,28 @@ def main():
         status_type_id = None
 
     # --------------------------------------------------------
+    # Area
+    # --------------------------------------------------------
+
+    polygon = None
+    bounding_box = None
+
+    if args.place:
+
+        polygon = load_place_polygon(
+            args.place
+        )
+
+        west, south, east, north = polygon.bounds
+        bounding_box = (south, west, north, east)
+
+    elif args.latitude is None or args.longitude is None:
+
+        parser.error(
+            "Either --place or both --latitude and --longitude are required."
+        )
+
+    # --------------------------------------------------------
     # Download
     # --------------------------------------------------------
 
@@ -419,7 +524,15 @@ def main():
             else None
         ),
         status_type_id=status_type_id,
+        bounding_box=bounding_box,
     )
+
+    if polygon is not None:
+
+        stations = filter_by_polygon(
+            stations,
+            polygon,
+        )
 
     # --------------------------------------------------------
     # Save raw JSON

@@ -58,7 +58,7 @@ def visualise_stations(my_graph, my_plan, my_filepath):
 
 if __name__ == '__main__':
     ox.config(use_cache=True, log_console=True)
-    ort = "Taipei"
+    ort = "Tainan"
 
     G = ox.load_graphml("Graph/" + ort + "/" + ort + ".graphml")
 

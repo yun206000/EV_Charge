@@ -11,7 +11,7 @@ def travel_metric(my_node_list):
     """Return demand-weighted average and maximum travel time in minutes."""
     big_travel_list = []
     for my_node in my_node_list:
-        travel = my_node[1]['distance'] / ef.VELOCITY * 60
+        travel = my_node[1].get('travel time', my_node[1]['distance'] / ef.VELOCITY) * 60
         times = ceil(10 * ef.weak_demand(my_node))
         for time in range(times):
             big_travel_list.append(travel)
@@ -53,12 +53,12 @@ def test(my_plan, my_node_list, my_basic_cost, my_norm_benefit, my_norm_charging
     travel_time_minutes = ef.travel_cost(my_node_list) * 60
     waiting_time_minutes = ef.waiting_time(my_plan) * 60
     charging_time_minutes = ef.charging_time(my_plan) * 60
-    print("The score is {}".format(score))
-    print("Benefit: {}".format(benefit * 100))
-    print("Waiting time: {}, Travel time: {}, Charging time: {}".format(wait_time * 100, cost_travel * 100,
-                                                                        charg_time * 100))
-    print("Actual total time (minutes) - Waiting: {:.3f}, Travel: {:.3f}, Charging: {:.3f}".format(
-        waiting_time_minutes, travel_time_minutes, charging_time_minutes))
+    # print("The score is {}".format(score))
+    # print("Benefit: {}".format(benefit * 100))
+    # print("Waiting time: {}, Travel time: {}, Charging time: {}".format(wait_time * 100, cost_travel * 100,
+    #                                                                     charg_time * 100))
+    # print("Actual total time (minutes) - Waiting: {:.3f}, Travel: {:.3f}, Charging: {:.3f}".format(
+    #     waiting_time_minutes, travel_time_minutes, charging_time_minutes))
     print("Travel time (minutes) - Average: {:.3f}, Maximum: {:.3f}".format(travel_average, travel_max))
     print("Waiting time (minutes) - Average: {:.3f}, Maximum: {:.3f}".format(wait_average, wait_max))
     print("Used budget: {} \n".format(total_inst_cost * 100))
@@ -96,19 +96,20 @@ def perform_test(my_node_file, my_basic_cost, my_result_file, my_norm_benefit, m
     with (open(my_result_file, "rb")) as f:
         my_plan = pickle.load(f)
     print("Number of charging stations: {}".format(len(my_plan)))
+    my_node_list, my_plan = prepare_existing_plan(my_plan, my_node_list)
     test(my_plan, my_node_list, my_basic_cost, my_norm_benefit, my_norm_charging, my_norm_waiting,
          my_norm_travel, my_norm_score)
 
 
 if __name__ == '__main__':
-    location = "Taipei"
+    location = "Tainan"
 
     graph_file = "Graph/" + location + "/" + location + ".graphml"
-    graph = ox.load_graphml(graph_file)
+    node_file = "Graph/" + location + "/node_list_" + location + ".txt"
+    graph, _ = ef.prepare_graph(graph_file, node_file)
     """
     Test existing charging stations.
     """
-    node_file = "Graph/" + location + "/node_list_" + location + ".txt"
     with open(node_file, "r") as file:
         node_list = eval(file.readline())
     with (open("Graph/" + location + "/existingplan_" + location + ".pkl", "rb")) as f:

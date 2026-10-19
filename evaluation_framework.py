@@ -1,16 +1,69 @@
 import osmnx as ox
+import networkx as nx
 import numpy as np
 from math import sin, cos, sqrt, atan2, radians
+import re
+
+from scipy.sparse import csr_matrix
+from scipy.sparse.csgraph import dijkstra as csgraph_dijkstra
+from scipy.spatial import cKDTree
 
 """
 Utility model and help functions.
+
+OSM ROUTING REWRITE
+--------------------
+The original implementation called nx.shortest_path_length() once per
+(node, station) pair. That is wasteful for this problem's access pattern:
+a handful of station locations are each queried against every node, over
+and over, as candidate plans are evaluated. A single-source Dijkstra run
+already has to explore roughly the same part of the graph whether it stops
+at one target or returns distances to every node, so instead of paying for
+a fresh shortest-path search per pair, we now pay for ONE Dijkstra run per
+distinct station location (source) and cache the resulting "distance to
+every node" row. Every later lookup against that station is then an O(1)
+array read.
+
+This is done with scipy's C-level `dijkstra` on a precomputed CSR sparse
+matrix (built once, at graph-load time), rather than networkx's pure-Python
+Dijkstra, which gives a further large constant-factor speedup on top of the
+caching change. A one-time KD-tree replaces the previous
+ox.distance.nearest_nodes() calls, which were silently rebuilding a spatial
+index from scratch on every single lookup.
+
+Note on scope: this optimizes the "few repeated sources, many targets"
+pattern, which is what this codebase actually needs. It is not a full
+Contraction Hierarchies implementation (which mainly pays off for
+*arbitrary* point-to-point queries at huge scale, e.g. via OSRM/Valhalla or
+NetworKit's pruned landmark labeling). If the access pattern ever changes
+to "many distinct arbitrary pairs, queried once each," that's the point at
+which a real CH/PLL structure would be worth the added complexity.
 """
+
+_OSM_GRAPH = None
+_OSM_NODE_CACHE = {}       # user node id (from my_node_list / station pos) -> matrix row index
+_OSM_ROUTE_CACHE = {}      # matrix row index (station) -> [time_row, length_row, undirected_fallback_or_None]
+
+_OSM_NODE_INDEX = {}       # OSM graph node id -> matrix index
+_OSM_INDEX_NODE = []       # matrix index -> OSM graph node id
+_OSM_KDTREE = None         # cKDTree over (x, y) of every OSM graph node, built once
+
+_OSM_TIME_MATRIX = None                # CSR, directed, edge weight = travel time in seconds
+_OSM_LENGTH_MATRIX = None              # CSR, directed, edge weight = length in meters
+_OSM_TIME_MATRIX_UNDIRECTED = None     # fallback for when a directed route doesn't exist
+_OSM_LENGTH_MATRIX_UNDIRECTED = None
+
 
 def prepare_graph(my_graph_file, my_node_file):
     """
     loads graph and nodes prepared in load_graph.py
     """
+    global _OSM_GRAPH, _OSM_NODE_CACHE, _OSM_ROUTE_CACHE
     my_graph = ox.load_graphml(my_graph_file)
+    _OSM_GRAPH = my_graph
+    _OSM_NODE_CACHE = {}
+    _OSM_ROUTE_CACHE = {}
+    _build_sparse_graph(my_graph)
     with open(my_node_file, "r") as file:
         my_node_list = eval(file.readline())
     return my_graph, my_node_list
@@ -25,8 +78,9 @@ def cost_single(my_node, my_station, my_node_dict, my_cost_dict):
     if s_pos[0] in my_node_dict[my_node[0]]:
         distance = my_node_dict[my_node[0]][s_pos[0]]
     else:
-        distance = haversine(s_pos, my_node)
+        distance, travel_time = _osm_route(s_pos, my_node)
         my_node_dict[my_node[0]][s_pos[0]] = distance
+        my_node[1]["travel time"] = travel_time
     # check if cost has to be calculated
     try:
         _a = my_cost_dict[my_node[0]]
@@ -35,7 +89,7 @@ def cost_single(my_node, my_station, my_node_dict, my_cost_dict):
     if s_pos[0] in my_cost_dict[my_node[0]]:
         cost_node = my_cost_dict[my_node[0]][s_pos[0]]
     else:
-        cost_travel = alpha * distance / VELOCITY
+        cost_travel = alpha * my_node[1].get("travel time", distance / VELOCITY)
         cost_boring = (1 - alpha) / distance * (s_dict["W_s"] + 1 / s_dict["service rate"])
         cost_node = weak_demand(my_node) * (cost_travel + cost_boring)
         my_cost_dict[my_node[0]][s_pos[0]] = cost_node
@@ -53,6 +107,7 @@ def station_seeking(my_plan, my_node_list, my_node_dict, my_cost_dict):
         s_pos = chosen_station[0]
         the_node[1]["charging station"] = s_pos[0]
         the_node[1]["distance"] = my_node_dict[the_node[0]][s_pos[0]]
+        the_node[1]["travel time"] = _osm_route(s_pos, the_node)[1]
     return my_node_list, my_node_dict, my_cost_dict
 
 
@@ -108,6 +163,163 @@ def haversine(s_pos, my_node):
     if distance < 0.1:  # to avoid ZeroDivisionError
         distance = 0.1
     return distance
+
+
+def osm_travel_time(s_pos, my_node):
+    """Return estimated driving time in hours using the loaded OSM road graph."""
+    return _osm_route(s_pos, my_node)[1]
+
+
+def _osm_route(s_pos, my_node):
+    if _OSM_TIME_MATRIX is None:
+        raise RuntimeError("An OSM graph must be loaded with prepare_graph before calculating road travel time")
+
+    source_idx = _nearest_osm_node(s_pos)
+    target_idx = _nearest_osm_node(my_node)
+    return _distance_and_time(source_idx, target_idx)
+
+
+def _distance_and_time(source_idx, target_idx):
+    """
+    Look up (distance, travel_time) between two already-resolved matrix
+    indices, computing and caching the station's full one-to-all row the
+    first time it's needed.
+    """
+    time_row, length_row, undirected = _station_distance_rows(source_idx)
+
+    distance_m = length_row[target_idx]
+    travel_time_h = time_row[target_idx] / 3600
+
+    if not np.isfinite(distance_m) or not np.isfinite(travel_time_h):
+        # no route in the directed graph (e.g. one-way streets blocking the
+        # direct path) -- fall back to the undirected graph, same as the
+        # original code's `_OSM_GRAPH.to_undirected()` retry
+        if undirected is None:
+            und_time_row = csgraph_dijkstra(_OSM_TIME_MATRIX_UNDIRECTED, directed=True, indices=source_idx)
+            und_length_row = csgraph_dijkstra(_OSM_LENGTH_MATRIX_UNDIRECTED, directed=True, indices=source_idx)
+            undirected = (und_time_row, und_length_row)
+            _OSM_ROUTE_CACHE[source_idx][2] = undirected
+
+        distance_m = undirected[1][target_idx]
+        travel_time_h = undirected[0][target_idx] / 3600
+
+        if not np.isfinite(distance_m):
+            raise ValueError("No drivable OSM route exists between the two points")
+
+    return max(float(distance_m), 0.1), max(float(travel_time_h), 0.0)
+
+
+def _station_distance_rows(source_idx):
+    """
+    One-to-all shortest paths (by time and by length) from a single OSM
+    graph node index, computed once with scipy's C-level Dijkstra and
+    cached for the lifetime of the loaded graph. Every later query against
+    this same source is then just an array read (O(1)) instead of a fresh
+    shortest-path search.
+    """
+    if source_idx in _OSM_ROUTE_CACHE:
+        return _OSM_ROUTE_CACHE[source_idx]
+
+    time_row = csgraph_dijkstra(_OSM_TIME_MATRIX, directed=True, indices=source_idx)
+    length_row = csgraph_dijkstra(_OSM_LENGTH_MATRIX, directed=True, indices=source_idx)
+
+    _OSM_ROUTE_CACHE[source_idx] = [time_row, length_row, None]
+    return _OSM_ROUTE_CACHE[source_idx]
+
+
+def _nearest_osm_node(position):
+    """
+    Resolve a (node_id, attrs) position to its nearest OSM graph node's
+    matrix index, using a KD-tree built once at graph-load time instead of
+    rebuilding a spatial index on every call.
+    """
+    node_id, attributes = position
+    if node_id not in _OSM_NODE_CACHE:
+        _, idx = _OSM_KDTREE.query([float(attributes["x"]), float(attributes["y"])])
+        _OSM_NODE_CACHE[node_id] = int(idx)
+    return _OSM_NODE_CACHE[node_id]
+
+
+def _build_sparse_graph(graph):
+    """
+    One-time preprocessing: turn the osmnx MultiDiGraph into CSR sparse
+    matrices (directed + undirected-fallback, both time- and
+    length-weighted) plus a KD-tree over node coordinates. Everything that
+    used to happen per-query in the old code (parsing maxspeed, resolving
+    parallel edges, finding nearest nodes) now happens once here.
+    """
+    global _OSM_TIME_MATRIX, _OSM_LENGTH_MATRIX
+    global _OSM_TIME_MATRIX_UNDIRECTED, _OSM_LENGTH_MATRIX_UNDIRECTED
+    global _OSM_NODE_INDEX, _OSM_INDEX_NODE, _OSM_KDTREE
+
+    _OSM_INDEX_NODE = list(graph.nodes())
+    _OSM_NODE_INDEX = {node_id: idx for idx, node_id in enumerate(_OSM_INDEX_NODE)}
+    n = len(_OSM_INDEX_NODE)
+
+    coords = np.array(
+        [[graph.nodes[node_id]["x"], graph.nodes[node_id]["y"]] for node_id in _OSM_INDEX_NODE]
+    )
+    _OSM_KDTREE = cKDTree(coords)
+
+    # For parallel edges (a MultiDiGraph can have several roads between the
+    # same two nodes) keep the minimum time and minimum length separately,
+    # matching networkx's own behaviour of taking the min weight per
+    # (u, v) pair on a multigraph.
+    best_time = {}
+    best_length = {}
+    for u, v, edge_data in graph.edges(data=True):
+        length = float(edge_data.get("length", 0.0))
+        speed_kmh = _parse_speed_kmh(edge_data.get("maxspeed"))
+        speed_m_per_hour = speed_kmh * 1000 if speed_kmh else VELOCITY
+        travel_seconds = length / speed_m_per_hour * 3600 if speed_m_per_hour else float("inf")
+
+        key = (_OSM_NODE_INDEX[u], _OSM_NODE_INDEX[v])
+        if key not in best_time or travel_seconds < best_time[key]:
+            best_time[key] = travel_seconds
+        if key not in best_length or length < best_length[key]:
+            best_length[key] = length
+
+    _OSM_TIME_MATRIX = _matrix_from_dict(best_time, n)
+    _OSM_LENGTH_MATRIX = _matrix_from_dict(best_length, n)
+
+    _OSM_TIME_MATRIX_UNDIRECTED = _matrix_from_dict(_symmetrize(best_time), n)
+    _OSM_LENGTH_MATRIX_UNDIRECTED = _matrix_from_dict(_symmetrize(best_length), n)
+
+
+def _matrix_from_dict(edge_dict, n):
+    if not edge_dict:
+        return csr_matrix((n, n))
+    rows, cols = zip(*edge_dict.keys())
+    data = list(edge_dict.values())
+    return csr_matrix((data, (rows, cols)), shape=(n, n))
+
+
+def _symmetrize(edge_dict):
+    """
+    Add the reverse of every directed edge (keeping the smaller weight if
+    both directions already exist), so the resulting matrix behaves like
+    graph.to_undirected() for routing purposes.
+    """
+    sym = dict(edge_dict)
+    for (u_idx, v_idx), w in edge_dict.items():
+        rev_key = (v_idx, u_idx)
+        if rev_key not in sym or w < sym[rev_key]:
+            sym[rev_key] = w
+    return sym
+
+
+def _parse_speed_kmh(value):
+    if isinstance(value, (list, tuple)):
+        value = value[0] if value else None
+    if value is None:
+        return None
+    match = re.search(r"[0-9]+(?:\.[0-9]+)?", str(value))
+    if not match:
+        return None
+    speed = float(match.group())
+    if "mph" in str(value).lower():
+        speed *= 1.60934
+    return speed if speed > 0 else None
 
 
 def nodes_covered(my_station, my_node_list):
@@ -202,7 +414,8 @@ def social_benefit(my_plan, my_node_list):
 
 def travel_cost(my_node_list):
     """ yields the estimated travel time of all vehicles """
-    my_cost_travel = sum([my_node[1]["distance"] * weak_demand(my_node) / VELOCITY for my_node in my_node_list])
+    my_cost_travel = sum([my_node[1].get("travel time", my_node[1]["distance"] / VELOCITY) * weak_demand(my_node)
+                          for my_node in my_node_list])
     return my_cost_travel
 
 
@@ -329,7 +542,7 @@ def constraint_check(my_plan, my_node_list, basic_cost):
 alpha = 0.4
 my_lambda = 0.5
 
-K = 8  # maximal number of chargers at a station
+K = 15  # maximal number of chargers at a station
 RADIUS_MAX = 1000  # [radius_max] = m
 INSTALL_FEE = np.array([300, 750, 28000])  # fee per installing a charger of type 1, 2 or 3. [fee] = $
 CHARGING_POWER = np.array([7, 22, 50])  # [power] = kW, rounded

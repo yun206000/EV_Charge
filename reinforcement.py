@@ -75,7 +75,7 @@ if __name__ == '__main__':
     np.random.seed(seed)
     random.seed(seed)
     # Instantiate the env
-    location = "Taipei"  # take a location of your choice
+    location = "Tainan"  # take a location of your choice
     repository_root = os.path.dirname(os.path.abspath(__file__))
     graph_dir = os.path.join(repository_root, "Graph", location)
     graph_file = os.path.join(graph_dir, location + ".graphml")
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     plan_file = os.path.join(graph_dir, "existingplan_" + location + ".pkl")
 
     env = ev.StationPlacement(graph_file, node_file, plan_file)
-    log_dir = os.path.join(repository_root, "tmp_Taipei")
+    log_dir = os.path.join(repository_root, "tmp_Tainan")
     modelname = "best_model_" + location + "_"
     os.makedirs(log_dir, exist_ok=True)
 
@@ -92,7 +92,7 @@ if __name__ == '__main__':
     """
     env = Monitor(env, log_dir)
     model = DQN("MlpPolicy", env, verbose=1, batch_size=128, buffer_size=10000, learning_rate=0.001, device='cpu',
-                seed=seed)
+                learning_starts=1000, target_update_interval=1000, seed=seed)
     callback = SaveOnBestTrainingRewardCallback(check_freq=400, my_log_dir=log_dir, my_modelname=modelname)
-    model.learn(total_timesteps=2000, log_interval=10 ** 4, callback=callback)
+    model.learn(total_timesteps=20000, log_interval=10 ** 4, callback=callback)
 
