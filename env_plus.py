@@ -66,8 +66,7 @@ def coverage(my_node_list, my_plan):
     """
     see which nodes are covered by the charging plan
     """
-    for my_node in my_node_list:
-        cover = ef.node_coverage(my_plan, my_node)
+    for my_node, cover in zip(my_node_list, ef.coverage_vector(my_plan, my_node_list).tolist()):
         my_node[1]["covered"] = cover
 
 
@@ -392,7 +391,7 @@ class StationPlacement(gym.Env):
             # add column to existing station
             config_index = 1
             if len(occupied_list) == 0:
-                chosen_node = choice(free_list)
+                chosen_node = choice(free_list)  # NOSONAR S2245: simulation, seeded for reproducibility
             else:
                 if my_action == 2:
                     chosen_node = choose_node_new_benefit(occupied_list)
@@ -405,7 +404,7 @@ class StationPlacement(gym.Env):
             stolen_station = anti_choose_node_bybenefit(self.node_list, steal_plan)
             if stolen_station is None:
                 # only necessary if we take this action in the very beginning
-                chosen_node = choice(free_list)
+                chosen_node = choice(free_list)  # NOSONAR S2245: simulation, seeded for reproducibility
             else:
                 self.budget, config_index = self.plan_instance.steal_column(stolen_station, self.budget)
                 chosen_node = support_stations(self.plan_instance.plan, free_list)

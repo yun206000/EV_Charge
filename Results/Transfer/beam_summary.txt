@@ -1,0 +1,32 @@
+Validation B = k = 1 vs zero-shot (transfer/evaluate.py), episode seeds [1, 2, 3, 4, 5]
+  max |difference| of improvement: 0, same episode length: True
+
+Beam search B4k2 (B = 4, k = 2) vs zero-shot, Taipei
+           zero_shot    beam  difference  change_pct  stations_zero_shot  stations_beam  minutes
+eval_seed                                                                                       
+1             2.4756  2.6428      0.1671      6.7504                 403            373  27.8417
+2             2.0695  2.0954      0.0259      1.2536                 231            231  11.8417
+3             2.3019  2.3021      0.0001      0.0062                 292            293  18.9600
+4             2.3604  2.5539      0.1935      8.1986                 285            342  14.9333
+5             2.4119  2.4119      0.0000      0.0000                 294            294  19.1883
+
+mean zero-shot 2.3239, mean beam 2.4012, change +0.0773 (+3.3%)
+better on 4 / 5, equal on 1, worse on 0 episode seeds
+paired t-test (one-sided, beam > zero-shot): t = 1.819, p = 0.0715
+Wilcoxon signed-rank (one-sided, exact, 4 seeds with a difference): p = 0.0625
+
+Service metrics (mean over plans; test_solution.py definitions)
+               n  stations  travel_avg_min  waiting_avg_min  waiting_max_min
+plan                                                                        
+Existing plan  1      29.0           3.861            3.030           26.692
+Zero-shot      5     301.0           1.199            0.110            0.498
+Beam search    5     306.6           1.172            0.111            0.460
+
+Average travel / waiting time per episode seed (minutes, target < 15)
+           travel_avg_zero_shot  travel_avg_beam  waiting_avg_zero_shot  waiting_avg_beam
+eval_seed                                                                                
+1                         1.018            1.043                  0.090             0.101
+2                         1.360            1.338                  0.123             0.125
+3                         1.166            1.164                  0.113             0.114
+4                         1.219            1.082                  0.113             0.104
+5                         1.230            1.230                  0.111             0.111

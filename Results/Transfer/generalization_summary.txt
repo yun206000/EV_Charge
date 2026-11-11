@@ -1,0 +1,6 @@
+Generalisation: Tainan source model on Taipei (improvement = score - existing score 0.2333)
+
+zeroshot   n = 5  mean 2.3239  sd 0.1560  min 2.0695  max 2.4756
+random     n = 3  mean 1.2563  sd 0.9453  min 0.1666  max 1.8570
+
+zero-shot vs random: +85.0%, Welch t = 1.94, one-sided p = 0.0939

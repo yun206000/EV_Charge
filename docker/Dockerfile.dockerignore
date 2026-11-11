@@ -1,0 +1,15 @@
+# keep the build context small: code + input data only, outputs are mounted at run time
+.git
+**/__pycache__
+*.pyc
+runs
+logs
+Results
+Images
+tmp_*
+cache
+Preprocessing/cache
+*.zip
+LicenseNotes.pdf
+docker/.env
+.env

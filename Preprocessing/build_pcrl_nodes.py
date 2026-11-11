@@ -223,7 +223,7 @@ def save_node_list(
 
         # PCRL loads this using:
         #
-        # my_node_list = eval(file.readline())
+        # my_node_list = ast.literal_eval(file.readline())
         #
         f.write(
             repr(node_list)

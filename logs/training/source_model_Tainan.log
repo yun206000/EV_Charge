@@ -1,0 +1,1 @@
+{'city': 'Tainan', 'label': 'source_Tainan', 'seed': 1, 'policy': 'model', 'model': 'runs/source_Tainan/best_source.zip', 'train_steps': 0, 'eval_seed': 1, 'existing_score': 0.23333333333333334, 'score': 8.76565560897245, 'improvement': 8.532322275639117, 'relative_pct': 3756.7095467024783, 'n_stations': 405, 'episode_steps': 581, 'seconds': 1019.6}

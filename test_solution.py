@@ -1,3 +1,4 @@
+import ast
 import evaluation_framework as ef
 import pickle
 from math import ceil
@@ -92,7 +93,7 @@ def prepare_existing_plan(my_plan, my_node_list):
 def perform_test(my_node_file, my_basic_cost, my_result_file, my_norm_benefit, my_norm_charging,
                  my_norm_waiting, my_norm_travel, my_norm_score):
     with open(my_node_file, "r") as file:
-        my_node_list = eval(file.readline())
+        my_node_list = ast.literal_eval(file.readline())
     with (open(my_result_file, "rb")) as f:
         my_plan = pickle.load(f)
     print("Number of charging stations: {}".format(len(my_plan)))
@@ -111,7 +112,7 @@ if __name__ == '__main__':
     Test existing charging stations.
     """
     with open(node_file, "r") as file:
-        node_list = eval(file.readline())
+        node_list = ast.literal_eval(file.readline())
     with (open("Graph/" + location + "/existingplan_" + location + ".pkl", "rb")) as f:
         plan = pickle.load(f)
     print("Number of already existing charging stations: {}".format(len(plan)))

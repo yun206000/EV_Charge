@@ -1,3 +1,4 @@
+import ast
 import osmnx as ox
 import networkx as nx
 import numpy as np
@@ -65,7 +66,7 @@ def prepare_graph(my_graph_file, my_node_file):
     _OSM_ROUTE_CACHE = {}
     _build_sparse_graph(my_graph)
     with open(my_node_file, "r") as file:
-        my_node_list = eval(file.readline())
+        my_node_list = ast.literal_eval(file.readline())
     return my_graph, my_node_list
 
 
@@ -350,6 +351,31 @@ def node_coverage(my_plan, my_node):
     return single_benefit
 
 
+def coverage_vector(my_plan, my_node_list):
+    """
+    node_coverage for every node at once (same formula, vectorised over the node x station distance matrix)
+    """
+    priv_CS = np.array([my_node[1]["private CS"] for my_node in my_node_list], dtype=float)
+    if not my_plan:
+        return np.zeros(len(my_node_list))
+    node_x = np.array([my_node[1]['x'] for my_node in my_node_list], dtype=float)[:, None]
+    node_y = np.array([my_node[1]['y'] for my_node in my_node_list], dtype=float)[:, None]
+    station_x = np.array([s[0][1]['x'] for s in my_plan], dtype=float)[None, :]
+    station_y = np.array([s[0][1]['y'] for s in my_plan], dtype=float)[None, :]
+    radius = np.array([s[2]["radius"] for s in my_plan], dtype=float)[None, :]
+    # haversine(station, node), see haversine()
+    dlon = np.radians(node_x - station_x)
+    dlat = np.radians(node_y - station_y)
+    a = np.sin(dlat / 2) ** 2 + np.cos(np.radians(station_y)) * np.cos(np.radians(node_y)) * np.sin(dlon / 2) ** 2
+    distance = 6372800 * 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
+    distance = np.maximum(distance, 0.1)
+    I_1 = np.sum(distance <= radius, axis=1)
+    harmonic = [0.0]
+    for ith in range(len(my_plan)):
+        harmonic.append(harmonic[-1] + 1 / (ith + 1))
+    return np.array(harmonic)[I_1] * (1 - 0.1 * priv_CS)
+
+
 def total_number_EVs(my_station, my_node_list):
     """
     yields total number of EVs coming to S in a unit time interval for charging
@@ -404,10 +430,7 @@ def social_benefit(my_plan, my_node_list):
     """
     returns the social benefit of the charging plan (our definition of benefit)
     """
-    my_benefit = 0
-    for my_node in my_node_list:
-        I3 = node_coverage(my_plan, my_node)
-        my_benefit += I3
+    my_benefit = sum(coverage_vector(my_plan, my_node_list).tolist())  # sequential sum, same order as node_coverage loop
     my_benefit /= len(my_node_list)
     return my_benefit
 

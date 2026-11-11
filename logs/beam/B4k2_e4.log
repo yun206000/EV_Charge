@@ -1,0 +1,29 @@
+start: score 0.2333, Q [0.464 0.468 0.489 0.478 0.468]
+step 25 beam 4 best live 0.2333 (key 0.7575, 0 stations, budget 4981250) best done - (12s) backbone live
+step 50 beam 4 best live 0.2333 (key 0.7978, 0 stations, budget 4962500) best done - (22s) backbone live
+step 75 beam 4 best live 0.2333 (key 0.8076, 0 stations, budget 4943750) best done - (33s) backbone live
+step 100 beam 4 best live 0.2333 (key 0.7966, 0 stations, budget 4925000) best done - (45s) backbone live
+step 125 beam 4 best live 0.2333 (key 0.8194, 0 stations, budget 4906250) best done - (56s) backbone live
+step 150 beam 4 best live 0.2333 (key 0.8348, 0 stations, budget 4887500) best done - (67s) backbone live
+step 175 beam 4 best live 0.2333 (key 0.8564, 0 stations, budget 4868750) best done - (79s) backbone live
+step 200 beam 4 best live 0.2333 (key 0.8755, 0 stations, budget 4850000) best done - (90s) backbone live
+step 225 beam 4 best live 0.2440 (key 0.8666, 30 stations, budget 4824600) best done - (102s) backbone live
+step 250 beam 4 best live 0.2527 (key 0.8896, 31 stations, budget 4796560) best done - (113s) backbone live
+step 275 beam 4 best live 0.2527 (key 0.8855, 31 stations, budget 4777810) best done - (125s) backbone live
+step 300 beam 4 best live 0.2536 (key 0.9017, 31 stations, budget 4759060) best done - (136s) backbone live
+step 325 beam 4 best live 0.5046 (key 1.0784, 41 stations, budget 4530940) best done - (149s) backbone live
+step 350 beam 4 best live 0.9909 (key 1.4836, 65 stations, budget 4240630) best done - (169s) backbone live
+step 375 beam 4 best live 1.3289 (key 1.7517, 88 stations, budget 3919030) best done - (197s) backbone live
+step 400 beam 4 best live 1.5794 (key 1.8902, 113 stations, budget 3323880) best done - (232s) backbone live
+step 425 beam 4 best live 1.8355 (key 2.1309, 138 stations, budget 3031540) best done - (273s) backbone live
+step 450 beam 4 best live 2.0135 (key 2.2788, 166 stations, budget 2681920) best done - (322s) backbone live
+step 475 beam 4 best live 2.1724 (key 2.4324, 191 stations, budget 2170110) best done - (379s) backbone live
+step 500 beam 4 best live 2.2840 (key 2.5446, 213 stations, budget 2100860) best done - (443s) backbone live
+step 525 beam 4 best live 2.4083 (key 2.6333, 241 stations, budget 686450) best done - (515s) backbone live
+step 550 beam 4 best live 2.5176 (key 2.7381, 266 stations, budget 255640) best done - (594s) backbone live
+step 575 beam 4 best live 2.5872 (key 2.8280, 288 stations, budget 889730) best done 2.5937 (680s)
+step 600 beam 4 best live 2.6864 (key 2.9347, 313 stations, budget 486620) best done 2.5937 (774s)
+step 625 beam 4 best live 2.7717 (key 3.0163, 338 stations, budget 57880) best done 2.5937 (875s)
+step 630 beam 0 best live nan (key nan, 0 stations, budget 0) best done 2.7872 (896s)
+{'city': 'Taipei', 'label': 'B4k2', 'model': 'runs/source_Tainan/best_source.zip', 'beam': 4, 'topk': 2, 'value_weight': 1.0, 'eval_seed': 4, 'existing_score': 0.23333333333333334, 'score': 2.7872237771665462, 'improvement': 2.553890443833213, 'n_stations': 342, 'episode_steps': 630, 'expansions': 5028, 'seconds': 896.0, 'action_counts': '38 2 548 39 3'}
+peak memory of coordinator + beam members: 6.8 GB (PSS)

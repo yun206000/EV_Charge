@@ -1,0 +1,2 @@
+city,label,seed,policy,model,train_steps,existing_score,score,improvement,relative_pct,n_stations,episode_steps,seconds,eval_seed
+Tainan,source_Tainan,1,model,runs/source_Tainan/best_source.zip,0,0.23333333333333334,8.76565560897245,8.532322275639117,3756.7095467024783,405,581,1019.6,1

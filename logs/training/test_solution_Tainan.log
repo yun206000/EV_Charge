@@ -1,0 +1,13 @@
+Number of already existing charging stations: 17
+Error: More chargers at the station than admitted: 18 chargers
+Travel time (minutes) - Average: 10.806, Maximum: 131.784
+Waiting time (minutes) - Average: 7.457, Maximum: 56.842
+Used budget: 0.0 
+
+Reinforcement Learning
+Number of charging stations: 755
+Error: More chargers at the station than admitted: 18 chargers
+Travel time (minutes) - Average: 1.771, Maximum: 89.394
+Waiting time (minutes) - Average: 0.365, Maximum: 8.456
+Used budget: 99.994 
+

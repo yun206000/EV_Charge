@@ -4,6 +4,22 @@ import time
 import argparse
 import requests
 
+
+ENV_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docker", ".env")
+
+
+def read_env_file(path=ENV_FILE):
+    """KEY=VALUE lines of docker/.env (the file docker run --env-file reads); {} if it does not exist"""
+    values = {}
+    if os.path.exists(path):
+        with open(path) as file:
+            for line in file:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    name, value = line.split("=", 1)
+                    values[name.strip()] = value.strip().strip('"').strip("'")
+    return values
+
 """
 Download charging station data from Open Charge Map (OCM) for a given location.
 
@@ -356,11 +372,11 @@ def main():
 
     parser.add_argument(
         "--api-key",
-        default="bdae2d9d-53e7-4586-b6a2-7340ec69537b",
+        default=None,
         help=(
             "Open Charge Map API key. "
-            "If omitted, OCM_API_KEY environment "
-            "variable will be used."
+            "If omitted, the OCM_API_KEY environment "
+            "variable is used, else OCM_API_KEY in docker/.env."
         ),
     )
 
@@ -467,6 +483,9 @@ def main():
             "OCM_API_KEY"
         )
 
+    if api_key is None:
+        api_key = read_env_file().get("OCM_API_KEY")
+
     if not api_key:
 
         raise RuntimeError(
@@ -474,7 +493,9 @@ def main():
             "Use either:\n"
             "  --api-key YOUR_API_KEY\n\n"
             "or set:\n"
-            "  export OCM_API_KEY=YOUR_API_KEY"
+            "  export OCM_API_KEY=YOUR_API_KEY\n\n"
+            "or write OCM_API_KEY=YOUR_API_KEY into docker/.env "
+            "(see docker/.env.example)"
         )
 
     # --------------------------------------------------------

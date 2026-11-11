@@ -1,0 +1,17 @@
+/home/angel030880/test/PCRL/evaluation_framework.py:403: RuntimeWarning: divide by zero encountered in scalar divide
+  tau_s = 1 / s_dict["service rate"]
+/home/angel030880/test/PCRL/evaluation_framework.py:404: RuntimeWarning: invalid value encountered in scalar multiply
+  rho_s = s_dict["D_s"] * tau_s * time_unit  # dimensionless (shortened away)
+/home/angel030880/test/PCRL/evaluation_framework.py:448: RuntimeWarning: divide by zero encountered in scalar divide
+  my_charg_time = sum([my_station[2]["D_s"] / my_station[2]["service rate"] for my_station in my_plan])
+/home/angel030880/test/PCRL/env_plus.py:117: RuntimeWarning: divide by zero encountered in scalar divide
+  charg_time = station[2]["D_s"] / station[2]["service rate"]
+/home/angel030880/test/PCRL/evaluation_framework.py:93: RuntimeWarning: divide by zero encountered in scalar divide
+  cost_boring = (1 - alpha) / distance * (s_dict["W_s"] + 1 / s_dict["service rate"])
+/home/angel030880/test/PCRL/evaluation_framework.py:448: RuntimeWarning: invalid value encountered in scalar divide
+  my_charg_time = sum([my_station[2]["D_s"] / my_station[2]["service rate"] for my_station in my_plan])
+/home/angel030880/test/PCRL/env_plus.py:117: RuntimeWarning: invalid value encountered in scalar divide
+  charg_time = station[2]["D_s"] / station[2]["service rate"]
+Using cpu device
+Wrapping the env in a DummyVecEnv.
+Saved final model to runs/source_Tainan/final_model.zip
