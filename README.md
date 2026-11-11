@@ -140,6 +140,14 @@ sections 7 and 10, `Results/Tainan/metrics.csv`, `Results/Transfer/*_summary.txt
 Security: the code is scanned with SonarQube (`sonar-project.properties`); 0 vulnerabilities, 0 security hotspots,
 0 bugs, security rating A (`README_for_doc.md` section 11.7).
 
+Tests: 62 unit tests on a small synthetic city (`tests/`, about 7 seconds), all passing; SonarQube quality gate passed
+with 93.7% coverage of new code (`README_for_doc.md` section 11.8).
+
+```
+python -m pip install -r docker/requirements-test.txt
+python -m pytest --cov --cov-report=xml
+```
+
 
 # Folder structure
 All commands are run from the repository root; the modules in `transfer/` and `analysis/` are started with
@@ -166,7 +174,8 @@ PCRL/
 │   ├── plan_maps.py              maps of the Taipei stations before / after fine-tuning
 │   └── plan_metrics.py           service metrics of saved plans
 ├── scripts/                  run_generalization.sh, run_beam_search.sh
-├── docker/                   Dockerfile, Dockerfile.dockerignore, environment.yml, requirements-pcrl.txt, .env(.example)
+├── tests/                    unit tests (pytest; settings in pytest.ini, .coveragerc)
+├── docker/                   Dockerfile, Dockerfile.dockerignore, environment.yml, requirements-pcrl.txt, requirements-test.txt, .env(.example)
 ├── sonar-project.properties  SonarQube analysis settings
 ├── Graph/<city>/             input data
 ├── tmp_Tainan/               model and training log of reinforcement.py (tmp_Toy_Example/: original example)

@@ -126,7 +126,9 @@ PCRL/
 │   ├── plan_maps.py              台北微調前後充電站分布圖
 │   └── plan_metrics.py           任一已存規劃的服務指標
 ├── scripts/                  run_generalization.sh、run_beam_search.sh（完整流程）
-├── docker/                   Dockerfile、Dockerfile.dockerignore、environment.yml、requirements-pcrl.txt、.env（金鑰，不進 git）
+├── tests/                    單元測試（pytest，合成小城市資料，11.8）；設定檔 pytest.ini、.coveragerc
+├── docker/                   Dockerfile、Dockerfile.dockerignore、environment.yml、requirements-pcrl.txt、
+│                             requirements-test.txt（測試套件）、.env（金鑰，不進 git）
 ├── Graph/<city>/             輸入資料（graphml、節點、既有充電站）；Toy_Example 為原始 PCRL 範例資料
 ├── cache/                    osmnx 下載快取
 ├── tmp_Tainan/               原始 reinforcement.py 的台南模型與訓練紀錄（tmp_Toy_Example/ 為原始範例）
@@ -943,6 +945,7 @@ Q 值最高的 k = 2 個動作，依「目前分數 + 模型估計的後續提�
 | 微調（台北 beam search） | 2.3239 → **2.4012（+3.3%）**；4 / 5 個種子提升、0 個下降，最高 +8.2%；平均移動時間 −2.3%、最大等待時間 −7.7% |
 | 可重現性 | B = k = 1 與 zero-shot 逐位元相同；同一設定重跑結果逐位元相同 |
 | 安全性 | SonarQube 掃描：0 個安全性問題、0 個 security hotspot、0 個 bug，安全性評等 A（11.7） |
+| 程式品質 | 62 個單元測試全部通過；SonarQube Quality Gate **通過**，新程式碼測試覆蓋率 93.7%（11.8） |
 | 影像紀錄 | 訓練曲線、台南服務指標、台南地圖、泛化比較、微調前後、搜尋過程、台北服務指標、台北微調前後充電站分布圖（第 12 節） |
 
 ---
@@ -1027,8 +1030,45 @@ OCM API key 已從程式碼移到 `docker/.env`（3.3、4.5）。
 | Security / Reliability / Maintainability rating | **A / A / A** |
 
 重新執行：啟動 SonarQube（`docker run -d -p 127.0.0.1:9000:9000 sonarqube:community`），在網頁或 API 建立分析 token，
-再於 repo 根目錄執行 `sonar-project.properties` 開頭註解中的 scanner 指令。最後一次掃描：2026-11-11，加入 `analysis/plan_maps.py` 後，
-結果同上表。
+先執行單元測試產生覆蓋率報告（11.8），再於 repo 根目錄執行 `sonar-project.properties` 開頭註解中的 scanner 指令。
+最後一次掃描：2026-11-11，加入 `analysis/plan_maps.py` 與單元測試後，結果同上表，Quality Gate 通過（11.8）。
+
+### 11.8 單元測試與 Quality Gate（2026-11-11）
+
+- 工具：pytest 8.3.5 + pytest-cov 5.0.0（版本見 `docker/requirements-test.txt`）；測試在 `tests/`，設定檔 `pytest.ini`、`.coveragerc`。
+- 測試資料：`tests/conftest.py` 產生一座合成小城市（5 × 5 路網、26 個節點、2 座既有充電站），檔案格式與
+  `Graph/<city>/` 相同，因此測試只需數秒，也不依賴台南／台北的大型資料檔。分析腳本的測試在暫存資料夾中執行，
+  不會覆寫 `Results/`、`Images/` 的正式結果。
+- 執行：`python -m pytest --cov --cov-report=xml`，62 個測試全部通過，約 7 秒。
+
+| 測試檔 | 內容 |
+|---|---|
+| `test_evaluation_framework.py` | haversine、速限解析（含 mph）、路徑計算（單行道改用無向圖、無路可走時報錯）、向量化覆蓋與原版逐點計算相同、充電站屬性、超載時等待時間為無限大、限制檢查訊息、既有規劃的正規化分數 |
+| `test_service_metrics.py` | 平均移動／等待時間的加權方式（手算驗證）、節點指派、`analysis/plan_metrics.py` 輸出的 CSV 欄位與數值 |
+| `test_environments.py` | 充電配置表（最便宜配置）、啟發式選點、拆樁、預算用盡、原始環境通過 gym 介面檢查、完整 episode（5 種動作）、遷移環境觀測維度與範圍、同一種子 episode 逐位元重現 |
+| `test_beam_search.py` | 行程間訊息傳遞（大於 socket 緩衝區）、規劃簽章與充電站順序無關、fork 後子行程保留亂數狀態（11.5）、記憶體讀取、Q 值與模型貪婪動作一致 |
+| `test_analysis.py` | 訓練 log 解析、訓練曲線、台南服務指標圖、泛化摘要、beam search 摘要（驗證、統計檢定、逐種子服務指標）、台北微調前後充電站分布圖 |
+
+各模組覆蓋率（pytest-cov，以敘述計）：
+
+| 模組 | 覆蓋率 |
+|---|---|
+| `evaluation_framework.py` | 100% |
+| `env_plus.py` | 96% |
+| `transfer/env.py` | 99% |
+| `analysis/`（5 個模組） | 98–99% |
+| `test_solution.py` | 79% |
+| `transfer/beam_search.py` | 32%（行程協調與主程式由 10.3 的實際搜尋驗證，B = k = 1 與 zero-shot 逐位元相同） |
+
+SonarQube 結果（加入覆蓋率報告後重新掃描）：
+
+| 指標 | 結果 |
+|---|---|
+| Quality Gate | **通過（Passed）** |
+| 新程式碼測試覆蓋率（門檻 ≥ 80%） | **93.7%** |
+| 新程式碼重複率（門檻 ≤ 3%） | 0.0% |
+| 新程式碼問題數（門檻 0） | 0 |
+| 全專案測試覆蓋率 | 55.1%（前處理下載、模型訓練等長時間腳本以實際執行驗證，未納入單元測試） |
 
 ---
 
@@ -1074,6 +1114,9 @@ OCM API key 已從程式碼移到 `docker/.env`（3.3、4.5）。
 
 ```bash
 conda activate PCRL          # 或在 Docker 容器內（第 3.3 節）
+
+# 單元測試（11.8；需先安裝 docker/requirements-test.txt）
+python -m pytest --cov --cov-report=xml
 
 # 前處理（4.5；重現本文件結果時只需步驟 2、4，直接使用 repo 中的 graphml 與 OCM JSON）
 python Preprocessing/build_pcrl_nodes.py --graph Graph/Taipei/Taipei.graphml --output Graph/Taipei/node_list_Taipei.txt

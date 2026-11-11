@@ -5,3 +5,8 @@ __pycache__/
 # secrets (docker run --env-file docker/.env)
 docker/.env
 .env
+
+# unit test coverage (python -m pytest --cov --cov-report=xml)
+.coverage
+coverage.xml
+.pytest_cache/

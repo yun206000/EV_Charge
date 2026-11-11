@@ -1,0 +1,6 @@
+# coverage of the unit tests (pytest --cov), read by SonarQube from coverage.xml
+[run]
+source = .
+relative_files = True
+omit =
+    tests/*
