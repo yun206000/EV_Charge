@@ -1,0 +1,74 @@
+======================================================================
+PCRL OSM preprocessing
+======================================================================
+OSM place   : Da'an District, Taipei, Taiwan
+Location    : Taipei_Daan
+
+[1/2] Cutting the place polygon out of Graph/Taipei/Taipei.graphml...
+Nodes       : 1046
+Edges       : 2148
+
+[2/2] Saving GraphML...
+
+Finished.
+Output: Graph/Taipei_Daan/Taipei_Daan.graphml
+======================================================================
+PCRL node preprocessing
+======================================================================
+[1/4] Loading OSM graph...
+Nodes: 1046
+[2/4] Generating synthetic demand...
+[3/4] Generating synthetic estate price...
+[4/4] Building PCRL node list...
+Saved: Graph/Taipei_Daan/node_list_Taipei_Daan.txt
+
+======================================================================
+Finished
+======================================================================
+======================================================================
+Open Charge Map downloader
+======================================================================
+Bounding box   : (25.0072168, 121.5217225, 25.0454483, 121.5658788)
+Country        : TW
+StatusTypeID   : 50
+
+Requesting OCM API...
+HTTP status: 200
+Stations returned: 4
+Stations inside place polygon: 4 / 4
+
+Saved OCM JSON: Graph/Taipei_Daan/ocm_taipei_daan.json
+
+----------------------------------------------------------------------
+OCM data summary
+----------------------------------------------------------------------
+total_stations                : 4
+valid_coordinates             : 4
+has_number_of_points          : 4
+has_connections               : 4
+connections_with_power_kw     : 4
+----------------------------------------------------------------------
+Saved summary: Graph/Taipei_Daan/ocm_taipei_daan.json.summary.json
+
+======================================================================
+Download finished.
+======================================================================
+======================================================================
+PCRL OCM preprocessing
+======================================================================
+[1/5] Loading OSM graph...
+Nodes: 1046
+[2/5] Loading OCM data...
+OCM stations: 4
+[3/5] Mapping OCM stations to OSM nodes...
+Mapped stations: 4
+[4/5] Aggregating stations...
+Unique OSM station nodes: 4
+[5/5] Building PCRL existing plan...
+Mapping CSV saved to: Graph/Taipei_Daan/ocm_osm_mapping_Taipei_Daan.csv
+
+======================================================================
+Finished
+======================================================================
+existingplan : Graph/Taipei_Daan/existingplan_Taipei_Daan.pkl
+mapping CSV  : Graph/Taipei_Daan/ocm_osm_mapping_Taipei_Daan.csv

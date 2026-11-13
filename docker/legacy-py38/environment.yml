@@ -1,3 +1,4 @@
+# legacy environment (Python 3.8) of the trained models and reported results, see docker/legacy-py38/Dockerfile
 # Conda environment of PCRL, exported with `conda env export -n PCRL --no-builds` (2026-11-09).
 # Conda packages only; the pip packages are in requirements-pcrl.txt (gym 0.21.0 needs old pip/setuptools, see Dockerfile).
 # Locally:  conda env create -f environment.yml && conda activate PCRL

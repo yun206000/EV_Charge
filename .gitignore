@@ -10,3 +10,4 @@ docker/.env
 .coverage
 coverage.xml
 .pytest_cache/
+dependency-audit-sonar.json

@@ -1,3 +1,4 @@
+import argparse
 import pickle
 import osmnx as ox
 import matplotlib.pyplot as plt
@@ -56,13 +57,21 @@ def visualise_stations(my_graph, my_plan, my_filepath):
     plt.show()
 
 
-if __name__ == '__main__':
-    ox.config(use_cache=True, log_console=True)
-    ort = "Tainan"
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="Map of a charging plan.")
+    parser.add_argument("--city", default="Tainan", help="city folder in Graph/ (Tainan, Taipei, Toy_Example, ...)")
+    parser.add_argument("--plan", default=None, help="plan_RL.pkl (default: Results/<city>/plan_RL.pkl)")
+    parser.add_argument("--output", default=None, help="image file (default: Images/Result_Plots/<city>/RL_<city>.png)")
+    args = parser.parse_args(argv)
+    ox.settings.use_cache, ox.settings.log_console = True, True  # ox.config was removed in osmnx 2
+    ort = args.city
 
     G = ox.load_graphml("Graph/" + ort + "/" + ort + ".graphml")
 
-    with (open("Results/" + ort + "/plan_RL.pkl", "rb")) as f:
+    with (open(args.plan or "Results/" + ort + "/plan_RL.pkl", "rb")) as f:
         plan = pickle.load(f)
-    visualise_stations(G, plan, "Images/Result_Plots/" + ort + "/RL_" + ort + ".png")
+    visualise_stations(G, plan, args.output or "Images/Result_Plots/" + ort + "/RL_" + ort + ".png")
 
+
+if __name__ == '__main__':
+    main()

@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import gym_compat as gc
 import pytest
 from stable_baselines3.common.env_checker import check_env
 import evaluation_framework as ef
@@ -80,14 +81,14 @@ def test_station_placement_passes_gym_checks(env):
 
 
 def test_station_placement_episode(env):
-    obs = env.reset()
+    obs = gc.reset(env)
     assert obs.shape == env.observation_space.shape
     assert env.plan_length == 2
     best = env.best_score
     actions = [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 4, 0, 1, 2, 3]
     done, steps = False, 0
     while not done:
-        obs, reward, done, _ = env.step(actions[steps])
+        obs, reward, done, _ = gc.step(env, actions[steps])
         steps += 1
         assert reward >= 0
         assert env.best_score == pytest.approx(best + reward)
@@ -101,18 +102,18 @@ def test_station_placement_episode(env):
 
 
 def test_station_placement_budget_end(env):
-    env.reset()
+    gc.reset(env)
     env.budget = 1.0
-    env.step(0)
+    gc.step(env, 0)
     assert env.game_over
-    env.reset()
+    gc.reset(env)
     env.budget = 1.0
-    env.step(2)
+    gc.step(env, 2)
     assert env.game_over
 
 
 def test_steal_column(env):
-    env.reset()
+    gc.reset(env)
     plan = env.plan_instance
     station = plan.plan[0]
     station[1] = np.array([1.0, 0.0, 1.0])
@@ -140,7 +141,7 @@ def transfer_env(city_root):
 
 
 def test_transfer_observation(transfer_env):
-    obs = transfer_env.reset()
+    obs = gc.reset(transfer_env)
     assert obs.shape == (et.OBS_SIZE,)
     assert transfer_env.observation_space.contains(obs)
     assert obs[0] == pytest.approx(1.0)  # whole budget left
@@ -149,9 +150,9 @@ def test_transfer_observation(transfer_env):
 def test_transfer_episode_is_reproducible(transfer_env):
     def episode():
         random.seed(3)
-        obs, done, scores = transfer_env.reset(), False, []
+        obs, done, scores = gc.reset(transfer_env), False, []
         while not done:
-            obs, _, done, _ = transfer_env.step(len(scores) % 5)
+            obs, _, done, _ = gc.step(transfer_env, len(scores) % 5)
             assert np.all(np.isfinite(obs)) and np.all(np.abs(obs) <= 1)
             scores.append(transfer_env.best_score)
         return obs, scores
@@ -162,7 +163,7 @@ def test_transfer_episode_is_reproducible(transfer_env):
 
 
 def test_transfer_rejects_non_finite_observation(transfer_env):
-    transfer_env.reset()
+    gc.reset(transfer_env)
     transfer_env.budget = np.nan
     with pytest.raises(ValueError, match="Non-finite observation"):
         transfer_env.establish_observation()

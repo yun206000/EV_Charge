@@ -1,0 +1,2 @@
+city,label,seed,policy,model,train_steps,existing_score,score,improvement,relative_pct,n_stations,episode_steps,seconds,eval_seed
+Taipei_Daan,zeroshot,1,model,runs/source_Tainan/best_source.zip,0,0.23333333333333334,2.092225102766254,1.8588917694329208,896.6679011855374,74,128,3.0,1

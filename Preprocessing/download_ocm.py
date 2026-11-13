@@ -175,7 +175,8 @@ def load_place_polygon(place):
 
     gdf = ox.geocode_to_gdf(place)
 
-    return gdf.unary_union
+    # geopandas >= 1.0 renamed unary_union to union_all
+    return gdf.union_all() if hasattr(gdf, "union_all") else gdf.unary_union
 
 
 def filter_by_polygon(

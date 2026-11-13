@@ -25,6 +25,18 @@ def test_waiting_metric_is_weighted_by_station_flow():
     assert ts.waiting_metric(plan) == pytest.approx((12, 24))
 
 
+def test_service_progress_line():
+    nodes = [(1, {"travel time": 0.1, "distance": 1.0, "demand": 0.1, "private CS": 0})]
+    plan = [[None, None, {"D_s": 1.5, "W_s": 0.1}]]
+    assert ts.service_progress(7, nodes, plan) == ("step 7: 1 stations, avg travel time 6.000 min, "
+                                                   "avg waiting time 6.000 min")
+    assert ts.average_service(nodes, []) == pytest.approx((6, 0))  # no station with EV flow yet
+    plan[0][2]["W_s"] = ef.my_inf  # overloaded station
+    assert "unbounded" in ts.service_progress(7, nodes, plan)
+    plan[0][2]["W_s"] = float("nan")  # station without chargers
+    assert "unbounded" in ts.service_progress(7, nodes, plan)
+
+
 def test_prepare_plan_with_unknown_station_fails():
     plan = [[(12345, {}), np.array([0, 1, 0]), {}]]
     with pytest.raises(ValueError, match="12345"):

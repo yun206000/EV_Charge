@@ -3,6 +3,7 @@ import random
 import socket
 import threading
 import numpy as np
+import gym_compat as gc
 import pytest
 from stable_baselines3 import DQN
 from transfer import beam_search as bs
@@ -63,8 +64,8 @@ def scored_env(city_root):
 
 
 def test_scored_env_remembers_last_score(scored_env):
-    scored_env.reset()
-    _, reward, _, _ = scored_env.step(1)
+    gc.reset(scored_env)
+    _, reward, _, _ = gc.step(scored_env, 1)
     assert scored_env.last_score <= scored_env.best_score
     if reward > 0:
         assert scored_env.last_score == pytest.approx(scored_env.best_score)
@@ -73,7 +74,7 @@ def test_scored_env_remembers_last_score(scored_env):
 def test_q_values_of_model(scored_env):
     model = DQN("MlpPolicy", scored_env, policy_kwargs=dict(net_arch=[8]), learning_starts=0, seed=0,
                 device="cpu")  # the project runs on the CPU (transfer/beam_search.py loads models there)
-    obs = scored_env.reset()
+    obs = gc.reset(scored_env)
     values = bs.q_values(model, obs)
     assert values.shape == (5,) and values.dtype == float
     assert int(np.argmax(values)) == int(model.predict(obs, deterministic=True)[0])

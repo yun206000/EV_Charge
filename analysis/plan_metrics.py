@@ -34,6 +34,17 @@ def load_existing(city):
     return node_list, plan
 
 
+def load_plan(city, plan_dir):
+    """the plan saved by transfer/evaluate.py or transfer/beam_search.py (--save-plan), prepared like the existing one"""
+    with open(os.path.join(plan_dir, "nodes_RL.txt")) as file:
+        result_nodes = ast.literal_eval(file.readline())
+    with open(os.path.join(plan_dir, "plan_RL.pkl"), "rb") as file:
+        result_plan = pickle.load(file)
+    graph_dir = os.path.join("Graph", city)
+    ef.prepare_graph(os.path.join(graph_dir, city + ".graphml"), os.path.join(graph_dir, "node_list_" + city + ".txt"))
+    return ts.prepare_existing_plan(result_plan, result_nodes)
+
+
 def metrics(plan, node_list):
     travel_avg, travel_max = ts.travel_metric(node_list)
     wait_avg, wait_max = ts.waiting_metric(plan)
@@ -55,14 +66,7 @@ def main():
         row = metrics(plan, node_list)
         label, plan_dir = args.label or "existing", ""
     else:
-        with open(os.path.join(args.plan, "nodes_RL.txt")) as file:
-            result_nodes = ast.literal_eval(file.readline())
-        with open(os.path.join(args.plan, "plan_RL.pkl"), "rb") as file:
-            result_plan = pickle.load(file)
-        graph_dir = os.path.join("Graph", args.city)
-        ef.prepare_graph(os.path.join(graph_dir, args.city + ".graphml"),
-                         os.path.join(graph_dir, "node_list_" + args.city + ".txt"))
-        result_nodes, result_plan = ts.prepare_existing_plan(result_plan, result_nodes)
+        result_nodes, result_plan = load_plan(args.city, args.plan)
         row = metrics(result_plan, result_nodes)
         label, plan_dir = args.label, args.plan
     row.update(city=args.city, label=label, plan=plan_dir)

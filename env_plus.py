@@ -1,5 +1,5 @@
-import gym
-from gym import spaces
+import gym_compat as gc
+from gym_compat import spaces
 import numpy as np
 from stable_baselines3.common.env_checker import check_env
 import pickle
@@ -214,7 +214,7 @@ class Station:
         self.station = ef.s_dictionnary(self.station, node_list)
 
 
-class StationPlacement(gym.Env):
+class StationPlacement(gc.gym.Env):
     """Custom Environment that follows gym interface"""
     node_dict = {}
     cost_dict = {}
@@ -239,9 +239,10 @@ class StationPlacement(gym.Env):
         shape = (self.row_length + len(ef.CHARGING_POWER)) * len(self.node_list) + 1
         self.observation_space = spaces.Box(low=-1, high=1, shape=(shape,), dtype=np.float16)
 
-    def reset(self):
+    def reset(self, seed=None, options=None):
         """
-        Reset the state of the environment to an initial state
+        Reset the state of the environment to an initial state (seed / options: gymnasium interface, unused; the
+        episodes are seeded with random.seed / np.random.seed as before)
         """
         self.budget = ef.BUDGET
         self.game_over = False
@@ -257,7 +258,7 @@ class StationPlacement(gym.Env):
         self.config_dict = prepare_config()
         coverage(self.node_list, self.plan_instance.plan)
         obs = self.establish_observation()
-        return obs
+        return gc.reset_result(obs)
 
     def init_hilfe(self, my_node):
         StationPlacement.node_dict[my_node[0]] = {}  # prepare node_dict
@@ -357,7 +358,7 @@ class StationPlacement(gym.Env):
             self.game_over = True
         # if self.game_over:
         #     print("Best score {}.".format(self.best_score))
-        return obs, reward, self.game_over, {}
+        return gc.step_result(obs, reward, self.game_over, {})
 
     def station_config_check(self, my_station):
         """

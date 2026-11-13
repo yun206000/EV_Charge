@@ -73,7 +73,7 @@ PCRL（Placement of Charging stations with Reinforcement Learning）以 Deep Q-N
 | 微調前 / 後 | 微調前 = zero-shot 貪婪規劃；微調後 = beam search 規劃；同一組 episode 種子 1–5 配對比較 |
 | 微調過程紀錄 | 每次搜尋的逐步 log（`logs/beam/`）、結果 CSV、規劃檔（`Results/Transfer/plans/`） |
 | 服務目標 | 平均移動時間、平均等待時間 < 15 分鐘：台南（7.2、7.4、10.1）、台北微調前後（10.3） |
-| 影像紀錄 | 訓練曲線、台南服務指標、台南充電站地圖（`Images/Result_Plots/Training/`、`Tainan/`）；泛化比較圖、微調前後比較、搜尋過程、服務指標、微調前後充電站分布圖（`Images/Result_Plots/Transfer/`） |
+| 影像紀錄 | 台南、台北路網與既有充電站分布圖（`Images/Result_Plots/Data/`）；訓練曲線、台南服務指標、台南充電站地圖（`Images/Result_Plots/Training/`、`Tainan/`）；泛化比較圖、微調前後比較、搜尋過程、服務指標、微調前後充電站分布圖（`Images/Result_Plots/Transfer/`） |
 
 ---
 
@@ -109,6 +109,7 @@ Graph/<city>/* ──> env_plus.StationPlacement / transfer.env.TransferStationP
 PCRL/
 ├── evaluation_framework.py   效用模型：成本、覆蓋、等候時間、分數；路徑計算與快取；全域常數
 ├── env_plus.py               原始 gym 環境 StationPlacement（觀測 8N+1 維）
+├── gym_compat.py             gym 0.21 / gymnasium 介面相容（新舊兩個環境都能執行，3.1）
 ├── reinforcement.py          原始 PCRL：DQN 訓練
 ├── model_eval.py             原始 PCRL：產生充電規劃
 ├── test_solution.py          原始 PCRL：規劃的評估指標
@@ -120,15 +121,16 @@ PCRL/
 │   ├── evaluate.py               貪婪 episode 評估：模型 / 隨機策略 → CSV、規劃
 │   └── beam_search.py            模型引導的 beam search（台北微調）
 ├── analysis/                 統計與影像紀錄
+│   ├── data_maps.py              台南、台北路網與既有充電站（OCM 對應後）分布圖
 │   ├── training_plots.py         訓練曲線（原始模型、來源模型）、台南服務指標
 │   ├── generalization.py         泛化統計與圖
 │   ├── beam.py                   微調前後比較、搜尋過程、服務指標
 │   ├── plan_maps.py              台北微調前後充電站分布圖
 │   └── plan_metrics.py           任一已存規劃的服務指標
-├── scripts/                  run_generalization.sh、run_beam_search.sh（完整流程）
+├── scripts/                  run_generalization.sh、run_beam_search.sh（完整流程）；dependency_audit.sh／.py（相依套件弱點掃描，11.9）
 ├── tests/                    單元測試（pytest，合成小城市資料，11.8）；設定檔 pytest.ini、.coveragerc
-├── docker/                   Dockerfile、Dockerfile.dockerignore、environment.yml、requirements-pcrl.txt、
-│                             requirements-test.txt（測試套件）、.env（金鑰，不進 git）
+├── docker/                   Dockerfile、Dockerfile.dockerignore、requirements-pcrl.txt、requirements-test.txt（測試套件）、
+│                             .env（金鑰，不進 git）；legacy-py38/（舊環境：訓練模型與報告數值的產生環境）
 ├── Graph/<city>/             輸入資料（graphml、節點、既有充電站）；Toy_Example 為原始 PCRL 範例資料
 ├── cache/                    osmnx 下載快取
 ├── tmp_Tainan/               原始 reinforcement.py 的台南模型與訓練紀錄（tmp_Toy_Example/ 為原始範例）
@@ -136,7 +138,7 @@ PCRL/
 ├── Results/
 │   ├── Tainan/                   台南充電規劃（原始模型、source_model/ 來源模型）與服務指標 metrics.csv
 │   └── Transfer/                 泛化與微調的結果 CSV、摘要；plans/ 各規劃
-├── Images/Result_Plots/      影像紀錄：Training/、Tainan/、Transfer/
+├── Images/Result_Plots/      影像紀錄：Data/、Training/、Tainan/、Transfer/
 └── logs/                     training/（訓練與評估 log）、beam/（beam search 逐步 log）
 ```
 
@@ -144,7 +146,21 @@ PCRL/
 
 ## 3. 執行環境（Conda / Docker）
 
-### 3.1 軟體版本（conda 環境 `PCRL`）
+### 3.1 軟體版本
+
+專案有兩個環境，程式碼相同（`gym_compat.py` 處理 gym 0.21 與 gymnasium 的介面差異），兩者都通過全部單元測試：
+
+| | 目前環境（2026-11-13 起） | 舊環境 |
+|---|---|---|
+| conda 環境 / Docker 映像 | `PCRL-py312` / `pcrl:2.0`（`docker/Dockerfile`） | `PCRL` / `pcrl:1.0`（`docker/legacy-py38/Dockerfile`） |
+| Python | 3.12.16 | 3.8.20 |
+| stable-baselines3 / RL 介面 | 2.9.2 / gymnasium 1.4.0 | 1.5.0 / gym 0.21.0 |
+| torch | 2.15.0（CPU 版） | 1.12.0（+cu102 wheel，只用 CPU） |
+| osmnx / numpy / pandas | 2.1.1 / 2.5.4 / 3.1.1 | 1.2.1 / 1.24.3 / 1.4.3 |
+| 已知弱點（pip-audit） | **0** | 120 個（15 個套件，11.9） |
+| 用途 | 預設環境（`scripts/run_*.sh` 的 `PY` 預設值）：訓練、評估、前處理；舊模型直接載入，結果與舊環境相同（11.10） | 訓練模型與本文件數值的產生環境，保留以便完整重現（`PY=$HOME/anaconda3/envs/PCRL/bin/python`） |
+
+舊環境套件明細（conda 環境 `PCRL`）：
 
 | 套件 | 版本 | 用途 |
 |---|---|---|
@@ -161,59 +177,63 @@ PCRL/
 | geopandas / shapely / pyproj / fiona / rtree | 0.11.0 / 1.8.2 / 3.3.1 / 1.8.21 / 1.0.0 | 地理資料 |
 | scikit-learn | 1.3.0（conda） | |
 
-完整清單：`docker/environment.yml`（conda 套件）與 `docker/requirements-pcrl.txt`（pip 套件）。
+完整清單：目前環境 `docker/requirements-pcrl.txt`；舊環境 `docker/legacy-py38/environment.yml`（conda 套件）與 `docker/legacy-py38/requirements-pcrl.txt`（pip 套件）。
 
 ### 3.2 硬體
 
 - CPU：28 執行緒；記憶體 31 GB。
-- GPU：RTX 4090，但 torch 1.12 + CUDA 10.2 不支援 sm_89（錯誤訊息 `no kernel image is available`），
-  因此所有訓練與推論都在 CPU 上執行，載入模型必須指定 `DQN.load(path, device="cpu")`。
+- GPU：RTX 4090，但舊環境的 torch 1.12 + CUDA 10.2 不支援 sm_89（錯誤訊息 `no kernel image is available`），
+  因此所有訓練與推論都在 CPU 上執行，載入模型一律指定 CPU（`gym_compat.load_dqn()`）；目前環境沿用 CPU 版 torch。
 - 網路很小（15 萬個參數），瓶頸在環境模擬（每步約 1–2 秒），GPU 不會帶來明顯加速。
 
 ### 3.3 Docker 封裝
 
-檔案（`docker/`）：`Dockerfile`、`Dockerfile.dockerignore`、`environment.yml`、`requirements-pcrl.txt`、`.env.example`。建置時以 repo 根目錄為 build context（`-f docker/Dockerfile`），BuildKit 會自動使用與 Dockerfile 同名的 `.dockerignore`。
+檔案（`docker/`）：`Dockerfile`、`Dockerfile.dockerignore`、`requirements-pcrl.txt`、`requirements-test.txt`、`.env.example`；舊環境在
+`docker/legacy-py38/`。建置時以 repo 根目錄為 build context（`-f docker/Dockerfile`），BuildKit 會自動使用與 Dockerfile 同名的 `.dockerignore`。
 
-- 基底映像：`continuumio/miniconda3:24.9.2-0`。
+- 基底映像：`python:3.12.16-slim-bookworm`（舊環境：`continuumio/miniconda3:24.9.2-0`）。
 - 建置步驟：
-  1. `conda env create -f docker/environment.yml`（conda 套件）。
-  2. 安裝與主機相同的 `pip==23.1.2 setuptools==65.5.0 wheel==0.38.4`，再以
-     `pip install --no-build-isolation -r docker/requirements-pcrl.txt` 安裝 pip 套件。
-     gym 0.21.0 的 `setup.py` 不符合新版 setuptools 規範，必須用舊版工具且關閉 build isolation 才能安裝。
-  3. 環境路徑 `/opt/conda/envs/PCRL/bin` 加入 `PATH`，容器內直接執行 `python` 即為 PCRL 環境。
-  4. 建立非 root 使用者 `pcrl`（uid 1000）作為預設使用者。
-  5. 逐一列出要複製的程式碼與 `Graph/` 輸入資料（`*.py`、`transfer/`、`analysis/`、`Preprocessing/`、`Visualisierung/`、
+  1. 安裝 `pip==26.3 setuptools==84.2.1 wheel==0.48.0`，再以 `pip install -r docker/requirements-pcrl.txt` 安裝全部套件
+     （torch 取自 PyTorch 的 CPU 套件庫）。
+     舊環境：`conda env create -f docker/legacy-py38/environment.yml`，再以舊版 pip 工具且關閉 build isolation 安裝
+     `docker/legacy-py38/requirements-pcrl.txt`（gym 0.21.0 的 `setup.py` 不符合新版 setuptools 規範）。
+  2. 建立非 root 使用者 `pcrl`（uid 1000）作為預設使用者。
+  3. 逐一列出要複製的程式碼與 `Graph/` 輸入資料（`*.py`、`transfer/`、`analysis/`、`Preprocessing/`、`Visualisierung/`、
      `scripts/`、`Graph/`）到 `/workspace/PCRL`，檔案屬於 root、對執行使用者唯讀；`runs/`、`logs/`、`Results/`、
      `Images/`、`tmp_*` 等輸出不放進映像（另有 `docker/Dockerfile.dockerignore` 把關），執行時以 volume 掛載。
-- 環境變數：`MPLBACKEND=Agg`（無螢幕繪圖）、`PYTHONUNBUFFERED=1`（即時輸出 log）。
+- 環境變數：`MPLBACKEND=Agg`（無螢幕繪圖）、`PYTHONUNBUFFERED=1`（即時輸出 log）、`PY=python`（`scripts/run_*.sh` 使用容器內的
+  Python；舊環境映像未設定，執行腳本時加 `-e PY=python`）。
 - 金鑰：OCM API key 放在 `docker/.env`（格式見 `docker/.env.example`：`OCM_API_KEY=...`），執行時以
   `--env-file docker/.env` 傳入容器。`docker/.env` 不進 git（`.gitignore`）也不會複製進映像（`Dockerfile.dockerignore`）。
 
 ```bash
-# 建置（在 repo 根目錄執行）
-docker build -f docker/Dockerfile -t pcrl:1.0 .
+# 建置（在 repo 根目錄執行）；舊環境：docker build -f docker/legacy-py38/Dockerfile -t pcrl:1.0 .
+docker build -f docker/Dockerfile -t pcrl:2.0 .
 
 # 檢查環境（預設 CMD 會印出各套件版本）
-docker run --rm pcrl:1.0
+docker run --rm pcrl:2.0
 
 # 掛載整個 repo，輸出直接寫回主機，並以主機使用者身分寫檔
-docker run --rm -it -v "$PWD":/workspace/PCRL -u "$(id -u):$(id -g)" pcrl:1.0 \
+docker run --rm -it -v "$PWD":/workspace/PCRL -u "$(id -u):$(id -g)" pcrl:2.0 \
     python -m transfer.evaluate --city Taipei --policy model --model runs/source_Tainan/best_source.zip \
     --label docker_check --seed 0 --eval-seed 1 --csv Results/Transfer/docker_check.csv
 
 # 長時間實驗（背景執行）
-docker run -d --name pcrl_generalization -v "$PWD":/workspace/PCRL -u "$(id -u):$(id -g)" pcrl:1.0 \
+docker run -d --name pcrl_generalization -v "$PWD":/workspace/PCRL -u "$(id -u):$(id -g)" pcrl:2.0 \
     scripts/run_generalization.sh all
 
 # 前處理下載 OCM 充電站（金鑰由 docker/.env 傳入）
-docker run --rm -it --env-file docker/.env -v "$PWD":/workspace/PCRL -u "$(id -u):$(id -g)" pcrl:1.0 \
+docker run --rm -it --env-file docker/.env -v "$PWD":/workspace/PCRL -u "$(id -u):$(id -g)" pcrl:2.0 \
     python Preprocessing/download_ocm.py --place "Taipei, Taiwan" --output Graph/Taipei/ocm_taipei.json
 ```
 
 每個環境行程約佔 1–1.4 GB 記憶體，平行執行數（`JOBS`）需依主機記憶體調整。`scripts/run_beam_search.sh` 使用 `systemd-run --user --scope`（cgroup 記憶體上限），需在主機上執行。
-映像約 3.0 GB；建置時需要約 6–8 GB 暫存空間（torch wheel 776 MB 與各層），建置前請確認磁碟空間。
+映像約 1.7 GB（舊環境 3.0 GB，建置時需要約 6–8 GB 暫存空間）。
 
-**驗證（2026-11-09；2026-11-11 依新目錄結構與安全性修正重建後再次驗證）**：
+**驗證**（`pcrl:2.0`，2026-11-13）：台南來源模型在大安區的貪婪 episode（種子 1）improvement 1.8588917694329221、74 站、128 步，
+與主機 `PCRL-py312` 逐位元相同（與舊環境的比較見 11.10）；金鑰傳入、非 root 使用者、程式檔唯讀等檢查同下表。
+
+舊環境 `pcrl:1.0`（2026-11-09；2026-11-11 依新目錄結構與安全性修正重建後再次驗證）：
 
 | 檢查 | 結果 |
 |---|---|
@@ -257,6 +277,9 @@ docker run --rm -it --env-file docker/.env -v "$PWD":/workspace/PCRL -u "$(id -u
 - OCM 功率對應 PCRL 三種充電樁：≤ 11 kW → 7 kW；≤ 35 kW → 22 kW；其餘 → 50 kW。
 - 對應最近 OSM 節點，同一節點的多個 OCM 站合併。所有 OCM 充電站都納入（`--max-distance 100000`，見 4.5）。
 - 對應明細：`Graph/<city>/ocm_osm_mapping_<city>.csv`。
+- 分布圖（`python -m analysis.data_maps`）：`Images/Result_Plots/Data/Tainan_network_stations.png`、`Taipei_network_stations.png`。藍點 = 既有充電站（畫在對應的路網節點上，大小 = 充電樁數），空心圓 + 虛線 = 距離對應節點超過 500 m 的 OCM 原始位置。
+  - 台南：17 個 OCM 站 → 17 座既有充電站、86 支充電樁（50 kW 85 支、7 kW 1 支），全部在對應節點 332 m 以內。
+  - 台北：33 個 OCM 站 → 29 座既有充電站、142 支充電樁（50 kW 136 支、7 kW 6 支）。其中 10 個 OCM 站位於台北市路網範圍外（距對應節點超過 500 m，最遠 9.5 km），對應到路網邊緣最近的節點；同一節點的站已合併。
 
 ### 4.4 資料集統計
 
@@ -274,11 +297,42 @@ docker run --rm -it --env-file docker/.env -v "$PWD":/workspace/PCRL -u "$(id -u
 | 既有規劃的正規化分數 | 0.2333 | 0.2333 |
 | 每個 episode 步數上限 N/2 | 7,992 | 6,015 |
 
+**示範用小地圖：台南中西區（`Graph/Tainan_WestCentral/`，2026-11-12）**。整個流程（訓練 1,000 步 → 規劃 → 指標 → 地圖）
+約 2 分鐘，適合示範。原本預定的安平區在 OCM 上沒有任何充電站（環境需要至少一座既有充電站做分數正規化），
+因此改用相鄰、面積更小的中西區。
+
+| | 台南中西區 Tainan_WestCentral |
+|---|---|
+| 面積 | 6.3 km² |
+| 路網節點數 N / 邊數 | 652 / 1,846 |
+| 經度範圍 / 緯度範圍 | 120.1658 – 120.2117 / 22.9813 – 23.0075 |
+| 既有充電站（OCM） | 2 座，充電樁 7 / 22 / 50 kW：1 / 0 / 8 |
+| 平均需求 / 平均地價 | 0.531 / 0.556 |
+| 每個 episode 步數上限 N/2 | 326 |
+| 路網來源 | 由 `Graph/Tainan/Tainan.graphml` 依中西區行政界線切出（`build_osm_graph.py --from-graph`，4.5） |
+| 前處理 log | `logs/preprocessing/Tainan_WestCentral.log` |
+
+中西區是台南的一部分（652 個節點、2 座既有充電站都在台南的訓練資料中），因此只用來示範流程，不用來評估泛化能力。
+
+**示範泛化用的小地圖：台北大安區（`Graph/Taipei_Daan/`，2026-11-12）**。台北從未用於訓練或 checkpoint 選擇，
+可示範台南來源模型 zero-shot 與 beam search（10.5）。
+
+| | 台北大安區 Taipei_Daan |
+|---|---|
+| 面積 | 11.3 km² |
+| 路網節點數 N / 邊數 | 1,046 / 2,148 |
+| 經度範圍 / 緯度範圍 | 121.5218 – 121.5634 / 25.0099 – 25.0453 |
+| 既有充電站（OCM） | 4 座，充電樁 7 / 22 / 50 kW：0 / 0 / 23 |
+| 平均需求 / 平均地價 | 0.483 / 0.510 |
+| 路網來源 | 由 `Graph/Taipei/Taipei.graphml` 依大安區行政界線切出（`build_osm_graph.py --from-graph`，4.5） |
+| 前處理 log | `logs/preprocessing/Taipei_Daan.log` |
+
 （既有規劃分數在兩市都是 0.2333，因為分數是以既有規劃本身做正規化，見 5.4。）
 
 ### 4.5 執行前處理（產生 `Graph/<city>/`）
 
-在 repo 根目錄執行（`conda activate PCRL` 或 Docker 容器內）。osmnx 1.2.1 的下載快取寫在根目錄的 `cache/`（已納入 git）。
+在 repo 根目錄執行（`conda activate PCRL-py312` 或 Docker 容器內）。osmnx 的下載快取寫在根目錄的 `cache/`（已納入 git）。
+兩個環境的前處理結果完全相同（11.10）。
 
 | 步驟 | 腳本 | 輸入 | 輸出 | 需要網路 |
 |---|---|---|---|---|
@@ -306,6 +360,15 @@ python Preprocessing/download_ocm.py --place "$PLACE" --output Graph/$CITY/ocm_$
 python Preprocessing/build_ocm_plan.py --graph Graph/$CITY/$CITY.graphml --ocm Graph/$CITY/ocm_$LC.json \
     --output-pkl Graph/$CITY/existingplan_$CITY.pkl --mapping-csv Graph/$CITY/ocm_osm_mapping_$CITY.csv \
     --max-distance 100000
+```
+
+示範用小地圖（台南中西區）：步驟 1 加上 `--from-graph Graph/Tainan/Tainan.graphml`，從已下載的台南路網依行政界線
+（Nominatim）切出，不需連 Overpass（Overpass 公用伺服器滿載時也能完成；與 `graph_from_place(retain_all=False)`
+相同，只保留最大的連通路網）；步驟 2–4 不變：
+
+```bash
+CITY=Tainan_WestCentral; PLACE="West Central District, Tainan, Taiwan"; LC=tainan_westcentral
+python Preprocessing/build_osm_graph.py --place "$PLACE" --location $CITY --output-dir Graph --from-graph Graph/Tainan/Tainan.graphml
 ```
 
 驗證（2026-11-10）：以現有的 graphml 與 OCM JSON 重跑步驟 2 和 4，台南、台北的 `node_list_<city>.txt`、
@@ -395,7 +458,7 @@ score = my_lambda × benefit/benefit₀ − (1 − my_lambda) × cost
 
 ## 6. 強化學習環境 StationPlacement
 
-實作於 `env_plus.py`（gym 0.21 介面）。
+實作於 `env_plus.py`（gym 0.21 / gymnasium 介面，`gym_compat.py`）。
 
 ### 6.1 Episode 流程
 
@@ -482,7 +545,7 @@ for t = 1 … total_timesteps:
 | 參數 | 值 |
 |---|---|
 | 城市 | Tainan（N = 15,983 個節點，既有 17 站） |
-| 演算法 | DQN（stable-baselines3 1.5.0） |
+| 演算法 | DQN（stable-baselines3 1.5.0，舊環境） |
 | Policy | `MlpPolicy`，預設隱藏層 [64, 64]，ReLU |
 | 網路 | Linear(127865→64) → ReLU → Linear(64→64) → ReLU → Linear(64→5)，共 **8,187,909** 個參數 |
 | total_timesteps | 20,000 |
@@ -498,6 +561,39 @@ for t = 1 … total_timesteps:
 | seed | 1；`torch.manual_seed`、`np.random.seed`、`random.seed`，`torch.use_deterministic_algorithms(True)` |
 | 裝置 | CPU |
 | 模型保存 | `SaveOnBestTrainingRewardCallback`：每 400 步讀 `monitor.csv`，取最近 3 個 episode 的平均訓練獎勵，創新高就另存 `tmp_Tainan/best_model_Tainan_<steps>.zip`（不覆蓋舊模型；2026-11-10 清理後只保留實際使用的 11200） |
+
+**命令列參數（2026-11-12 加入）**：原始 PCRL 的四支程式都以 `--city` 指定城市（`Graph/<city>/` 的資料夾名稱，預設 Tainan），
+不加參數時與原本的台南設定完全相同（台南指標重算結果與 `logs/training/test_solution_Tainan.log` 逐字相同）。
+
+| 程式 | 參數 | 預設 |
+|---|---|---|
+| `reinforcement.py` | `--city`、`--steps`（訓練步數）、`--learning-starts`、`--check-freq`、`--metrics-freq`、`--seed`、`--log-dir` | Tainan、20,000、1,000、400、50、1、`tmp_<city>/` |
+| `model_eval.py` | `--city`、`--model`、`--output`、`--metrics-freq` | Tainan、`tmp_<city>/` 中步數最大的 `best_model_<city>_<steps>.zip`（即最後一次創新高的模型）、`Results/<city>/`、50 |
+| `test_solution.py` | `--city`、`--plan-dir` | Tainan、`Results/<city>/` |
+| `Visualisierung/visualise.py` | `--city`、`--plan`、`--output` | Tainan、`Results/<city>/plan_RL.pkl`、`Images/Result_Plots/<city>/RL_<city>.png` |
+
+`--metrics-freq n`：每 n 步印出目前規劃（執行中的 episode）的平均移動時間與平均等待時間（`test_solution.py` 的定義），
+例如 `step 400: 72 stations, avg travel time 0.702 min, avg waiting time 0.341 min`；0 = 不印。
+`model_eval.py` 在 episode 結束時也會印一次。
+
+例：在台北直接訓練原始 PCRL 模型 1,000 步（`learning_starts` 須小於總步數，網路才會更新；模型在第一個 episode
+結束後才會存檔，台北一個 episode 約 600–700 步，所以把檢查間隔縮短為 100 步）：
+
+```bash
+python reinforcement.py --city Taipei --steps 1000 --learning-starts 200 --check-freq 100   # → tmp_Taipei/best_model_Taipei_<steps>.zip
+python model_eval.py --city Taipei                                          # → Results/Taipei/
+python test_solution.py --city Taipei
+python Visualisierung/visualise.py --city Taipei                            # → Images/Result_Plots/Taipei/RL_Taipei.png
+```
+
+示範流程（台南中西區，4.4；全部約 2 分鐘）：
+
+```bash
+python reinforcement.py --city Tainan_WestCentral --steps 1000 --learning-starts 200 --check-freq 100   # 約 70 秒
+python model_eval.py --city Tainan_WestCentral                                                          # 約 30 秒
+python test_solution.py --city Tainan_WestCentral
+python Visualisierung/visualise.py --city Tainan_WestCentral
+```
 | 輸出 | `tmp_Tainan/`（模型、`train.log`） |
 
 **訓練過程**（`tmp_Tainan/train.log`，「最近 3 個 episode 平均訓練獎勵」，含探索）
@@ -761,7 +857,7 @@ python -m transfer.beam_search --city Taipei --beam 4 --topk 2 --eval-seed 1 --l
 | `--patience` | 200 | 貪婪主線完成後，若最佳分數連續這麼多步沒有提升就結束搜尋 |
 | `--max-mem-gb` | 16 | 協調行程＋所有候選行程的記憶體（PSS）上限，超過即中止 |
 | `--min-available-gb` | 4 | 主機可用記憶體下限，低於即中止 |
-| `--label`、`--csv`、`--save-plan`、`--log-every` | `beam`、`Results/Transfer/beam.csv`、無、25 | 結果標籤、CSV、規劃輸出資料夾、log 頻率 |
+| `--label`、`--csv`、`--save-plan`、`--log-every` | `beam`、`Results/Transfer/beam.csv`、無、25 | 結果標籤、CSV、規劃輸出資料夾、log 頻率（每 n 步印分數與目前最佳成員規劃的平均移動／等待時間；開始時印既有規劃、結束時印存檔規劃；0 = 不印中途進度） |
 
 **演算法**
 
@@ -806,7 +902,7 @@ for t = 1, 2, …:
 | `analyze` | `analysis/generalization.py` → `Results/Transfer/generalization_summary.txt`、`Images/Result_Plots/Transfer/generalization.png` |
 | `all` | 以上依序執行 |
 
-環境變數：`PY`、`SOURCE_STEPS=20000`、`EVAL_SEEDS="1 2 3 4 5"`、`RANDOM_SEEDS="1 2 3"`、`JOBS=8`。
+環境變數：`PY`（預設 conda 環境 `PCRL-py312` 的 Python；舊環境 `$HOME/anaconda3/envs/PCRL/bin/python`）、`SOURCE_STEPS=20000`、`EVAL_SEEDS="1 2 3 4 5"`、`RANDOM_SEEDS="1 2 3"`、`JOBS=8`。
 
 ### 9.5 `scripts/run_beam_search.sh`
 
@@ -817,13 +913,14 @@ for t = 1, 2, …:
 | `analyze` | `analysis/beam.py` → `Results/Transfer/beam_summary.txt`、`Images/Result_Plots/Transfer/beam/` 三張圖；`analysis/plan_maps.py` → 微調前後的台北充電站分布圖 `map_seed<seed>.png` |
 | `all` | 以上依序執行 |
 
-環境變數：`BEAM=4`、`TOPK=2`、`EVAL_SEEDS="1 2 3 4 5"`、`JOBS=2`（同時執行的 run 數）、`MEM_MAX=12G`（每個 run 的 cgroup 上限）、
+環境變數：`PY`（同 9.4）、`BEAM=4`、`TOPK=2`、`EVAL_SEEDS="1 2 3 4 5"`、`JOBS=2`（同時執行的 run 數）、`MEM_MAX=12G`（每個 run 的 cgroup 上限）、
 `GUARD_GB=11`（傳給 `--max-mem-gb`）。
 
 ### 9.6 分析與影像紀錄
 
 | 腳本 | 輸出 |
 |---|---|
+| `analysis/data_maps.py` | 路網與既有充電站（OCM 對應後）分布圖：`python -m analysis.data_maps [--cities Tainan Taipei] [--far-m 500]` → `Images/Result_Plots/Data/<city>_network_stations.png` |
 | `analysis/training_plots.py` | `Images/Result_Plots/Training/original_Tainan_training.png`、`source_Tainan_training.png`、`Tainan_service_metrics.png`（讀 `Results/Tainan/metrics.csv`） |
 | `analysis/generalization.py` | 泛化統計（Welch t 檢定）與 `generalization.png` |
 | `analysis/beam.py` | 驗證（B = k = 1 vs zero-shot）、微調前後配對比較（paired t 檢定、Wilcoxon）、服務指標（平均與逐種子）、三張圖 |
@@ -944,9 +1041,40 @@ Q 值最高的 k = 2 個動作，依「目前分數 + 模型估計的後續提�
 | 泛化（台北 zero-shot） | 不經台北訓練即達 2.3239，比隨機策略高 85.0%，5 個種子全部高於隨機策略的最佳結果 |
 | 微調（台北 beam search） | 2.3239 → **2.4012（+3.3%）**；4 / 5 個種子提升、0 個下降，最高 +8.2%；平均移動時間 −2.3%、最大等待時間 −7.7% |
 | 可重現性 | B = k = 1 與 zero-shot 逐位元相同；同一設定重跑結果逐位元相同 |
-| 安全性 | SonarQube 掃描：0 個安全性問題、0 個 security hotspot、0 個 bug，安全性評等 A（11.7） |
-| 程式品質 | 62 個單元測試全部通過；SonarQube Quality Gate **通過**，新程式碼測試覆蓋率 93.7%（11.8） |
+| 安全性 | 程式碼：SonarQube 0 個安全性問題、0 個 security hotspot、0 個 bug（11.7）；相依套件：升級後 49 個套件 **0 個已知弱點**（舊環境 120 個，11.9、11.10） |
+| 程式品質 | 79 個單元測試在新舊兩個環境全部通過；SonarQube Quality Gate **通過**，0 個 issue，安全性／可靠性／可維護性評等 A / A / A，新程式碼覆蓋率 88.9%（11.10） |
+| 環境升級 | Python 3.12、torch 2.15、SB3 2.9；既有模型直接載入，台北與大安區的規劃與舊環境逐站相同，分數差異 < 1e-12（11.10） |
 | 影像紀錄 | 訓練曲線、台南服務指標、台南地圖、泛化比較、微調前後、搜尋過程、台北服務指標、台北微調前後充電站分布圖（第 12 節） |
+
+### 10.5 示範：台北大安區（zero-shot + beam search）
+
+台南來源模型直接用於大安區，再以 beam search（B = 4、k = 2）微調；每個種子 zero-shot 約 4 秒、beam search 8–47 秒，
+記憶體峰值約 0.5 GB。2026-11-12 試跑結果（score improvement，相對既有規劃 0.2333）：
+
+| episode 種子 | zero-shot | beam search | 變化 | 站數 |
+|---|---|---|---|---|
+| 1 | 1.8589 | 1.8987 | +2.1% | 74 → 77 |
+| 2 | 1.9393 | 2.0319 | +4.8% | 93 → 99 |
+| 3 | 1.5893 | 2.0163 | +26.9% | 52 → 100 |
+| 4 | 1.9052 | 2.1158 | +11.1% | 80 → 111 |
+| 5 | 2.2050 | 2.2485 | +2.0% | 131 → 138 |
+| 平均 | 1.8995 | **2.0623** | **+8.6%** | |
+
+種子 1 的平均移動／等待時間：既有 4 座 2.231 / 0.949 分，zero-shot 0.675 / 0.065 分，beam search 0.681 / 0.065 分。
+
+```bash
+C=Taipei_Daan; M=runs/source_Tainan/best_source.zip; OUT=Results/$C; mkdir -p $OUT
+for e in 1 2 3 4 5; do
+  python -m transfer.evaluate --city $C --policy model --model $M --label zeroshot --eval-seed $e \
+      --csv $OUT/zeroshot.csv --save-plan $OUT/zeroshot_e$e
+  python -m transfer.beam_search --city $C --model $M --beam 4 --topk 2 --eval-seed $e --label B4k2 \
+      --csv $OUT/beam.csv --save-plan $OUT/B4k2_e$e
+done
+python -m analysis.plan_metrics --city $C --existing --csv $OUT/metrics.csv
+python -m analysis.plan_metrics --city $C --plan $OUT/zeroshot_e1 --label zeroshot_e1 --csv $OUT/metrics.csv
+python -m analysis.plan_metrics --city $C --plan $OUT/B4k2_e1 --label B4k2_e1 --csv $OUT/metrics.csv
+python Visualisierung/visualise.py --city $C --plan $OUT/B4k2_e1/plan_RL.pkl --output Images/Result_Plots/$C/B4k2_e1.png
+```
 
 ---
 
@@ -1002,7 +1130,7 @@ beam search 同時有多個行程，每個行程各自保有環境複本。三�
 
 - 工具：SonarQube Community Build 26.11（`sonarqube:community`）+ `sonarsource/sonar-scanner-cli`，設定檔
   `sonar-project.properties`（repo 根目錄）。
-- 範圍：全部程式碼，24 個檔案、3,275 行（Python 23 個、`docker/Dockerfile`）；輸入資料、輸出、快取與 `docker/.env` 不在掃描範圍。
+- 範圍：全部程式碼，24 個檔案、3,398 行（Python 23 個、`docker/Dockerfile`）；輸入資料、輸出、快取與 `docker/.env` 不在掃描範圍。
 
 **第一次掃描**：安全性 5 項（高 2、中 2、低 1）、可靠性 1 項，已全部處理：
 
@@ -1031,15 +1159,18 @@ OCM API key 已從程式碼移到 `docker/.env`（3.3、4.5）。
 
 重新執行：啟動 SonarQube（`docker run -d -p 127.0.0.1:9000:9000 sonarqube:community`），在網頁或 API 建立分析 token，
 先執行單元測試產生覆蓋率報告（11.8），再於 repo 根目錄執行 `sonar-project.properties` 開頭註解中的 scanner 指令。
-最後一次掃描：2026-11-11，加入 `analysis/plan_maps.py` 與單元測試後，結果同上表，Quality Gate 通過（11.8）。
+2026-11-11 加入 `analysis/plan_maps.py` 與單元測試後重新掃描，程式碼結果同上表，Quality Gate 通過（11.8）。
+2026-11-13 起掃描也匯入相依套件弱點（11.9）：舊環境的 15 個套件弱點一度使 Vulnerabilities = 15、安全性評等 E；
+升級環境後回到 0 個問題、評等 A，Quality Gate 通過（11.10）。
 
 ### 11.8 單元測試與 Quality Gate（2026-11-11）
 
-- 工具：pytest 8.3.5 + pytest-cov 5.0.0（版本見 `docker/requirements-test.txt`）；測試在 `tests/`，設定檔 `pytest.ini`、`.coveragerc`。
+- 工具：pytest 9.2.0 + pytest-cov 7.1.0（目前環境，`docker/requirements-test.txt`；舊環境 pytest 8.3.5，`docker/legacy-py38/requirements-test.txt`）；
+  測試在 `tests/`，設定檔 `pytest.ini`、`.coveragerc`。
 - 測試資料：`tests/conftest.py` 產生一座合成小城市（5 × 5 路網、26 個節點、2 座既有充電站），檔案格式與
   `Graph/<city>/` 相同，因此測試只需數秒，也不依賴台南／台北的大型資料檔。分析腳本的測試在暫存資料夾中執行，
   不會覆寫 `Results/`、`Images/` 的正式結果。
-- 執行：`python -m pytest --cov --cov-report=xml`，62 個測試全部通過，約 7 秒。
+- 執行：`python -m pytest --cov --cov-report=xml`，79 個測試全部通過，約 9 秒。
 
 | 測試檔 | 內容 |
 |---|---|
@@ -1047,7 +1178,9 @@ OCM API key 已從程式碼移到 `docker/.env`（3.3、4.5）。
 | `test_service_metrics.py` | 平均移動／等待時間的加權方式（手算驗證）、節點指派、`analysis/plan_metrics.py` 輸出的 CSV 欄位與數值 |
 | `test_environments.py` | 充電配置表（最便宜配置）、啟發式選點、拆樁、預算用盡、原始環境通過 gym 介面檢查、完整 episode（5 種動作）、遷移環境觀測維度與範圍、同一種子 episode 逐位元重現 |
 | `test_beam_search.py` | 行程間訊息傳遞（大於 socket 緩衝區）、規劃簽章與充電站順序無關、fork 後子行程保留亂數狀態（11.5）、記憶體讀取、Q 值與模型貪婪動作一致 |
-| `test_analysis.py` | 訓練 log 解析、訓練曲線、台南服務指標圖、泛化摘要、beam search 摘要（驗證、統計檢定、逐種子服務指標）、台北微調前後充電站分布圖 |
+| `test_pipeline.py` | 原始 PCRL 流程以 `--city` 指定城市：訓練 30 步並存模型（每 10 步印出平均移動／等待時間）→ 產生規劃（自動選最新模型）→ 服務指標 → 地圖 |
+| `test_analysis.py` | 訓練 log 解析、訓練曲線、台南服務指標圖、泛化摘要、beam search 摘要（驗證、統計檢定、逐種子服務指標）、台北微調前後充電站分布圖、路網與既有充電站分布圖 |
+| `test_dependency_audit.py` | 相依套件弱點報告（11.9）：CVSS 3.x 分數（標準範例向量）、嚴重度來源優先順序、修正版本、套件鎖定行號、SonarQube 匯入格式（不連網，以假資料測試） |
 
 各模組覆蓋率（pytest-cov，以敘述計）：
 
@@ -1057,18 +1190,117 @@ OCM API key 已從程式碼移到 `docker/.env`（3.3、4.5）。
 | `env_plus.py` | 96% |
 | `transfer/env.py` | 99% |
 | `analysis/`（5 個模組） | 98–99% |
-| `test_solution.py` | 79% |
+| `test_solution.py` | 99% |
+| `reinforcement.py`、`model_eval.py` | 99%、98% |
+| `Visualisierung/visualise.py` | 86% |
+| `analysis/data_maps.py` | 86% |
+| `scripts/dependency_audit.py` | 96% |
 | `transfer/beam_search.py` | 32%（行程協調與主程式由 10.3 的實際搜尋驗證，B = k = 1 與 zero-shot 逐位元相同） |
 
-SonarQube 結果（加入覆蓋率報告後重新掃描）：
+SonarQube 結果（2026-11-11，加入覆蓋率報告後重新掃描；2026-11-13 的結果見 11.9）：
 
 | 指標 | 結果 |
 |---|---|
 | Quality Gate | **通過（Passed）** |
-| 新程式碼測試覆蓋率（門檻 ≥ 80%） | **93.7%** |
+| 新程式碼測試覆蓋率（門檻 ≥ 80%） | **93.8%** |
 | 新程式碼重複率（門檻 ≤ 3%） | 0.0% |
 | 新程式碼問題數（門檻 0） | 0 |
-| 全專案測試覆蓋率 | 55.1%（前處理下載、模型訓練等長時間腳本以實際執行驗證，未納入單元測試） |
+| 全專案測試覆蓋率 | 62.5%（前處理下載、來源模型訓練等長時間腳本以實際執行驗證，未納入單元測試） |
+
+### 11.9 相依套件弱點掃描（pip-audit，2026-11-13）
+
+- 範圍：Docker 映像實際安裝的 Python 套件（含 pip / setuptools / wheel）加上測試套件；Python 直譯器本身與 openssl 等
+  非 Python 函式庫不在範圍內。本節是舊環境 `pcrl:1.0` 的結果（48 + 7 = 55 個套件，紀錄在 `Results/Security/legacy-py38/`）；
+  升級後的結果見 11.10。torch 的 CPU 版（`2.15.0+cpu`）以 PyPI 上的同一版本 `2.15.0` 比對。
+- 工具：pip-audit 2.9.0（PyPA），比對 PyPI / OSV 弱點資料庫；只送出套件名稱與版本。嚴重度取 GitHub advisory 評等
+  （OSV 資料庫），沒有評等時以 CVSS 3.x 向量計算分數，兩者都沒有的標為未評級。
+- 執行：`scripts/dependency_audit.sh`（約 30 秒）→ `Results/Security/pip_audit.json`（原始結果）、`dependency_audit.csv`
+  （每個弱點一列）、`dependency_audit_summary.txt`（每個套件一列），以及給 SonarQube 匯入的 `dependency-audit-sonar.json`。
+- SonarQube：`sonar-project.properties` 以 `sonar.externalIssuesReportPaths` 匯入，每個有弱點的套件一個 issue，標在鎖定該套件的那一行
+  （`docker/requirements-*.txt` 或 `docker/Dockerfile`），之後每次掃描都會自動列管。
+
+**結果**：55 個套件中 15 個有已知弱點，共 120 個（critical 11、high 57、medium 40、low 8、未評級 4）。
+
+| 套件 | 版本 | 弱點數 | 最高嚴重度 | 全部修正的版本 |
+|---|---|---|---|---|
+| pillow | 9.1.1 | 54 | critical | 13.0.0（另 2 個尚無修正） |
+| torch | 1.12.0 | 24 | critical | 2.13.0（另 5 個尚無修正） |
+| certifi | 2022.6.15 | 4 | critical | 2026.10.18 |
+| brotli | 1.0.9 | 2 | critical | 1.2.1 |
+| fiona | 1.8.21 | 2 | critical | 1.10b2 |
+| urllib3 | 1.26.9 | 10 | high | 2.8.0 |
+| setuptools | 65.5.0 | 5 | high | 84.1.0 |
+| fonttools | 4.33.3 | 2 | high | 4.60.2 |
+| geopandas | 0.11.0 | 1 | high | 1.1.2 |
+| pip | 23.1.2 | 7 | medium | 26.2 |
+| requests | 2.28.1 | 4 | medium | 2.33.0 |
+| idna | 3.3 | 2 | medium | 3.15 |
+| pytest | 8.3.5 | 1 | medium | 9.0.3 |
+| scikit-learn | 1.3.0 | 1 | medium | 1.5.0 |
+| zipp | 3.8.0 | 1 | medium | 3.19.1 |
+
+**SonarQube 掃描（舊環境，2026-11-13 升級前）**：
+
+| 指標 | 結果 |
+|---|---|
+| Quality Gate | **未通過（Failed）**：新程式碼問題數 13（門檻 0），全部是匯入的相依套件弱點 |
+| 新程式碼測試覆蓋率（門檻 ≥ 80%） | 90.3%（通過） |
+| 新程式碼重複率（門檻 ≤ 3%） | 0.0%（通過） |
+| Vulnerabilities / 安全性評等 | 15 / E（全部來自相依套件；程式碼本身 0 個） |
+| Bugs / Security Hotspots | 0 / 0 |
+| 全專案測試覆蓋率 | 64.7%（29 個檔案、3,707 行） |
+
+這些版本原本是為了重現訓練結果而鎖定的（Python 3.8、torch 1.12、stable-baselines3 1.5、gym 0.21），多數修正版本已不支援
+Python 3.8（例如 pillow 13、torch 2.13），因此改為升級整個環境並驗證既有模型與結果（11.10）。
+
+### 11.10 環境升級與重現驗證（2026-11-13）
+
+為修正 11.9 的相依套件弱點，環境升級為 Python 3.12（conda 環境 `PCRL-py312`、Docker 映像 `pcrl:2.0`，版本見 3.1）。
+舊環境保留在 `docker/legacy-py38/`（`pcrl:1.0`），作為訓練模型與本文件數值的產生環境。
+
+**程式修改**（新舊兩個環境都能執行）：
+
+- `gym_compat.py`：依 stable-baselines3 版本選用 gym 0.21 或 gymnasium；環境的 `reset()` / `step()` 依所用函式庫回傳
+  對應格式，腳本一律透過 `gym_compat.reset()` / `step()` 取得原本的格式；`load_dqn()` 在 CPU 上載入模型，並以環境的
+  observation / action space 取代舊模型檔中 SB3 2.x 無法讀取的 gym 0.21 物件（網路權重不變）。
+- 使用者：`env_plus.py`、`transfer/env.py`、`transfer/evaluate.py`、`transfer/beam_search.py`、`model_eval.py` 與測試。
+- osmnx 2：`ox.config` 改為 `ox.settings`；`truncate_graph_polygon` 不再有 `retain_all`，改以 `largest_component`
+  保留最大弱連通部分；geopandas 1.x 的 `unary_union` 改為 `union_all`（舊版仍用原寫法）。
+
+**弱點掃描**：`pcrl:2.0` 的 43 個套件加上測試套件，共 49 個，**0 個已知弱點**（`Results/Security/`）。
+
+**重現驗證**（同一模型檔 `runs/source_Tainan/best_source.zip`，結果在新環境重新產生後與舊環境紀錄比較）：
+
+| 項目 | 舊環境 | 新環境 | 比較 |
+|---|---|---|---|
+| 台北 zero-shot（種子 1） | improvement 2.4756452779578244、403 站、688 步 | 2.4756452779580473、403 站、688 步 | 規劃逐站相同（站點與各類充電樁數），分數差 2.2e-13 |
+| 大安區 zero-shot（種子 1、3） | 1.8588917694329208 / 1.5893022066346283 | 1.8588917694329221 / 1.5893022066346234 | 規劃逐站相同，分數差 < 1e-14 |
+| 大安區 beam search B4k2（種子 1、3） | 1.8987150021890278、77 站 / 2.0163047408223203、100 站 | 1.898715002189029、77 站 / 2.0163047408223265、100 站 | 規劃逐站相同，搜尋步數相同 |
+| 大安區服務指標（beam search 種子 1） | 既有 2.231 / 0.949 分，規劃 0.681 / 0.065 分 | 相同 | 相同 |
+| 原始 PCRL 模型（`model_eval.py`，西中區模型 `best_model_Tainan_WestCentral_400.zip`） | score 5.676077559707788、328 站 | 5.676077559707786、328 站 | 規劃逐站相同（站點與各類充電樁數），分數差 2e-15 |
+| 前處理（大安區路網切割、台北與大安區 OCM 對應、台北節點清單） | | | 輸出完全相同（節點與邊、對應表、既有規劃、節點清單檔逐位元相同） |
+| 單元測試 | 79 個通過 | 79 個通過 | |
+| 台北 zero-shot 執行時間 | 832.7 秒 | 631.0 秒 | 約快 24% |
+| 訓練（`transfer/train.py` 大安區、`reinforcement.py` 西中區，各 300 步） | | 正常完成 | checkpoint 可由 `transfer/evaluate.py` 載入評估 |
+
+模型的每一步決策都相同；分數只在第 13 位小數以後有差異，來自新版 numpy 的浮點加總順序。本文件的數值（舊環境產生）
+因此不需重算。載入舊模型時 SB3 2.x 會提示 optimizer 狀態格式不同，只影響接續訓練，不影響推論。
+
+驗證後 `scripts/run_generalization.sh`、`scripts/run_beam_search.sh` 的預設 `PY` 改為新環境。評估與 beam search 的結果與
+舊環境相同；重新訓練則因 torch / SB3 版本不同，亂數序列與舊環境不同，訓練出的模型不會與本文件的模型逐位元相同，
+要逐位元重現訓練請用舊環境（`PY=$HOME/anaconda3/envs/PCRL/bin/python`）。
+
+**SonarQube 重新掃描**（升級後，2026-11-13）：
+
+| 指標 | 結果 |
+|---|---|
+| Quality Gate | **通過（Passed）** |
+| 新程式碼測試覆蓋率（門檻 ≥ 80%） | 88.9% |
+| 新程式碼重複率（門檻 ≤ 3%） | 0.0% |
+| 問題數（Issues） | **0**（相依套件弱點 0、程式碼 0） |
+| Vulnerabilities / Bugs / Security Hotspots | 0 / 0 / 0 |
+| Security / Reliability / Maintainability rating | **A / A / A** |
+| 全專案測試覆蓋率 | 65.1%（28 個檔案、3,779 行） |
 
 ---
 
@@ -1078,6 +1310,8 @@ SonarQube 結果（加入覆蓋率報告後重新掃描）：
 
 | 檔案 | 階段 | 內容 |
 |---|---|---|
+| `Images/Result_Plots/Data/Tainan_network_stations.png` | 資料 | 台南路網（15,983 節點）與 17 座既有充電站（OCM 對應後，大小 = 充電樁數） |
+| `Images/Result_Plots/Data/Taipei_network_stations.png` | 資料 | 台北路網（12,030 節點）與 29 座既有充電站；標出 10 個位於路網範圍外的 OCM 原始位置與其對應節點 |
 | `Images/Result_Plots/Training/original_Tainan_training.png` | 訓練 | 原始 PCRL 模型在台南的訓練曲線（最近 3 個 episode 平均獎勵、保存的最佳模型） |
 | `Images/Result_Plots/Training/source_Tainan_training.png` | 訓練 | 來源模型在台南的訓練 episode 獎勵與各 checkpoint 貪婪分數、選中的 17,000 步 |
 | `Images/Result_Plots/Training/Tainan_service_metrics.png` | 訓練 | 台南既有充電站、原始 PCRL 模型、來源模型的平均移動時間與平均等待時間，標示 15 分鐘目標線 |
@@ -1113,7 +1347,8 @@ SonarQube 結果（加入覆蓋率報告後重新掃描）：
 ## 13. 重現步驟
 
 ```bash
-conda activate PCRL          # 或在 Docker 容器內（第 3.3 節）
+conda activate PCRL-py312    # 或在 Docker 容器內（第 3.3 節）；scripts/run_*.sh 預設也用此環境
+# 逐位元重現訓練：conda activate PCRL（docker/legacy-py38/），並以 PY=$HOME/anaconda3/envs/PCRL/bin/python 執行 scripts/run_*.sh
 
 # 單元測試（11.8；需先安裝 docker/requirements-test.txt）
 python -m pytest --cov --cov-report=xml
@@ -1124,15 +1359,16 @@ python Preprocessing/build_ocm_plan.py --graph Graph/Taipei/Taipei.graphml --ocm
     --output-pkl Graph/Taipei/existingplan_Taipei.pkl --mapping-csv Graph/Taipei/ocm_osm_mapping_Taipei.csv --max-distance 100000
 
 # 一、訓練：原始 PCRL 模型（台南）
-python reinforcement.py      # 訓練 → tmp_Tainan/
-python model_eval.py         # 產生規劃 → Results/Tainan/
-python test_solution.py      # 指標
-python Visualisierung/visualise.py
+python reinforcement.py --city Tainan      # 訓練 → tmp_Tainan/（--city 可換成其他城市，7.2）
+python model_eval.py --city Tainan         # 產生規劃 → Results/Tainan/
+python test_solution.py --city Tainan      # 指標
+python Visualisierung/visualise.py --city Tainan
 
 # 一、訓練：來源模型（台南，transfer/env.py）
 scripts/run_generalization.sh source   # 訓練 20,000 步（約 14 小時）
 scripts/run_generalization.sh select   # checkpoint 選擇 → runs/source_Tainan/best_source.zip
 scripts/run_generalization.sh service  # 台南平均移動／等待時間（既有、原始模型、來源模型）→ Results/Tainan/metrics.csv
+python -m analysis.data_maps           # 台南、台北路網與既有充電站分布圖 → Images/Result_Plots/Data/
 python -m analysis.training_plots      # 訓練曲線、台南服務指標圖 → Images/Result_Plots/Training/
 
 # 二、泛化（台北）
@@ -1149,7 +1385,9 @@ scripts/run_beam_search.sh analyze
 
 - 訓練：`--seed` 設定 torch / numpy / random，並啟用 `torch.use_deterministic_algorithms(True)`。
 - 評估：`--eval-seed` 設定 `random` / `np.random`（環境中動作 2–4 的隨機選點）；beam search 在 fork 時保留亂數狀態（11.5）。
-- 同一模型、同一 episode 種子結果可逐位元重現（例：zero-shot 種子 1 = 2.4756452779578244）。
+- 同一環境、同一模型、同一 episode 種子結果可逐位元重現（例：zero-shot 種子 1 = 2.4756452779578244（舊環境）、
+  2.4756452779580473（新環境）；兩環境的規劃逐站相同，11.10）。
+- 訓練只在同一環境內逐位元重現；本文件的模型由舊環境訓練。
 
 ---
 

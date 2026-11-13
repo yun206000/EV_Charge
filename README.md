@@ -23,29 +23,35 @@ The full technical documentation (Traditional Chinese, all settings, parameters 
 
 
 # Installation
-The environment (Python 3.8.20, stable-baselines3 1.5.0, torch 1.12.0 CPU, gym 0.21.0, osmnx 1.2.1) is packaged as a
-Docker image; the files are in `docker/`.
+The environment (Python 3.12.16, stable-baselines3 2.9.2, gymnasium 1.4.0, torch 2.15.0 CPU, osmnx 2.1.1; no known
+vulnerabilities) is packaged as a Docker image; the files are in `docker/`.
 
 ```bash
-docker build -f docker/Dockerfile -t pcrl:1.0 .        # from the repository root
-docker run --rm pcrl:1.0                                # prints the package versions
-docker run --rm -it -v "$PWD":/workspace/PCRL -u "$(id -u):$(id -g)" pcrl:1.0 python -m transfer.evaluate --help
+docker build -f docker/Dockerfile -t pcrl:2.0 .        # from the repository root
+docker run --rm pcrl:2.0                                # prints the package versions
+docker run --rm -it -v "$PWD":/workspace/PCRL -u "$(id -u):$(id -g)" pcrl:2.0 python -m transfer.evaluate --help
 ```
+
+The models were trained and the reported results produced in the legacy environment (Python 3.8.20,
+stable-baselines3 1.5.0, torch 1.12.0, gym 0.21.0, osmnx 1.2.1), kept in `docker/legacy-py38/` (`pcrl:1.0`) for exact
+reproduction. The code runs in both (`gym_compat.py`); the trained models load unchanged in the new environment and give
+the same plans (`README_for_doc.md` section 11.10). The scripts in `scripts/` use the new environment by default;
+set `PY=$HOME/anaconda3/envs/PCRL/bin/python` to run them in the legacy one (training is reproduced bit for bit only
+in the environment it was run in).
 
 The Open Charge Map API key (needed only to download stations, preprocessing step 3) is kept in `docker/.env`
 (`OCM_API_KEY=...`, template `docker/.env.example`). The file is git-ignored and not copied into the image; pass it
 with `docker run --env-file docker/.env ...`. Outside Docker, `Preprocessing/download_ocm.py` reads it directly.
 
-Without Docker, create the conda environment from the same files:
+Without Docker, create a conda environment from the same file:
 
 ```bash
-conda env create -f docker/environment.yml
-conda activate PCRL
-pip install pip==23.1.2 setuptools==65.5.0 wheel==0.38.4
-pip install --no-build-isolation -r docker/requirements-pcrl.txt
+conda create -n PCRL-py312 python=3.12
+conda activate PCRL-py312
+pip install -r docker/requirements-pcrl.txt
 ```
 
-Models are always loaded on the CPU (`DQN.load(path, device="cpu")`).
+Models are always loaded on the CPU (`gym_compat.load_dqn()`).
 
 
 # Preprocessing (Tainan / Taipei)
@@ -75,11 +81,24 @@ keep the files in `Graph/<city>/` and rerun only steps 2 and 4, which reproduce 
 Original PCRL model on Tainan (environment `env_plus.py`, observation of 8 values per node):
 
 ```bash
-python reinforcement.py      # DQN training -> tmp_Tainan/best_model_Tainan_<steps>.zip, tmp_Tainan/train.log
-python model_eval.py         # charging plan of the model -> Results/Tainan/plan_RL.pkl, nodes_RL.txt
-python test_solution.py      # travel time, waiting time, budget of the plan
-python Visualisierung/visualise.py
+python reinforcement.py --city Tainan          # DQN training -> tmp_Tainan/best_model_Tainan_<steps>.zip
+python model_eval.py --city Tainan             # charging plan of the model -> Results/Tainan/plan_RL.pkl, nodes_RL.txt
+python test_solution.py --city Tainan          # travel time, waiting time, budget of the plan
+python Visualisierung/visualise.py --city Tainan
 ```
+
+`--city` is the folder name in `Graph/` (default Tainan). Other options: `reinforcement.py --steps --learning-starts
+--check-freq --seed --log-dir`, `model_eval.py --model --output` (default model: the `best_model_<city>_<steps>.zip`
+with the most steps in `tmp_<city>/`), `test_solution.py --plan-dir`, `visualise.py --plan --output`. Example, 1,000
+training steps directly on Taipei: `python reinforcement.py --city Taipei --steps 1000 --learning-starts 200 --check-freq 100`.
+`--metrics-freq n` (default 50) prints the average travel and waiting time of the current plan every n steps.
+
+Small demo map, Tainan West Central District (`Graph/Tainan_WestCentral/`, 652 nodes, 2 existing stations; the whole
+pipeline takes about 2 minutes): `--city Tainan_WestCentral`. Its road network is cut out of the Tainan graph with
+`Preprocessing/build_osm_graph.py --from-graph Graph/Tainan/Tainan.graphml` (no Overpass download needed). It is part
+of Tainan, so it only demonstrates the pipeline. For a generalisation demo use Taipei Da'an District
+(`Graph/Taipei_Daan/`, 1,046 nodes, 4 existing stations, cut from the Taipei graph): zero-shot + beam search take seconds
+per seed (`README_for_doc.md` section 10.5).
 
 City-independent source model on Tainan (environment `transfer/env.py`, fixed observation of 324 values, so the same
 network runs on every city):
@@ -88,6 +107,7 @@ network runs on every city):
 scripts/run_generalization.sh source    # 20,000 training steps -> runs/source_Tainan/
 scripts/run_generalization.sh select    # best checkpoint -> runs/source_Tainan/best_source.zip
 scripts/run_generalization.sh service   # Tainan travel / waiting time of every plan -> Results/Tainan/metrics.csv
+python -m analysis.data_maps            # road network and existing stations of Tainan / Taipei -> Images/Result_Plots/Data/
 python -m analysis.training_plots       # training curves, Tainan service metrics -> Images/Result_Plots/Training/
 ```
 
@@ -137,11 +157,12 @@ Both trained models meet the 15-minute target by a wide margin.
 Without any Taipei training the Tainan model is 85% better than a random policy. Details: `README_for_doc.md`
 sections 7 and 10, `Results/Tainan/metrics.csv`, `Results/Transfer/*_summary.txt`, figures in `Images/Result_Plots/`.
 
-Security: the code is scanned with SonarQube (`sonar-project.properties`); 0 vulnerabilities, 0 security hotspots,
-0 bugs, security rating A (`README_for_doc.md` section 11.7).
+Security: the code is scanned with SonarQube (`sonar-project.properties`) and the dependencies with pip-audit
+(`scripts/dependency_audit.sh`, imported into SonarQube): 0 issues, 0 vulnerabilities, 0 security hotspots, ratings
+A / A / A, quality gate passed (`README_for_doc.md` sections 11.7, 11.9, 11.10).
 
-Tests: 62 unit tests on a small synthetic city (`tests/`, about 7 seconds), all passing; SonarQube quality gate passed
-with 93.7% coverage of new code (`README_for_doc.md` section 11.8).
+Tests: 79 unit tests on a small synthetic city (`tests/`, about 10 seconds), passing in both environments; 88.9% coverage
+of new code (`README_for_doc.md` section 11.8).
 
 ```
 python -m pip install -r docker/requirements-test.txt
@@ -157,6 +178,7 @@ All commands are run from the repository root; the modules in `transfer/` and `a
 PCRL/
 ├── evaluation_framework.py   utility model (cost, coverage, waiting time, score), routing and caches
 ├── env_plus.py               original environment StationPlacement
+├── gym_compat.py             gym 0.21 / gymnasium compatibility (both environments)
 ├── reinforcement.py          original PCRL: DQN training
 ├── model_eval.py             original PCRL: charging plan of a model
 ├── test_solution.py          original PCRL: travel time, waiting time, budget of a plan
@@ -168,14 +190,15 @@ PCRL/
 │   ├── evaluate.py               greedy episodes of a model / random policy -> CSV, plan
 │   └── beam_search.py            model-guided beam search
 ├── analysis/                 statistics and figures
+│   ├── data_maps.py              road network and existing stations (after the OCM mapping)
 │   ├── training_plots.py         training curves, Tainan service metrics
 │   ├── generalization.py         zero-shot vs random policy
 │   ├── beam.py                   beam search vs zero-shot, search progress, service metrics
 │   ├── plan_maps.py              maps of the Taipei stations before / after fine-tuning
 │   └── plan_metrics.py           service metrics of saved plans
-├── scripts/                  run_generalization.sh, run_beam_search.sh
+├── scripts/                  run_generalization.sh, run_beam_search.sh, dependency_audit.sh / .py (dependency vulnerability scan)
 ├── tests/                    unit tests (pytest; settings in pytest.ini, .coveragerc)
-├── docker/                   Dockerfile, Dockerfile.dockerignore, environment.yml, requirements-pcrl.txt, requirements-test.txt, .env(.example)
+├── docker/                   Dockerfile, Dockerfile.dockerignore, requirements-pcrl.txt, requirements-test.txt, .env(.example); legacy-py38/
 ├── sonar-project.properties  SonarQube analysis settings
 ├── Graph/<city>/             input data
 ├── tmp_Tainan/               model and training log of reinforcement.py (tmp_Toy_Example/: original example)

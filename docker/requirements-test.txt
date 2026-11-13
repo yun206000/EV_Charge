@@ -1,10 +1,8 @@
 # unit tests and coverage (tests/, pytest.ini, .coveragerc), installed on top of requirements-pcrl.txt
 # install with: python -m pip install -r requirements-test.txt
-# exceptiongroup 1.2.2 keeps typing-extensions at the pinned 4.2.0 of requirements-pcrl.txt
-pytest==8.3.5
-pytest-cov==5.0.0
-coverage==7.6.1
-exceptiongroup==1.2.2
-iniconfig==2.1.0
-pluggy==1.5.0
-tomli==2.5.0
+pytest==9.2.0
+pytest-cov==7.1.0
+coverage==7.17.3
+iniconfig==2.3.1
+pluggy==1.7.0
+Pygments==2.21.0

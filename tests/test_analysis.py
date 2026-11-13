@@ -4,7 +4,7 @@ import sys
 import numpy as np
 import pandas as pd
 import pytest
-from analysis import beam, generalization, plan_maps, plan_metrics, training_plots
+from analysis import beam, data_maps, generalization, plan_maps, plan_metrics, training_plots
 from conftest import CITY, EXISTING_IDS, build_node_list, build_plan, node_id
 
 """
@@ -48,6 +48,19 @@ def test_plan_maps_figure(workdir, city_files, monkeypatch, capsys):
     plan_maps.main()
     assert os.path.getsize(os.path.join(plan_maps.OUT_DIR, "map_seed1.png")) > 0
     assert "3 -> 4 stations, 2 added, 1 removed" in capsys.readouterr().out
+
+
+# data_maps ##########################################################################################################
+def test_data_map_shows_mapping(workdir, tmp_path):
+    mapping = tmp_path / "mapping.csv"  # one site next to its node, one 1.2 km away; both on existing stations
+    write(str(mapping), "ocm_id,latitude,longitude,nearest_node,nearest_distance_m,n_7kw,n_22kw,n_50kw,numberofpoints\n"
+          "1,23.0001,120.2001,{},15.0,0,2,0,2\n2,22.99,120.19,{},1200.0,0,2,0,2\n".format(*EXISTING_IDS))
+    info = data_maps.draw_city(CITY, str(workdir / "map.png"), far_m=500, mapping_file=str(mapping))
+    assert info["stations"] == 2 and info["ocm_sites"] == 2 and info["chargers"] == 4
+    assert info["chargers_by_power"] == {22: 4}
+    assert info["far_sites"] == 1 and info["max_distance_m"] == 1200.0
+    assert os.path.getsize(workdir / "map.png") > 0
+    assert [data_maps.marker_area(n) for n in [1, 3, 4, 7, 8, 30]] == [14, 14, 30, 30, 60, 60]
 
 
 # training_plots #####################################################################################################

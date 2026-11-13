@@ -1,5 +1,5 @@
 import numpy as np
-from gym import spaces
+from gym_compat import spaces
 import evaluation_framework as ef
 import env_plus as ev
 
@@ -62,7 +62,7 @@ class TransferStationPlacement(ev.StationPlacement):
         self.total_demand = max(self.weak_demand.sum(), 1e-9)
         self.initial_node_attributes = [dict(my_node[1]) for my_node in self.node_list]
 
-    def reset(self):
+    def reset(self, seed=None, options=None):
         """
         Start every episode with empty distance/cost caches. The caches of env_plus/evaluation_framework are never
         emptied, so in a long training run they grow to several GB per process. The cost cache is also keyed by
@@ -77,7 +77,7 @@ class TransferStationPlacement(ev.StationPlacement):
             for node_cache in my_dict.values():
                 node_cache.clear()
         ef._OSM_ROUTE_CACHE.clear()
-        return super(TransferStationPlacement, self).reset()
+        return super(TransferStationPlacement, self).reset(seed=seed, options=options)
 
     def node_features(self, j, covered):
         return [self.weak_demand[j], squash(covered[j]), self.price[j], self.x_norm[j], self.y_norm[j]]

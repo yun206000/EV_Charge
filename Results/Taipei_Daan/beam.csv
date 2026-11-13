@@ -1,0 +1,4 @@
+city,label,model,beam,topk,value_weight,eval_seed,existing_score,score,improvement,n_stations,episode_steps,expansions,seconds,action_counts
+Taipei_Daan,B4k2,runs/source_Tainan/best_source.zip,4,2,1.0,1,0.23333333333333334,2.132048335522361,1.8987150021890278,77,135,1026,8.5,2 4 113 12 4
+Taipei_Daan,B4k2,runs/source_Tainan/best_source.zip,4,2,1.0,1,0.23333333333333334,2.132048335522361,1.8987150021890278,77,135,1026,10.8,2 4 113 12 4
+Taipei_Daan,B4k2,runs/source_Tainan/best_source.zip,4,2,1.0,1,0.23333333333333334,2.132048335522361,1.8987150021890278,77,135,1026,8.5,2 4 115 10 4

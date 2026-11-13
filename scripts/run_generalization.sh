@@ -14,7 +14,9 @@ set -euo pipefail
 SELF="$(cd "$(dirname "$0")" && pwd)/$(basename "$0")"  # absolute, so the script can call itself after the cd
 cd "$(dirname "$SELF")/.."  # repository root
 
-export PY=${PY:-$HOME/anaconda3/envs/PCRL/bin/python}
+# Python of the conda environment PCRL-py312 (README_for_doc.md section 3.1); the legacy environment that produced
+# the reported results: PY=$HOME/anaconda3/envs/PCRL/bin/python
+export PY=${PY:-$HOME/anaconda3/envs/PCRL-py312/bin/python}
 SOURCE_STEPS=${SOURCE_STEPS:-20000}
 EVAL_SEEDS=${EVAL_SEEDS:-"1 2 3 4 5"}
 RANDOM_SEEDS=${RANDOM_SEEDS:-"1 2 3"}

@@ -1,39 +1,44 @@
-# pip packages of the conda environment PCRL (pip freeze of the host, 2026-11-09)
-# install with: python -m pip install --no-build-isolation -r requirements-pcrl.txt
-attrs==21.4.0
-certifi==2022.6.15
-charset-normalizer==2.1.0
-click==8.1.3
-click-plugins==1.1.1
-cligj==0.7.2
-cloudpickle==2.1.0
-cycler==0.11.0
-fiona==1.8.21
-fonttools==4.33.3
-geopandas==0.11.0
-gym==0.21.0
-gym-notices==0.0.7
-idna==3.3
-importlib-metadata==4.12.0
-kiwisolver==1.4.3
-matplotlib==3.5.2
-munch==2.5.0
-networkx==2.8.4
-numpy==1.24.3  # the host lists 1.23.0 (pip) but imports 1.24.3 (files of conda numpy-base); models are pickled with 1.24.3
-osmnx==1.2.1
-packaging==21.3
-pandas==1.4.3
-pillow==9.1.1
-pyparsing==3.0.9
-pyproj==3.3.1
-python-dateutil==2.8.2
-pytz==2022.1
-requests==2.28.1
-rtree==1.0.0
-shapely==1.8.2
-six==1.16.0
-stable-baselines3==1.5.0
-torch==1.12.0
-typing-extensions==4.2.0
-urllib3==1.26.9
-zipp==3.8.0
+# pip packages of PCRL (Python 3.12): pip freeze of the conda environment PCRL-py312 (2026-11-13), no known vulnerabilities
+# (scripts/dependency_audit.sh). torch is the CPU build from the PyTorch index, as before the project runs on the CPU.
+# install with: python -m pip install -r requirements-pcrl.txt
+--extra-index-url https://download.pytorch.org/whl/cpu
+certifi==2026.10.23
+charset-normalizer==3.5.2
+cloudpickle==3.1.2
+contourpy==1.4.0
+cycler==0.12.1
+Farama-Notifications==0.0.6
+filelock==4.2.4
+fonttools==4.68.0
+fsspec==2026.9.0
+geopandas==1.2.0
+gymnasium==1.4.0
+idna==3.20
+Jinja2==3.1.6
+joblib==1.6.0
+kiwisolver==1.5.1
+MarkupSafe==3.0.3
+matplotlib==3.11.2
+mpmath==1.3.0
+narwhals==2.28.0
+networkx==3.7
+numpy==2.5.4
+osmnx==2.1.1
+packaging==26.3
+pandas==3.1.1
+pillow==13.0.0
+pyogrio==0.13.0
+pyparsing==3.3.3
+pyproj==3.8.0
+python-dateutil==4.0.0
+requests==2.34.2
+scikit-learn==1.9.1
+scipy==1.18.1
+shapely==2.2.0
+stable_baselines3==2.9.2
+sympy==1.14.0
+threadpoolctl==3.8.0
+torch==2.15.0+cpu
+typing_extensions==4.16.0
+tzdata==2026.6
+urllib3==2.8.0

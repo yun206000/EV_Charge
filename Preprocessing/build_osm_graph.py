@@ -8,7 +8,8 @@ import osmnx as ox
 def build_osm_graph(
     place: str,
     location: str,
-    output_dir: str = "Graph"
+    output_dir: str = "Graph",
+    from_graph: str = None
 ):
     """
     Download OSM driving network.
@@ -23,6 +24,12 @@ def build_osm_graph(
 
     output_dir:
         Root directory for PCRL graph files.
+
+    from_graph:
+        Optional GraphML of a larger, already downloaded area (e.g. Graph/Tainan/Tainan.graphml). The graph is then
+        cut to the place polygon (from Nominatim) instead of downloading it from Overpass, which helps when the
+        Overpass servers are overloaded; like graph_from_place(retain_all=False) only the largest connected part is
+        kept.
     """
 
     location_dir = os.path.join(output_dir, location)
@@ -35,14 +42,33 @@ def build_osm_graph(
     print(f"Location    : {location}")
     print()
 
-    print("[1/2] Downloading OSM graph...")
+    if from_graph:
+        print(f"[1/2] Cutting the place polygon out of {from_graph}...")
+        places = ox.geocode_to_gdf(place)
+        # geopandas >= 1.0 renamed unary_union to union_all
+        polygon = places.union_all() if hasattr(places, "union_all") else places.unary_union
+        G = ox.load_graphml(from_graph)
+        if int(ox.__version__.split(".")[0]) >= 2:
+            # osmnx 2 removed retain_all: keep the largest weakly connected part, as retain_all=False did
+            G = ox.truncate.largest_component(
+                ox.truncate.truncate_graph_polygon(G, polygon),
+                strongly=False
+            )
+        else:
+            G = ox.truncate.truncate_graph_polygon(
+                G,
+                polygon,
+                retain_all=False
+            )
+    else:
+        print("[1/2] Downloading OSM graph...")
 
-    G = ox.graph_from_place(
-        place,
-        network_type="drive",
-        simplify=True,
-        retain_all=False
-    )
+        G = ox.graph_from_place(
+            place,
+            network_type="drive",
+            simplify=True,
+            retain_all=False
+        )
 
     print(f"Nodes       : {len(G.nodes)}")
     print(f"Edges       : {len(G.edges)}")
@@ -106,12 +132,22 @@ def main():
         help="Root Graph directory"
     )
 
+    parser.add_argument(
+        "--from-graph",
+        default=None,
+        help=(
+            "GraphML of a larger downloaded area to cut the place out of, instead of downloading from Overpass, "
+            'e.g. "Graph/Tainan/Tainan.graphml"'
+        )
+    )
+
     args = parser.parse_args()
 
     build_osm_graph(
         place=args.place,
         location=args.location,
-        output_dir=args.output_dir
+        output_dir=args.output_dir,
+        from_graph=args.from_graph
     )
 
 

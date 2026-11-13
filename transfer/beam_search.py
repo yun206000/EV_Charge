@@ -14,8 +14,10 @@ import threading
 import time
 import numpy as np
 import torch
-from stable_baselines3 import DQN
+import gym_compat as gc
 import evaluation_framework as ef
+import test_solution as ts
+from analysis import plan_metrics as pm
 from transfer import env as et
 
 """
@@ -33,6 +35,11 @@ Greedy backbone: one of the B places always holds the greedy episode of the mode
 the search covers the zero-shot result and adds B - 1 places for alternatives. Plans that finish (budget used up)
 are kept aside; the result is the best plan over all finished and live members. After the backbone has finished, the
 search stops when the best score has not improved for --patience steps.
+
+Service metrics (definitions of test_solution.py): the average travel and waiting time are printed for the existing
+plan at the start, every --log-every steps for the current plan of the beam member with the best score, and at the
+end for the saved plan (--save-plan, same numbers as analysis/plan_metrics.py). They are only read from the members,
+so the search and its result do not change; --log-every 0 turns the periodic lines off.
 
 With --beam 1 --topk 1 this is exactly the greedy episode of transfer/evaluate.py (same random draws).
 
@@ -136,7 +143,7 @@ class Worker:
                     if fork_keep_random() == 0:
                         conn.close()
                         try:
-                            obs, _, done, _ = self.env.step(action)
+                            obs, _, done, _ = gc.step(self.env, action)
                             error = None
                         except Exception as exc:  # report and stop this branch
                             obs, done, error = None, True, repr(exc)
@@ -144,6 +151,8 @@ class Worker:
                         break
                 else:
                     os._exit(0)  # parent: all expansions live on in the children
+            elif command[0] == "metrics":  # read only: the member goes on unchanged
+                send(conn, ts.service_progress(command[1], self.env.node_list, self.env.plan_instance.plan))
             elif command[0] == "save":
                 os.makedirs(command[1], exist_ok=True)
                 pickle.dump(self.env.best_plan, open(os.path.join(command[1], "plan_RL.pkl"), "wb"))
@@ -169,6 +178,11 @@ class Coordinator:
 
     def command(self, my_id, *command):
         send(self.conns[my_id], command)
+
+    def service(self, my_id, step):
+        """progress line with the average travel / waiting time of the member's current plan"""
+        self.command(my_id, "metrics", step)
+        return recv(self.conns[my_id])
 
     def kill(self, my_id):
         conn = self.conns.pop(my_id)
@@ -285,7 +299,8 @@ def main():
     parser.add_argument("--label", default="beam")
     parser.add_argument("--csv", default="Results/Transfer/beam.csv")
     parser.add_argument("--save-plan", default=None)
-    parser.add_argument("--log-every", type=int, default=25)
+    parser.add_argument("--log-every", type=int, default=25,
+                        help="progress line with score and average travel / waiting time every n steps (0 = off)")
     parser.add_argument("--max-mem-gb", type=float, default=16.0,
                         help="abort when coordinator + beam members use more than this many GB (PSS); 0 = off")
     parser.add_argument("--min-available-gb", type=float, default=4.0,
@@ -299,7 +314,7 @@ def main():
     env = ScoredStationPlacement(os.path.join(graph_dir, args.city + ".graphml"),
                                     os.path.join(graph_dir, "node_list_" + args.city + ".txt"),
                                     os.path.join(graph_dir, "existingplan_" + args.city + ".pkl"))
-    model = DQN.load(args.model, device="cpu")
+    model = gc.load_dqn(args.model, env)
     model.q_net.eval()
 
     socket_dir = tempfile.mkdtemp(prefix="pcrl_beam_")  # private directory (mode 0700), removed at the end
@@ -314,7 +329,7 @@ def main():
     start = time.time()
     random.seed(args.eval_seed)  # same seeding as transfer.evaluate.run_episode
     np.random.seed(args.eval_seed)
-    obs = env.reset()
+    obs = gc.reset(env)
     existing_score = env.best_score
     first_member = fork_keep_random()
     if first_member == 0:
@@ -334,6 +349,7 @@ def main():
         best_done, steps, expansions = None, 0, 0
         backbone, best_overall, last_improvement = 0, existing_score, 0
         print("start: score {:.4f}, Q {}".format(existing_score, np.round(beam[0]["q"], 3)), flush=True)
+        print("existing plan, " + coordinator.service(0, 0), flush=True)
         while beam and steps < args.max_steps:
             if backbone is None and steps - last_improvement >= args.patience:
                 print("step {}: no improvement for {} steps, search stopped".format(steps, args.patience), flush=True)
@@ -377,7 +393,7 @@ def main():
                     seen.add(report["sig"])
                 else:
                     coordinator.kill(report["id"])
-            if steps % args.log_every == 0 or not beam:
+            if (args.log_every > 0 and steps % args.log_every == 0) or not beam:
                 top = max(beam, key=lambda r: r["key"]) if beam else None
                 print("step {} beam {} best live {:.4f} (key {:.4f}, {} stations, budget {:.0f}) best done {} "
                       "({:.0f}s){}".format(steps, len(beam), max([r["best"] for r in beam], default=float("nan")),
@@ -386,6 +402,9 @@ def main():
                                            "{:.4f}".format(best_done["best"]) if best_done else "-",
                                            time.time() - start, "" if backbone is None else " backbone live"),
                       flush=True)
+                if beam:
+                    leader = max(beam, key=lambda r: r["best"])
+                    print("  current plan of the best member, " + coordinator.service(leader["id"], steps), flush=True)
 
         candidates = beam + ([best_done] if best_done else [])
         winner = max(candidates, key=lambda r: r["best"])
@@ -407,6 +426,10 @@ def main():
                    seconds=round(time.time() - start, 1), action_counts=" ".join(map(str, counts)))
         print(row, flush=True)
         print("peak memory of coordinator + beam members: {:.1f} GB (PSS)".format(guard.peak_gb), flush=True)
+        if args.save_plan:  # all members are gone, so the caches of this process can be used
+            final_nodes, final_plan = pm.load_plan(args.city, args.save_plan)
+            print("saved plan {}, ".format(args.save_plan) + ts.service_progress(len(path), final_nodes, final_plan)
+                  .split(": ", 1)[1], flush=True)
         os.makedirs(os.path.dirname(os.path.abspath(args.csv)), exist_ok=True)
         with open(args.csv, "a", newline="") as file:
             fcntl.flock(file, fcntl.LOCK_EX)

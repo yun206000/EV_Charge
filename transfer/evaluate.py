@@ -9,7 +9,7 @@ import re
 import time
 import numpy as np
 import torch
-from stable_baselines3 import DQN
+import gym_compat as gc
 from transfer import env as et
 
 """
@@ -47,12 +47,12 @@ def run_episode(env, choose_action, seed):
     random.seed(seed)
     np.random.seed(seed)
     start = time.time()
-    obs = env.reset()
+    obs = gc.reset(env)
     existing_score = env.best_score
     done = False
     steps = 0
     while not done:
-        obs, _, done, _ = env.step(choose_action(obs))
+        obs, _, done, _ = gc.step(env, choose_action(obs))
         steps += 1
     best_node_list, best_plan = env.best_node_list, env.best_plan
     result = dict(existing_score=existing_score, score=env.best_score,
@@ -91,7 +91,7 @@ def main():
     os.makedirs(os.path.dirname(os.path.abspath(args.csv)), exist_ok=True)
     for model_path in model_paths:
         if args.policy == "model":
-            model = DQN.load(model_path, device='cpu')
+            model = gc.load_dqn(model_path, env)
             if not all(torch.isfinite(param).all() for param in model.policy.parameters()):
                 raise ValueError("Model {} has non-finite weights".format(model_path))
             choose_action = lambda obs: int(model.predict(obs, deterministic=True)[0])

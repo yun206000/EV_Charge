@@ -1,11 +1,17 @@
+import argparse
 import ast
+import os
 import evaluation_framework as ef
 import pickle
+import math
 from math import ceil
 import osmnx as ox
 
 """
 Calculate evaluation metrics for the created charging plan.
+
+    python test_solution.py --city Tainan       # existing stations and Results/Tainan/ (model_eval.py)
+    python test_solution.py --city Taipei --plan-dir Results/Transfer/plans/B4k2_e1
 """
 
 def travel_metric(my_node_list):
@@ -27,6 +33,27 @@ def waiting_metric(my_plan):
         for time in range(times):
             big_waiting_list.append(my_station[2]["W_s"] * 60)
     return sum(big_waiting_list) / len(big_waiting_list), max(big_waiting_list)
+
+
+def average_service(my_node_list, my_plan):
+    """average travel and waiting time (minutes) of the current plan, definitions of travel_metric / waiting_metric"""
+    travel_average = travel_metric(my_node_list)[0]
+    try:
+        wait_average = waiting_metric(my_plan)[0]
+    except ZeroDivisionError:  # no station has any EV flow yet
+        wait_average = 0.0
+    return travel_average, wait_average
+
+
+def service_progress(step, my_node_list, my_plan):
+    """one progress line with the average travel and waiting time of the current plan"""
+    travel_average, wait_average = average_service(my_node_list, my_plan)
+    if math.isfinite(wait_average) and wait_average < ef.my_inf * 60:
+        waiting = "{:.3f} min".format(wait_average)
+    else:  # W_s of a station without chargers or with more EVs than it can serve is unbounded
+        waiting = "unbounded (a station has no chargers or is overloaded)"
+    return "step {}: {} stations, avg travel time {:.3f} min, avg waiting time {}".format(
+        step, len(my_plan), travel_average, waiting)
 
 
 def eci_test(my_plan, my_node_list, my_norm_benefit, my_norm_charging, my_norm_waiting,
@@ -102,12 +129,17 @@ def perform_test(my_node_file, my_basic_cost, my_result_file, my_norm_benefit, m
          my_norm_travel, my_norm_score)
 
 
-if __name__ == '__main__':
-    location = "Tainan"
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="Service metrics of the existing stations and of a charging plan.")
+    parser.add_argument("--city", default="Tainan", help="city folder in Graph/ (Tainan, Taipei, Toy_Example, ...)")
+    parser.add_argument("--plan-dir", default=None,
+                        help="folder with plan_RL.pkl and nodes_RL.txt (default: Results/<city>, from model_eval.py)")
+    args = parser.parse_args(argv)
+    location = args.city
 
     graph_file = "Graph/" + location + "/" + location + ".graphml"
     node_file = "Graph/" + location + "/node_list_" + location + ".txt"
-    graph, _ = ef.prepare_graph(graph_file, node_file)
+    ef.prepare_graph(graph_file, node_file)
     """
     Test existing charging stations.
     """
@@ -124,6 +156,11 @@ if __name__ == '__main__':
     test(plan, node_list, basic_cost, norm_benefit, norm_charging, norm_waiting, norm_travel, norm_score)
 
     print("Reinforcement Learning")
-    node_file = "Results/" + location + "/nodes_RL.txt"
-    result_file = "Results/" + location + "/plan_RL.pkl"
+    plan_dir = args.plan_dir or "Results/" + location
+    node_file = os.path.join(plan_dir, "nodes_RL.txt")
+    result_file = os.path.join(plan_dir, "plan_RL.pkl")
     perform_test(node_file, basic_cost, result_file, norm_benefit, norm_charging, norm_waiting, norm_travel, norm_score)
+
+
+if __name__ == '__main__':
+    main()
