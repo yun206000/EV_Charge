@@ -1,0 +1,22 @@
+# PCRL environment + trained model weights (MODEL_CARD.md): the image pcrl:2.0 (docker/Dockerfile) plus
+#   tmp_Tainan/best_model_Tainan_11200.zip   original PCRL model (env_plus.py, Tainan only), 8,187,909 parameters
+#   runs/source_Tainan/best_source.zip       source model (transfer/env.py, any city), 150,277 parameters
+# The weights are git-ignored (*.zip), so the image is built from a working copy that holds them.
+# Build (from the repository root; docker/Dockerfile.model.dockerignore is used automatically):
+#         docker build -f docker/Dockerfile -t pcrl:2.0 .
+#         docker build -f docker/Dockerfile.model -t pcrl:2.0-model .
+# Run:    docker run --rm pcrl:2.0-model python -m transfer.evaluate --city Taipei_Daan --policy model \
+#             --model runs/source_Tainan/best_source.zip --label zeroshot --eval-seed 1 --csv /tmp/zeroshot.csv
+ARG BASE=pcrl:2.0
+FROM ${BASE}
+
+# model files owned by root and read-only; the folders belong to the user, because model_eval.py writes the
+# monitor.csv of its evaluation episode next to the model
+USER root
+RUN install -d -o pcrl -g pcrl tmp_Tainan runs runs/source_Tainan
+COPY --chmod=444 tmp_Tainan/best_model_Tainan_11200.zip tmp_Tainan/
+COPY --chmod=444 runs/source_Tainan/best_source.zip runs/source_Tainan/config.json runs/source_Tainan/
+COPY --chmod=444 MODEL_CARD.md ./
+USER pcrl
+
+CMD ["python", "-c", "import hashlib, glob, torch, stable_baselines3, gymnasium; print('PCRL environment + models: torch', torch.__version__, '| sb3', stable_baselines3.__version__, '| gymnasium', gymnasium.__version__); [print(' ', p, hashlib.sha256(open(p, 'rb').read()).hexdigest()) for p in sorted(glob.glob('tmp_Tainan/*.zip') + glob.glob('runs/source_Tainan/*.zip'))]"]

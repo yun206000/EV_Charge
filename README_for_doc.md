@@ -2,7 +2,7 @@
 
 > 本文件說明 PCRL 專案（`/home/angel030880/test/PCRL`）的系統架構、資料、效用模型、強化學習環境、模型結構、超參數、
 > 訓練／評估流程與實驗結果。所有數字均取自本 repo 的程式碼、設定檔與實驗紀錄（`Results/`、`runs/`、`logs/`）。
-> 最後更新：2026-11-11。
+> 最後更新：2026-11-20。模型的摘要說明（效能、超參數、時間、軟硬體需求、使用手冊）見 `MODEL_CARD.md`。
 
 ---
 
@@ -110,6 +110,7 @@ PCRL/
 ├── evaluation_framework.py   效用模型：成本、覆蓋、等候時間、分數；路徑計算與快取；全域常數
 ├── env_plus.py               原始 gym 環境 StationPlacement（觀測 8N+1 維）
 ├── gym_compat.py             gym 0.21 / gymnasium 介面相容（新舊兩個環境都能執行，3.1）
+├── MODEL_CARD.md             Model card：效能、參數與超參數、訓練／推論時間、軟硬體需求、使用手冊（11.11）
 ├── reinforcement.py          原始 PCRL：DQN 訓練
 ├── model_eval.py             原始 PCRL：產生充電規劃
 ├── test_solution.py          原始 PCRL：規劃的評估指標
@@ -126,10 +127,12 @@ PCRL/
 │   ├── generalization.py         泛化統計與圖
 │   ├── beam.py                   微調前後比較、搜尋過程、服務指標
 │   ├── plan_maps.py              台北微調前後充電站分布圖
-│   └── plan_metrics.py           任一已存規劃的服務指標
+│   ├── plan_metrics.py           任一已存規劃的服務指標
+│   └── trackio_logs.py           訓練與微調紀錄 → trackio 可匯入的 CSV（11.11）
 ├── scripts/                  run_generalization.sh、run_beam_search.sh（完整流程）；dependency_audit.sh／.py（相依套件弱點掃描，11.9）
 ├── tests/                    單元測試（pytest，合成小城市資料，11.8）；設定檔 pytest.ini、.coveragerc
 ├── docker/                   Dockerfile、Dockerfile.dockerignore、requirements-pcrl.txt、requirements-test.txt（測試套件）、
+│                             Dockerfile.model（環境＋模型權重映像 pcrl:2.0-model，11.11）、
 │                             .env（金鑰，不進 git）；legacy-py38/（舊環境：訓練模型與報告數值的產生環境）
 ├── Graph/<city>/             輸入資料（graphml、節點、既有充電站）；Toy_Example 為原始 PCRL 範例資料
 ├── cache/                    osmnx 下載快取
@@ -137,7 +140,8 @@ PCRL/
 ├── runs/source_Tainan/       來源模型：best_source.zip、checkpoints/、monitor.csv、config.json
 ├── Results/
 │   ├── Tainan/                   台南充電規劃（原始模型、source_model/ 來源模型）與服務指標 metrics.csv
-│   └── Transfer/                 泛化與微調的結果 CSV、摘要；plans/ 各規劃
+│   ├── Transfer/                 泛化與微調的結果 CSV、摘要；plans/ 各規劃
+│   └── Trackio/                  trackio 格式的訓練（training/）與微調（finetuning/）紀錄
 ├── Images/Result_Plots/      影像紀錄：Data/、Training/、Tainan/、Transfer/
 └── logs/                     training/（訓練與評估 log）、beam/（beam search 逐步 log）
 ```
@@ -225,6 +229,19 @@ docker run -d --name pcrl_generalization -v "$PWD":/workspace/PCRL -u "$(id -u):
 # 前處理下載 OCM 充電站（金鑰由 docker/.env 傳入）
 docker run --rm -it --env-file docker/.env -v "$PWD":/workspace/PCRL -u "$(id -u):$(id -g)" pcrl:2.0 \
     python Preprocessing/download_ocm.py --place "Taipei, Taiwan" --output Graph/Taipei/ocm_taipei.json
+```
+
+**含模型權重的映像 `pcrl:2.0-model`**（`docker/Dockerfile.model`，以 `pcrl:2.0` 為基底）：另外放入原始 PCRL 模型
+`tmp_Tainan/best_model_Tainan_11200.zip`、來源模型 `runs/source_Tainan/best_source.zip`（含 `config.json`）與 `MODEL_CARD.md`，
+不需掛載 repo 即可直接推論。模型權重不在 git 中（`*.zip`），需在含權重的工作目錄建置；build context 只含這幾個檔案
+（`docker/Dockerfile.model.dockerignore`）。模型檔屬於 root、唯讀；所在資料夾屬於使用者 `pcrl`（`model_eval.py` 會在模型旁寫
+評估 episode 的 `monitor.csv`）。驗證結果見 11.11。
+
+```bash
+docker build -f docker/Dockerfile.model -t pcrl:2.0-model .    # 先建好 pcrl:2.0
+docker run --rm pcrl:2.0-model                                  # 套件版本與兩個模型檔的 sha256
+docker run --rm pcrl:2.0-model python -m transfer.evaluate --city Taipei_Daan --policy model \
+    --model runs/source_Tainan/best_source.zip --label zeroshot --eval-seed 1 --csv /tmp/zeroshot.csv
 ```
 
 每個環境行程約佔 1–1.4 GB 記憶體，平行執行數（`JOBS`）需依主機記憶體調整。`scripts/run_beam_search.sh` 使用 `systemd-run --user --scope`（cgroup 記憶體上限），需在主機上執行。
@@ -925,6 +942,7 @@ for t = 1, 2, …:
 | `analysis/generalization.py` | 泛化統計（Welch t 檢定）與 `generalization.png` |
 | `analysis/beam.py` | 驗證（B = k = 1 vs zero-shot）、微調前後配對比較（paired t 檢定、Wilcoxon）、服務指標（平均與逐種子）、三張圖 |
 | `analysis/plan_maps.py` | 台北微調前後充電站分布圖（每個種子一張）：`python -m analysis.plan_maps [--label B4k2] [--seeds 1 2 3 4 5]` |
+| `analysis/trackio_logs.py` | 訓練與微調紀錄轉成 trackio 可匯入的 CSV：`python -m analysis.trackio_logs` → `Results/Trackio/training/`、`finetuning/`（11.11） |
 | `analysis/plan_metrics.py` | 任一已存規劃的服務指標：`python -m analysis.plan_metrics --city <city> --plan <資料夾> --label <名稱> --csv <檔案>`（`--existing` = 既有規劃） |
 
 ---
@@ -1042,7 +1060,8 @@ Q 值最高的 k = 2 個動作，依「目前分數 + 模型估計的後續提�
 | 微調（台北 beam search） | 2.3239 → **2.4012（+3.3%）**；4 / 5 個種子提升、0 個下降，最高 +8.2%；平均移動時間 −2.3%、最大等待時間 −7.7% |
 | 可重現性 | B = k = 1 與 zero-shot 逐位元相同；同一設定重跑結果逐位元相同 |
 | 安全性 | 程式碼：SonarQube 0 個安全性問題、0 個 security hotspot、0 個 bug（11.7）；相依套件：升級後 49 個套件 **0 個已知弱點**（舊環境 120 個，11.9、11.10） |
-| 程式品質 | 79 個單元測試在新舊兩個環境全部通過；SonarQube Quality Gate **通過**，0 個 issue，安全性／可靠性／可維護性評等 A / A / A，新程式碼覆蓋率 88.9%（11.10） |
+| 程式品質 | 140 個單元測試在新舊兩個環境全部通過；SonarQube Quality Gate **通過**，0 個 issue，安全性／可靠性／可維護性評等 A / A / A，全專案測試覆蓋率 95.9%（11.11） |
+| 交付物 | 含模型權重的 Docker 映像 `pcrl:2.0-model`（映像內重跑兩個模型的台南規劃，與報告逐站相同）、trackio 格式的訓練與微調紀錄（12 個 CSV，以 trackio 實際匯入驗證）、`MODEL_CARD.md`（11.11） |
 | 環境升級 | Python 3.12、torch 2.15、SB3 2.9；既有模型直接載入，台北與大安區的規劃與舊環境逐站相同，分數差異 < 1e-12（11.10） |
 | 影像紀錄 | 訓練曲線、台南服務指標、台南地圖、泛化比較、微調前後、搜尋過程、台北服務指標、台北微調前後充電站分布圖（第 12 節） |
 
@@ -1170,7 +1189,7 @@ OCM API key 已從程式碼移到 `docker/.env`（3.3、4.5）。
 - 測試資料：`tests/conftest.py` 產生一座合成小城市（5 × 5 路網、26 個節點、2 座既有充電站），檔案格式與
   `Graph/<city>/` 相同，因此測試只需數秒，也不依賴台南／台北的大型資料檔。分析腳本的測試在暫存資料夾中執行，
   不會覆寫 `Results/`、`Images/` 的正式結果。
-- 執行：`python -m pytest --cov --cov-report=xml`，79 個測試全部通過，約 9 秒。
+- 執行：`python -m pytest --cov --cov-report=xml`，140 個測試在新舊兩個環境全部通過，約 12–15 秒（2026-11-20）。
 
 | 測試檔 | 內容 |
 |---|---|
@@ -1181,21 +1200,25 @@ OCM API key 已從程式碼移到 `docker/.env`（3.3、4.5）。
 | `test_pipeline.py` | 原始 PCRL 流程以 `--city` 指定城市：訓練 30 步並存模型（每 10 步印出平均移動／等待時間）→ 產生規劃（自動選最新模型）→ 服務指標 → 地圖 |
 | `test_analysis.py` | 訓練 log 解析、訓練曲線、台南服務指標圖、泛化摘要、beam search 摘要（驗證、統計檢定、逐種子服務指標）、台北微調前後充電站分布圖、路網與既有充電站分布圖 |
 | `test_dependency_audit.py` | 相依套件弱點報告（11.9）：CVSS 3.x 分數（標準範例向量）、嚴重度來源優先順序、修正版本、套件鎖定行號、SonarQube 匯入格式（不連網，以假資料測試） |
+| `test_preprocessing.py` | 前處理腳本（OSM 路網、OCM 充電站、節點清單）：以假資料取代 Overpass／Nominatim／Open Charge Map 請求，不連網；金鑰來源順序、功率對應、既有規劃、合成需求與地價、由大路網切出小地圖 |
+| `test_transfer_scripts.py` | 跨城市程式的命令列流程：來源模型訓練（checkpoint 與最終模型）、模型與隨機策略評估、拒絕含非有限值的權重、beam search（B = k = 1 與評估相同、較寬的 beam 存規劃、步數上限）、候選行程指令迴圈與記憶體保護 |
+| `test_trackio_logs.py` | trackio 紀錄轉換（11.11）：欄名經 trackio 簡化規則後不變、探索率排程、原始模型與來源模型訓練紀錄、beam search 紀錄解析、空欄位省略、輸出檔 |
 
-各模組覆蓋率（pytest-cov，以敘述計）：
+各模組覆蓋率（pytest-cov，以敘述計；2026-11-20，140 個測試）：
 
 | 模組 | 覆蓋率 |
 |---|---|
 | `evaluation_framework.py` | 100% |
-| `env_plus.py` | 96% |
-| `transfer/env.py` | 99% |
-| `analysis/`（5 個模組） | 98–99% |
-| `test_solution.py` | 99% |
-| `reinforcement.py`、`model_eval.py` | 99%、98% |
-| `Visualisierung/visualise.py` | 86% |
+| `env_plus.py`、`gym_compat.py` | 97%、92% |
+| `reinforcement.py`、`model_eval.py`、`test_solution.py` | 99%、98%、99% |
+| `transfer/`（env、train、evaluate、beam_search） | 99%、98%、99%、95% |
+| `analysis/`（beam、generalization、plan_maps、plan_metrics、training_plots、trackio_logs） | 98–99% |
 | `analysis/data_maps.py` | 86% |
+| `Preprocessing/`（build_osm_graph、build_pcrl_nodes、download_ocm、build_ocm_plan、load_graph） | 96–100% |
+| `Preprocessing/nodes_preparation.py` | 44%（原始 PCRL 的 Hannover 範例程式，本專案未使用，4.1） |
+| `Visualisierung/visualise.py` | 86% |
 | `scripts/dependency_audit.py` | 96% |
-| `transfer/beam_search.py` | 32%（行程協調與主程式由 10.3 的實際搜尋驗證，B = k = 1 與 zero-shot 逐位元相同） |
+| 全部 | **95.9%** |
 
 SonarQube 結果（2026-11-11，加入覆蓋率報告後重新掃描；2026-11-13 的結果見 11.9）：
 
@@ -1302,6 +1325,57 @@ Python 3.8（例如 pillow 13、torch 2.13），因此改為升級整個環境�
 | Security / Reliability / Maintainability rating | **A / A / A** |
 | 全專案測試覆蓋率 | 65.1%（28 個檔案、3,779 行） |
 
+### 11.11 交付物：模型映像、trackio 紀錄、model card（2026-11-20）
+
+**1. 含模型權重的 Docker 映像 `pcrl:2.0-model`**（3.3，`docker/Dockerfile.model`）
+
+| 項目 | 內容 |
+|---|---|
+| 內容 | `pcrl:2.0` 的環境、程式碼與 `Graph/` 資料，加上原始 PCRL 模型（132.7 MB）、來源模型（2.4 MB）與 `MODEL_CARD.md` |
+| 大小 | 1.83 GB |
+| 權重檢查 | 映像內兩個模型檔的 sha256 與 repo 中的檔案相同（`docker run --rm pcrl:2.0-model` 印出） |
+| 映像內推論（不掛載 repo，2026-11-20） | 原始 PCRL 模型台南規劃 755 站（score 8.142435537145035），與 `Results/Tainan/` 逐站相同，`nodes_RL.txt` 逐位元相同；來源模型台南 improvement 8.532322275639508（舊環境 8.532322275639117）、405 站、581 步，規劃逐站相同；大安區 zero-shot 1.8588917694329221、74 站 |
+| 推論時間與記憶體（台南完整貪婪 episode） | 原始 PCRL 模型 3,031 秒、3.51 GB（舊環境紀錄 3,957 秒）；來源模型 945 秒、2.09 GB（舊環境 1,020 秒） |
+| 短訓練（台南 300 步，第 100 步起更新網路） | 原始 PCRL 模型 381.7 秒、1.86 GB；來源模型（8 執行緒）300.0 秒、1.36 GB；replay buffer 填滿時另需 4.8 GB / 0.12 GB（依程式計算） |
+| 交付檔 | `docker save pcrl:2.0-model \| gzip > dist/pcrl_2.0-model.tar.gz`（`dist/` 不進 git），以 `docker load -i` 載入 |
+
+**2. trackio 格式的訓練與微調紀錄**（`analysis/trackio_logs.py` → `Results/Trackio/`）
+
+trackio（Hugging Face）的 `trackio.import_csv()` 讀取第一欄 `step`、選用的 `timestamp`（ISO 8601）與數值指標欄，每個 CSV
+匯入成一個 run；欄名只保留前 10 個英數字或 `/`，因此所有欄名都在這個範圍內，匯入後名稱不變。
+
+| 檔案 | 列數 | 來源 | 主要欄位 |
+|---|---|---|---|
+| `training/original_Tainan.csv` | 49 | `tmp_Tainan/train.log`（每 400 步）＋評估 episode | `reward/avg`、`reward/max`、`saved`、`epsilon`、`eval/imp`、`eval/stns` |
+| `training/source_Tainan.csv` | 51 | `runs/source_Tainan/monitor.csv`（31 個 episode）＋`source_selection.csv`（20 個 checkpoint） | `timestamp`、`hours`、`reward`、`length`、`epsilon`、`eval/imp`、`eval/stns` |
+| `finetuning/Taipei_B4k2_e<1–5>.csv` | 22–29 | `logs/beam/B4k2_e*.log`（每 25 步） | `score`、`improve`、`live/best`、`done/best`、`key`、`beam`、`stations`、`budget`、`seconds` |
+| `finetuning/Taipei_zeroshot_e<1–5>.csv` | 22–29 | `logs/beam/B1k1_e*.log`（B = k = 1 = zero-shot） | 同上 |
+
+- 驗證：以 trackio 0.45.1 實際匯入全部 12 個檔案，從 trackio 資料庫讀回，每個檔案的筆數、指標名稱與數值都與 CSV 相同；
+  來源模型 31 個訓練 episode 都帶有時間戳。
+- `epsilon` 依訓練設定的線性排程計算；checkpoint 列沒有時間紀錄，`timestamp` 留空。
+- 新的 beam search 紀錄若含平均移動／等待時間（9.3 的 `--log-every`），另外輸出 `travel`、`waiting` 欄。
+- 單元測試 `tests/test_trackio_logs.py`（12 個）：欄名經 trackio 的簡化規則後不變、各紀錄的解析、空欄位省略、輸出檔。
+
+**3. Model card**（`MODEL_CARD.md`）
+
+依要求項目整理：各模組 AI 模型簡介與用途、預訓練資料集（來源、授權、統計）、參數數量與超參數意義、超參數對效能的
+影響（原始模型：訓練步數與保存策略；來源模型：訓練步數與 checkpoint 選擇，選到的 17,000 步比最後一步高 42.7%；
+微調：beam 寬度 B 與 k）、效能指標與綜合效能分數、訓練與測試細節及最終效能、訓練與推論參考時間、最低軟硬體需求、
+使用手冊（執行環境、使用方式、輸入與輸出格式）。
+
+**SonarQube 重新掃描**（2026-11-20，含上述程式與 `docker/Dockerfile.model`）：
+
+| 指標 | 結果 |
+|---|---|
+| Quality Gate | **通過（Passed）** |
+| 新程式碼測試覆蓋率 / 重複率 | 95.8% / 0.0% |
+| 問題數（Issues） | **0**（掃描中發現的 1 個可靠性問題：`value != value` 判斷 NaN，已改為 `math.isnan`） |
+| Vulnerabilities / Bugs / Security Hotspots | 0 / 0 / 0 |
+| Security / Reliability / Maintainability rating | **A / A / A** |
+| 全專案測試覆蓋率 | **95.9%**（30 個檔案、3,947 行） |
+| 單元測試 | 140 個，新舊兩個環境全部通過 |
+
 ---
 
 ## 12. 影像紀錄與輸出檔清單
@@ -1341,6 +1415,8 @@ Python 3.8（例如 pillow 13、torch 2.13），因此改為升級整個環境�
 | `Results/Transfer/beam.csv`, `beam_summary.txt` | 台北微調：beam search 驗證與結果 |
 | `Results/Transfer/plans/` | 台北規劃（`plan_RL.pkl`、`nodes_RL.txt`）：`zeroshot_e*`、`B1k1_e*`、`B4k2_e*`；服務指標 `metrics.csv`、`metrics_B4k2.csv` |
 | `logs/beam/<label>_e<seed>.log` | beam search 逐步紀錄（每 25 步：候選數、最佳分數、站數、剩餘預算）與記憶體峰值 |
+| `Results/Trackio/training/*.csv`, `Results/Trackio/finetuning/*.csv` | trackio 格式的訓練與微調紀錄（11.11） |
+| `MODEL_CARD.md` | Model card（11.11） |
 
 ---
 
@@ -1379,6 +1455,10 @@ scripts/run_generalization.sh analyze
 scripts/run_beam_search.sh validate    # B = k = 1，與 zero-shot 逐位元相同
 scripts/run_beam_search.sh search      # B = 4、k = 2
 scripts/run_beam_search.sh analyze
+
+# 交付物（11.11）
+python -m analysis.trackio_logs         # trackio 格式的訓練與微調紀錄 → Results/Trackio/
+docker build -f docker/Dockerfile.model -t pcrl:2.0-model .
 ```
 
 重現性：
@@ -1414,16 +1494,20 @@ scripts/run_beam_search.sh analyze
 
 ```python
 import os
-from stable_baselines3 import DQN
+import random
+import numpy as np
+import gym_compat as gc          # 新舊兩個環境都適用（3.1）
 from transfer import env as et   # 在 repo 根目錄執行
 
+random.seed(1); np.random.seed(1)                              # episode 種子（同 --eval-seed 1）
 env = et.make_env("Taipei", os.getcwd())
-model = DQN.load("runs/source_Tainan/best_source.zip", device="cpu")
-obs, done = env.reset(), False
+model = gc.load_dqn("runs/source_Tainan/best_source.zip", env)  # CPU 上載入
+obs, done = gc.reset(env), False
+existing_score = env.best_score
 while not done:
     action, _ = model.predict(obs, deterministic=True)
-    obs, reward, done, _ = env.step(int(action))
-print("improvement", env.best_score - 0.2333, "stations", len(env.best_plan))
+    obs, reward, done, _ = gc.step(env, int(action))
+print("improvement", env.best_score - existing_score, "stations", len(env.best_plan))
 ```
 
 ### 15.3 名詞對照

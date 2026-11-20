@@ -19,7 +19,8 @@ Open Charge Map) in two stages:
    (zero-shot) and with model-guided beam search on the Taipei map.
 
 The full technical documentation (Traditional Chinese, all settings, parameters and results) is
-`README_for_doc.md`.
+`README_for_doc.md`; the model card (performance, parameters and hyperparameters, training / inference time, hardware and software
+requirements, user manual) is `MODEL_CARD.md`.
 
 
 # Installation
@@ -30,6 +31,16 @@ vulnerabilities) is packaged as a Docker image; the files are in `docker/`.
 docker build -f docker/Dockerfile -t pcrl:2.0 .        # from the repository root
 docker run --rm pcrl:2.0                                # prints the package versions
 docker run --rm -it -v "$PWD":/workspace/PCRL -u "$(id -u):$(id -g)" pcrl:2.0 python -m transfer.evaluate --help
+```
+
+Image with the trained model weights (`docker/Dockerfile.model`, built on `pcrl:2.0`; the weights are git-ignored, so
+build it from a working copy that holds them):
+
+```bash
+docker build -f docker/Dockerfile.model -t pcrl:2.0-model .
+docker run --rm pcrl:2.0-model                                # package versions and sha256 of both model files
+docker run --rm pcrl:2.0-model python -m transfer.evaluate --city Taipei_Daan --policy model \
+    --model runs/source_Tainan/best_source.zip --label zeroshot --eval-seed 1 --csv /tmp/zeroshot.csv
 ```
 
 The models were trained and the reported results produced in the legacy environment (Python 3.8.20,
@@ -130,6 +141,10 @@ memory-limited cgroup (`systemd-run`, default 12 GB) and stops itself before the
 
 Service metrics of any saved plan: `python -m analysis.plan_metrics --city Taipei --plan <folder with plan_RL.pkl>`.
 
+Training and fine-tuning logs for trackio: `python -m analysis.trackio_logs` writes CSV files (a `step` column, an
+optional ISO `timestamp`, numeric metrics) to `Results/Trackio/training/` and `Results/Trackio/finetuning/`; each file is
+one run for `trackio.import_csv(path, project=...)`.
+
 
 # Results
 Service target: average travel time and average waiting time of the charging plan below 15 minutes
@@ -159,10 +174,10 @@ sections 7 and 10, `Results/Tainan/metrics.csv`, `Results/Transfer/*_summary.txt
 
 Security: the code is scanned with SonarQube (`sonar-project.properties`) and the dependencies with pip-audit
 (`scripts/dependency_audit.sh`, imported into SonarQube): 0 issues, 0 vulnerabilities, 0 security hotspots, ratings
-A / A / A, quality gate passed (`README_for_doc.md` sections 11.7, 11.9, 11.10).
+A / A / A, quality gate passed (`README_for_doc.md` sections 11.7, 11.9, 11.10, 11.11).
 
-Tests: 79 unit tests on a small synthetic city (`tests/`, about 10 seconds), passing in both environments; 88.9% coverage
-of new code (`README_for_doc.md` section 11.8).
+Tests: 140 unit tests on a small synthetic city (`tests/`, about 15 seconds), passing in both environments; 95.9%
+coverage (`README_for_doc.md` sections 11.8, 11.11).
 
 ```
 python -m pip install -r docker/requirements-test.txt
@@ -179,6 +194,7 @@ PCRL/
 ├── evaluation_framework.py   utility model (cost, coverage, waiting time, score), routing and caches
 ├── env_plus.py               original environment StationPlacement
 ├── gym_compat.py             gym 0.21 / gymnasium compatibility (both environments)
+├── MODEL_CARD.md             model card
 ├── reinforcement.py          original PCRL: DQN training
 ├── model_eval.py             original PCRL: charging plan of a model
 ├── test_solution.py          original PCRL: travel time, waiting time, budget of a plan
@@ -195,15 +211,16 @@ PCRL/
 │   ├── generalization.py         zero-shot vs random policy
 │   ├── beam.py                   beam search vs zero-shot, search progress, service metrics
 │   ├── plan_maps.py              maps of the Taipei stations before / after fine-tuning
-│   └── plan_metrics.py           service metrics of saved plans
+│   ├── plan_metrics.py           service metrics of saved plans
+│   └── trackio_logs.py           training / fine-tuning logs -> trackio CSV files
 ├── scripts/                  run_generalization.sh, run_beam_search.sh, dependency_audit.sh / .py (dependency vulnerability scan)
 ├── tests/                    unit tests (pytest; settings in pytest.ini, .coveragerc)
-├── docker/                   Dockerfile, Dockerfile.dockerignore, requirements-pcrl.txt, requirements-test.txt, .env(.example); legacy-py38/
+├── docker/                   Dockerfile, Dockerfile.model (+ weights), requirements-pcrl.txt, requirements-test.txt, .env(.example); legacy-py38/
 ├── sonar-project.properties  SonarQube analysis settings
 ├── Graph/<city>/             input data
 ├── tmp_Tainan/               model and training log of reinforcement.py (tmp_Toy_Example/: original example)
 ├── runs/source_Tainan/       source model, checkpoints, monitor.csv, config.json
-├── Results/                  Tainan/ plans and service metrics; Transfer/ result CSVs, summaries, plans/
+├── Results/                  Tainan/ plans and service metrics; Transfer/ result CSVs, summaries, plans/; Trackio/ logs
 ├── Images/Result_Plots/      figures: Training/, Tainan/, Transfer/
 └── logs/                     training/, beam/
 ```

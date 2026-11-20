@@ -1,0 +1,6 @@
+# build context of docker/Dockerfile.model: only the model weights and the model card (no secrets, no outputs)
+*
+!tmp_Tainan/best_model_Tainan_11200.zip
+!runs/source_Tainan/best_source.zip
+!runs/source_Tainan/config.json
+!MODEL_CARD.md

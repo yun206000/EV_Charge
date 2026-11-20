@@ -11,5 +11,6 @@ cache
 Preprocessing/cache
 *.zip
 LicenseNotes.pdf
+dist
 docker/.env
 .env

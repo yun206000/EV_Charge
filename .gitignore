@@ -11,3 +11,6 @@ docker/.env
 coverage.xml
 .pytest_cache/
 dependency-audit-sonar.json
+
+# exported Docker images (docker save), delivered separately
+dist/
