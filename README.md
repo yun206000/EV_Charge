@@ -174,7 +174,9 @@ sections 7 and 10, `Results/Tainan/metrics.csv`, `Results/Transfer/*_summary.txt
 
 Security: the code is scanned with SonarQube (`sonar-project.properties`) and the dependencies with pip-audit
 (`scripts/dependency_audit.sh`, imported into SonarQube): 0 issues, 0 vulnerabilities, 0 security hotspots, ratings
-A / A / A, quality gate passed (`README_for_doc.md` sections 11.7, 11.9, 11.10, 11.11).
+A / A / A, quality gate passed (`README_for_doc.md` sections 11.7, 11.9, 11.10, 11.11). Software bill of materials of
+the model image (syft, SPDX 2.3 JSON, 175 components): `scripts/sbom.sh` -> `Results/Security/充電站選址服務_SBOM.json`
+(section 11.12).
 
 Tests: 140 unit tests on a small synthetic city (`tests/`, about 15 seconds), passing in both environments; 95.9%
 coverage (`README_for_doc.md` sections 11.8, 11.11).
@@ -213,14 +215,16 @@ PCRL/
 │   ├── plan_maps.py              maps of the Taipei stations before / after fine-tuning
 │   ├── plan_metrics.py           service metrics of saved plans
 │   └── trackio_logs.py           training / fine-tuning logs -> trackio CSV files
-├── scripts/                  run_generalization.sh, run_beam_search.sh, dependency_audit.sh / .py (dependency vulnerability scan)
+├── scripts/                  run_generalization.sh, run_beam_search.sh, dependency_audit.sh / .py (dependency vulnerability scan),
+│                             sbom.sh (SBOM of the model image)
 ├── tests/                    unit tests (pytest; settings in pytest.ini, .coveragerc)
 ├── docker/                   Dockerfile, Dockerfile.model (+ weights), requirements-pcrl.txt, requirements-test.txt, .env(.example); legacy-py38/
 ├── sonar-project.properties  SonarQube analysis settings
 ├── Graph/<city>/             input data
 ├── tmp_Tainan/               model and training log of reinforcement.py (tmp_Toy_Example/: original example)
 ├── runs/source_Tainan/       source model, checkpoints, monitor.csv, config.json
-├── Results/                  Tainan/ plans and service metrics; Transfer/ result CSVs, summaries, plans/; Trackio/ logs
+├── Results/                  Tainan/ plans and service metrics; Transfer/ result CSVs, summaries, plans/; Trackio/ logs;
+│                             Security/ dependency scan, SBOM
 ├── Images/Result_Plots/      figures: Training/, Tainan/, Transfer/
 └── logs/                     training/, beam/
 ```

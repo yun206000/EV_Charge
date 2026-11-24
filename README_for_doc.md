@@ -2,7 +2,7 @@
 
 > 本文件說明 PCRL 專案（`/home/angel030880/test/PCRL`）的系統架構、資料、效用模型、強化學習環境、模型結構、超參數、
 > 訓練／評估流程與實驗結果。所有數字均取自本 repo 的程式碼、設定檔與實驗紀錄（`Results/`、`runs/`、`logs/`）。
-> 最後更新：2026-11-20。模型的摘要說明（效能、超參數、時間、軟硬體需求、使用手冊）見 `MODEL_CARD.md`。
+> 最後更新：2026-11-21。模型的摘要說明（效能、超參數、時間、軟硬體需求、使用手冊）見 `MODEL_CARD.md`。
 
 ---
 
@@ -129,7 +129,8 @@ PCRL/
 │   ├── plan_maps.py              台北微調前後充電站分布圖
 │   ├── plan_metrics.py           任一已存規劃的服務指標
 │   └── trackio_logs.py           訓練與微調紀錄 → trackio 可匯入的 CSV（11.11）
-├── scripts/                  run_generalization.sh、run_beam_search.sh（完整流程）；dependency_audit.sh／.py（相依套件弱點掃描，11.9）
+├── scripts/                  run_generalization.sh、run_beam_search.sh（完整流程）；dependency_audit.sh／.py（相依套件弱點掃描，11.9）；
+│                             sbom.sh（服務映像的軟體物料清單，11.12）
 ├── tests/                    單元測試（pytest，合成小城市資料，11.8）；設定檔 pytest.ini、.coveragerc
 ├── docker/                   Dockerfile、Dockerfile.dockerignore、requirements-pcrl.txt、requirements-test.txt（測試套件）、
 │                             Dockerfile.model（環境＋模型權重映像 pcrl:2.0-model，11.11）、
@@ -141,6 +142,7 @@ PCRL/
 ├── Results/
 │   ├── Tainan/                   台南充電規劃（原始模型、source_model/ 來源模型）與服務指標 metrics.csv
 │   ├── Transfer/                 泛化與微調的結果 CSV、摘要；plans/ 各規劃
+│   ├── Security/                 相依套件弱點掃描（11.9）、軟體物料清單 充電站選址服務_SBOM.json（11.12）
 │   └── Trackio/                  trackio 格式的訓練（training/）與微調（finetuning/）紀錄
 ├── Images/Result_Plots/      影像紀錄：Data/、Training/、Tainan/、Transfer/
 └── logs/                     training/（訓練與評估 log）、beam/（beam search 逐步 log）
@@ -1061,7 +1063,7 @@ Q 值最高的 k = 2 個動作，依「目前分數 + 模型估計的後續提�
 | 可重現性 | B = k = 1 與 zero-shot 逐位元相同；同一設定重跑結果逐位元相同 |
 | 安全性 | 程式碼：SonarQube 0 個安全性問題、0 個 security hotspot、0 個 bug（11.7）；相依套件：升級後 49 個套件 **0 個已知弱點**（舊環境 120 個，11.9、11.10） |
 | 程式品質 | 140 個單元測試在新舊兩個環境全部通過；SonarQube Quality Gate **通過**，0 個 issue，安全性／可靠性／可維護性評等 A / A / A，全專案測試覆蓋率 95.9%（11.11） |
-| 交付物 | 含模型權重的 Docker 映像 `pcrl:2.0-model`（映像內重跑兩個模型的台南規劃，與報告逐站相同）、trackio 格式的訓練與微調紀錄（12 個 CSV，以 trackio 實際匯入驗證）、`MODEL_CARD.md`（11.11） |
+| 交付物 | 含模型權重的 Docker 映像 `pcrl:2.0-model`（映像內重跑兩個模型的台南規劃，與報告逐站相同）、trackio 格式的訓練與微調紀錄（12 個 CSV，以 trackio 實際匯入驗證）、`MODEL_CARD.md`（11.11）；服務映像的軟體物料清單 `充電站選址服務_SBOM.json`（SPDX 2.3，175 個元件，11.12） |
 | 環境升級 | Python 3.12、torch 2.15、SB3 2.9；既有模型直接載入，台北與大安區的規劃與舊環境逐站相同，分數差異 < 1e-12（11.10） |
 | 影像紀錄 | 訓練曲線、台南服務指標、台南地圖、泛化比較、微調前後、搜尋過程、台北服務指標、台北微調前後充電站分布圖（第 12 節） |
 
@@ -1376,6 +1378,21 @@ trackio（Hugging Face）的 `trackio.import_csv()` 讀取第一欄 `step`、選
 | 全專案測試覆蓋率 | **95.9%**（30 個檔案、3,947 行） |
 | 單元測試 | 140 個，新舊兩個環境全部通過 |
 
+### 11.12 軟體物料清單（SBOM，syft，2026-11-21）
+
+服務映像 `pcrl:2.0-model`（11.11）的軟體物料清單：`Results/Security/充電站選址服務_SBOM.json`。
+
+| 項目 | 內容 |
+|---|---|
+| 工具 | syft 1.57.0（Anchore，https://github.com/anchore/syft）；從 GitHub 下載後以官方 checksums 檔驗證，掃描在本機進行，不送出資料 |
+| 格式 | SPDX 2.3 JSON（ISO/IEC 5962:2021），以 SPDX 官方工具 spdx-tools 0.8.3 驗證通過 |
+| 掃描對象 | Docker 映像 `pcrl:2.0-model`（image ID `sha256:b6ead715ef7b…`，與交付檔 `dist/pcrl_2.0-model.tar.gz` 相同），基底 Debian GNU/Linux 12（bookworm） |
+| 元件 | **175 個**：Debian 套件 105 個；Python 套件 55 個（pip 安裝的 43 個全部列入，另有 setuptools 內附的 12 個）；執行檔 15 個（Python 3.12.16 直譯器，及 pip／setuptools 內附的 14 個 Windows 啟動程式） |
+| 授權資訊 | 158 個元件帶授權資訊（例：stable-baselines3、osmnx 為 MIT，networkx 為 BSD-3-Clause）；其餘 17 個的套件資料沒有授權欄位（14 個 Windows 啟動程式、Python 直譯器、jinja2、farama-notifications） |
+| 檔案 | 3,935 個套件所屬檔案，各附雜湊值（SHA-1；其中 3,375 個另附 SHA-256） |
+| 範圍說明 | 清單列的是映像中的第三方元件；本專案自行開發的程式碼與模型權重不是套件，不在清單內（權重的 sha256 見 `MODEL_CARD.md` 第 12 節） |
+| 執行 | `scripts/sbom.sh`（約 30 秒；`IMAGE=`、`OUT=` 可指定其他映像與輸出檔） |
+
 ---
 
 ## 12. 影像紀錄與輸出檔清單
@@ -1417,6 +1434,7 @@ trackio（Hugging Face）的 `trackio.import_csv()` 讀取第一欄 `step`、選
 | `logs/beam/<label>_e<seed>.log` | beam search 逐步紀錄（每 25 步：候選數、最佳分數、站數、剩餘預算）與記憶體峰值 |
 | `Results/Trackio/training/*.csv`, `Results/Trackio/finetuning/*.csv` | trackio 格式的訓練與微調紀錄（11.11） |
 | `MODEL_CARD.md` | Model card（11.11） |
+| `Results/Security/充電站選址服務_SBOM.json` | 服務映像 `pcrl:2.0-model` 的軟體物料清單（SPDX 2.3 JSON，11.12） |
 
 ---
 
@@ -1456,9 +1474,10 @@ scripts/run_beam_search.sh validate    # B = k = 1，與 zero-shot 逐位元相�
 scripts/run_beam_search.sh search      # B = 4、k = 2
 scripts/run_beam_search.sh analyze
 
-# 交付物（11.11）
+# 交付物（11.11、11.12）
 python -m analysis.trackio_logs         # trackio 格式的訓練與微調紀錄 → Results/Trackio/
 docker build -f docker/Dockerfile.model -t pcrl:2.0-model .
+scripts/sbom.sh                         # 軟體物料清單 → Results/Security/充電站選址服務_SBOM.json
 ```
 
 重現性：
